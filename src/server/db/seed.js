@@ -1,8 +1,8 @@
 const db = require("./client");
 const { createUser } = require("./users");
 //will we need to create a restaurant and reviews js file, like how there is a users.js file? assuming we do - aj
-const { createRestaurant } = require('./restaurants'); 
-const { createReview } = require('./reviews');
+// const { createRestaurant } = require('./restaurants'); 
+// const { createReview } = require('./reviews');
 
 const users = [
   {
@@ -34,23 +34,23 @@ const users = [
 
 //I added restaurants and reviews below. Do we need them/are they set up correctly? - aj
 
-const restaurants = [
-  {
-    name: 'Restaurant A',
-    address: '123 Main St',
-    phone_number: '555-123-4567',
-  },
-];
+// const restaurants = [
+//   {
+//     name: 'Restaurant A',
+//     address: '123 Main St',
+//     phone_number: '555-123-4567',
+//   },
+// ];
 
-const reviews = [
-  {
-    user_id: 1, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 1, // Replace with the actual restaurant ID?? (or use faker?)
-    rating: 4,
-    review_text: 'Great food and service, blah blah blah',
-  },
+// const reviews = [
+//   {
+//     user_id: 1, // Replace with the actual user ID?? (or use faker?)
+//     restaurant_id: 1, // Replace with the actual restaurant ID?? (or use faker?)
+//     rating: 4,
+//     review_text: 'Great food and service, blah blah blah',
+//   },
 
-];
+// ];
 
 const dropTables = async () => {
   try {
@@ -76,7 +76,7 @@ const createTables = async () => {
             name VARCHAR(255) DEFAULT 'name',
             email VARCHAR(255) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL
-            is_admin BOOLEAN NOT NULL DEFAULT FALSE
+            
         )`);
     await db.query(`
         CREATE TABLE restaurants (
@@ -84,7 +84,7 @@ const createTables = async () => {
             name VARCHAR(255) NOT NULL,
             address VARCHAR(255) NOT NULL,
             phone_number VARCHAR(15)
-            average_rating NUMERIC(3, 2) DEFAULT 0.0 
+            
         )`);
     await db.query(`
         CREATE TABLE reviews (
@@ -114,27 +114,27 @@ const insertUsers = async () => {
   }
 };
 
-const insertRestaurants = async () => {
-  try {
-    for (const restaurant of restaurants) {
-      await createRestaurant(restaurant);
-    }
-    console.log('Restaurants data inserted successfully.');
-  } catch (error) {
-    console.error('Error inserting restaurant data:', error);
-  }
-};
+// const insertRestaurants = async () => {
+//   try {
+//     for (const restaurant of restaurants) {
+//       await createRestaurant(restaurant);
+//     }
+//     console.log('Restaurants data inserted successfully.');
+//   } catch (error) {
+//     console.error('Error inserting restaurant data:', error);
+//   }
+// };
 
-const insertReviews = async () => {
-  try {
-    for (const review of reviews) {
-      await createReview(review);
-    }
-    console.log('Reviews data inserted successfully.');
-  } catch (error) {
-    console.error('Error inserting review data:', error);
-  }
-};
+// const insertReviews = async () => {
+//   try {
+//     for (const review of reviews) {
+//       await createReview(review);
+//     }
+//     console.log('Reviews data inserted successfully.');
+//   } catch (error) {
+//     console.error('Error inserting review data:', error);
+//   }
+// };
 
 const seedDatabse = async () => {
   try {
@@ -142,8 +142,8 @@ const seedDatabse = async () => {
     await dropTables();
     await createTables();
     await insertUsers();
-    await insertRestaurants();
-    await insertReviews();
+    // await insertRestaurants();
+    // await insertReviews();
   } catch (err) {
     throw err;
   } finally {
