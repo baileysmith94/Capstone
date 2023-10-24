@@ -2,7 +2,7 @@ const db = require("./client");
 const { createUser } = require("./users");
 //will we need to create a restaurant and reviews js file, like how there is a users.js file? assuming we do - aj
 // const { createRestaurant } = require('./restaurant'); 
-// const { createReview } = require('./reviews');
+// const { createReview } = require('./reviews')a;
 
 const users = [
   {
