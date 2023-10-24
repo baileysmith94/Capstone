@@ -1,7 +1,7 @@
 const db = require("./client");
 const { createUser } = require("./users");
 //will we need to create a restaurant and reviews js file, like how there is a users.js file? assuming we do - aj
-// const { createRestaurant } = require('./restaurant'); 
+const { createRestaurant } = require('./restaurant'); 
 // const { createReview } = require('./reviews')a;
 
 const users = [
@@ -34,39 +34,39 @@ const users = [
 
 //I added restaurants and reviews below. Do we need them/are they set up correctly? - aj
 
-// const restaurants = [
-//   {
-//     name: 'Restaurant A',
-//     address: '123 Main St',
-//     phone_number: '555-123-4567',
-//   },
-//   {
-//     name: 'Peanut Garden',
-//     address: '5656 Garden Lane',
-//     phone_number: '281-593-3210',
-//   },
-// {
-//     name: 'Wisconsin Roadhouse',
-//     address: '321 Get Lost Lane',
-//     phone_number: '303-597-7256',
-//   },
-//   {
-//     name: 'Taco King',
-//     address: '301 Gordita Street',
-//     phone_number: '808-901-3278',
-//   },
+const restaurants = [
+  {
+    name: 'Restaurant A',
+    address: '123 Main St',
+    phone_number: '555-123-4567',
+  },
+  {
+    name: 'Peanut Garden',
+    address: '5656 Garden Lane',
+    phone_number: '281-593-3210',
+  },
+{
+    name: 'Wisconsin Roadhouse',
+    address: '321 Get Lost Lane',
+    phone_number: '303-597-7256',
+  },
+  {
+    name: 'Taco King',
+    address: '301 Gordita Street',
+    phone_number: '808-901-3278',
+  },
   
-// {
-//     name: 'Poultry Roaster',
-//     address: '999 Rotisserie Road',
-//     phone_number: '999-593-0303',
-//   },
-// {
-//     name: 'Gorgonzola Express',
-//     address: '0001 Stinky Street',
-//     phone_number: '578-371-9456',
-//   }
-// ];
+{
+    name: 'Poultry Roaster',
+    address: '999 Rotisserie Road',
+    phone_number: '999-593-0303',
+  },
+{
+    name: 'Gorgonzola Express',
+    address: '0001 Stinky Street',
+    phone_number: '578-371-9456',
+  }
+];
 
 // const reviews = [
 //   {
@@ -144,16 +144,16 @@ const insertUsers = async () => {
   }
 };
 
-// const insertRestaurants = async () => {
-//   try {
-//     for (const restaurant of restaurants) {
-//       await createRestaurant(restaurant);
-//     }
-//     console.log('Restaurants data inserted successfully.');
-//   } catch (error) {
-//     console.error('Error inserting restaurant data:', error);
-//   }
-// };
+const insertRestaurants = async () => {
+  try {
+    for (const restaurant of restaurants) {
+      await createRestaurant(restaurant);
+    }
+    console.log('Restaurants data inserted successfully.');
+  } catch (error) {
+    console.error('Error inserting restaurant data:', error);
+  }
+};
 
 // const insertReviews = async () => {
 //   try {
@@ -172,7 +172,7 @@ const seedDatabse = async () => {
     await dropTables();
     await createTables();
     await insertUsers();
-    // await insertRestaurants();
+    await insertRestaurants();
     // await insertReviews();
   } catch (err) {
     throw err;
