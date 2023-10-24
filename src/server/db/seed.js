@@ -1,7 +1,7 @@
 const db = require("./client");
 const { createUser } = require("./users");
 //will we need to create a restaurant and reviews js file, like how there is a users.js file? assuming we do - aj
-// const { createRestaurant } = require('./restaurants'); 
+// const { createRestaurant } = require('./restaurant'); 
 // const { createReview } = require('./reviews');
 
 const users = [
@@ -40,6 +40,32 @@ const users = [
 //     address: '123 Main St',
 //     phone_number: '555-123-4567',
 //   },
+//   {
+//     name: 'Peanut Garden',
+//     address: '5656 Garden Lane',
+//     phone_number: '281-593-3210',
+//   },
+// {
+//     name: 'Wisconsin Roadhouse',
+//     address: '321 Get Lost Lane',
+//     phone_number: '303-597-7256',
+//   },
+//   {
+//     name: 'Taco King',
+//     address: '301 Gordita Street',
+//     phone_number: '808-901-3278',
+//   },
+  
+// {
+//     name: 'Poultry Roaster',
+//     address: '999 Rotisserie Road',
+//     phone_number: '999-593-0303',
+//   },
+// {
+//     name: 'Gorgonzola Express',
+//     address: '0001 Stinky Street',
+//     phone_number: '578-371-9456',
+//   }
 // ];
 
 // const reviews = [
@@ -54,13 +80,14 @@ const users = [
 
 const dropTables = async () => {
   try {
-    await db.query(`
-        DROP TABLE IF EXISTS users;
-        `);
+    await db.query(`DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS restaurants;
+    DROP TABLE IF EXISTS reviews;`);
   } catch (err) {
     throw err;
   }
 };
+
 
 // users table has a primary key on the id field.
 // restaurants table has a primary key on the id field.
@@ -75,25 +102,28 @@ const createTables = async () => {
             id SERIAL PRIMARY KEY,
             name VARCHAR(255) DEFAULT 'name',
             email VARCHAR(255) UNIQUE NOT NULL,
-            password VARCHAR(255) NOT NULL
+            password VARCHAR(255) NOT NULL,
+            is_admin BOOLEAN NOT NULL DEFAULT FALSE
             
-        )`);
-    await db.query(`
-        CREATE TABLE restaurants (
+        );
+
+        CREATE TABLE restaurants(
             id SERIAL PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
             address VARCHAR(255) NOT NULL,
-            phone_number VARCHAR(15)
+            phone_number VARCHAR(15),
+            average_rating NUMERIC
             
-        )`);
-    await db.query(`
-        CREATE TABLE reviews (
+            
+        );
+   
+        CREATE TABLE reviews(
             id SERIAL PRIMARY KEY,
             user_id INT REFERENCES users(id),
             restaurant_id INT REFERENCES restaurants(id),
             rating INT NOT NULL,
             review_text TEXT
-        )`);
+        );`);
   } catch (err) {
     throw err;
   }
