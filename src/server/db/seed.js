@@ -71,30 +71,30 @@ const restaurants = [
 const reviews = [
   {
     user_id: 1, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 1, // Replace with the actual restaurant ID?? (or use faker?)
-    rating: 4,
+    restaurant_id: 2, // Replace with the actual restaurant ID?? (or use faker?)
+    rating: 3,
     review_text: 'Great food and service, blah blah blah',
   },
  {
-    user_id: 1, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 1, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 3, // Replace with the actual user ID?? (or use faker?)
+    restaurant_id: 4, // Replace with the actual restaurant ID?? (or use faker?)
     rating: 4,
     review_text: 'Great food and service, blah blah blah',
   },
  {
     user_id: 2, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 2, // Replace with the actual restaurant ID?? (or use faker?)
+    restaurant_id: 6, // Replace with the actual restaurant ID?? (or use faker?)
     rating: 2,
     review_text: 'Very sticky restaurant!',
   },
  {
-    user_id: 1, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 1, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 4, // Replace with the actual user ID?? (or use faker?)
+    restaurant_id: 3, // Replace with the actual restaurant ID?? (or use faker?)
     rating: 5,
     review_text: 'The food was wonderful, and the service was excellent',
   },
  {
-    user_id: 1, // Replace with the actual user ID?? (or use faker?)
+    user_id: 5, // Replace with the actual user ID?? (or use faker?)
     restaurant_id: 1, // Replace with the actual restaurant ID?? (or use faker?)
     rating: 5,
     review_text: 'Lovely restaurant with very nice staff',
@@ -135,7 +135,8 @@ const createTables = async () => {
             name VARCHAR(255) NOT NULL,
             address VARCHAR(255) NOT NULL,
             phone_number VARCHAR(15),
-            average_rating NUMERIC
+            average_rating NUMERIC,
+            image_url VARCHAR(255)
             
             
         );
