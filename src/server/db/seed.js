@@ -1,8 +1,8 @@
 const db = require("./client");
 const { createUser } = require("./users");
 //will we need to create a restaurant and reviews js file, like how there is a users.js file? assuming we do - aj
-// const { createRestaurant } = require('./restaurant'); 
-// const { createReview } = require('./reviews')a;
+const { createRestaurant } = require('./restaurant'); 
+const { createReview } = require('./review');
 
 const users = [
   {
@@ -34,49 +34,72 @@ const users = [
 
 //I added restaurants and reviews below. Do we need them/are they set up correctly? - aj
 
-// const restaurants = [
-//   {
-//     name: 'Restaurant A',
-//     address: '123 Main St',
-//     phone_number: '555-123-4567',
-//   },
-//   {
-//     name: 'Peanut Garden',
-//     address: '5656 Garden Lane',
-//     phone_number: '281-593-3210',
-//   },
-// {
-//     name: 'Wisconsin Roadhouse',
-//     address: '321 Get Lost Lane',
-//     phone_number: '303-597-7256',
-//   },
-//   {
-//     name: 'Taco King',
-//     address: '301 Gordita Street',
-//     phone_number: '808-901-3278',
-//   },
+const restaurants = [
+  {
+    name: 'Restaurant A',
+    address: '123 Main St',
+    phone_number: '555-123-4567',
+  },
+  {
+    name: 'Peanut Garden',
+    address: '5656 Garden Lane',
+    phone_number: '281-593-3210',
+  },
+{
+    name: 'Wisconsin Roadhouse',
+    address: '321 Get Lost Lane',
+    phone_number: '303-597-7256',
+  },
+  {
+    name: 'Taco King',
+    address: '301 Gordita Street',
+    phone_number: '808-901-3278',
+  },
   
-// {
-//     name: 'Poultry Roaster',
-//     address: '999 Rotisserie Road',
-//     phone_number: '999-593-0303',
-//   },
-// {
-//     name: 'Gorgonzola Express',
-//     address: '0001 Stinky Street',
-//     phone_number: '578-371-9456',
-//   }
-// ];
+{
+    name: 'Poultry Roaster',
+    address: '999 Rotisserie Road',
+    phone_number: '999-593-0303',
+  },
+{
+    name: 'Gorgonzola Express',
+    address: '0001 Stinky Street',
+    phone_number: '578-371-9456',
+  }
+];
 
-// const reviews = [
-//   {
-//     user_id: 1, // Replace with the actual user ID?? (or use faker?)
-//     restaurant_id: 1, // Replace with the actual restaurant ID?? (or use faker?)
-//     rating: 4,
-//     review_text: 'Great food and service, blah blah blah',
-//   },
-
-// ];
+const reviews = [
+  {
+    user_id: 1, // Replace with the actual user ID?? (or use faker?)
+    restaurant_id: 2, // Replace with the actual restaurant ID?? (or use faker?)
+    rating: 3,
+    review_text: 'Great food and service, blah blah blah',
+  },
+ {
+    user_id: 3, // Replace with the actual user ID?? (or use faker?)
+    restaurant_id: 4, // Replace with the actual restaurant ID?? (or use faker?)
+    rating: 4,
+    review_text: 'Great food and service, blah blah blah',
+  },
+ {
+    user_id: 2, // Replace with the actual user ID?? (or use faker?)
+    restaurant_id: 6, // Replace with the actual restaurant ID?? (or use faker?)
+    rating: 2,
+    review_text: 'Very sticky restaurant!',
+  },
+ {
+    user_id: 4, // Replace with the actual user ID?? (or use faker?)
+    restaurant_id: 3, // Replace with the actual restaurant ID?? (or use faker?)
+    rating: 5,
+    review_text: 'The food was wonderful, and the service was excellent',
+  },
+ {
+    user_id: 5, // Replace with the actual user ID?? (or use faker?)
+    restaurant_id: 1, // Replace with the actual restaurant ID?? (or use faker?)
+    rating: 5,
+    review_text: 'Lovely restaurant with very nice staff',
+  },
+];
 
 const dropTables = async () => {
   try {
@@ -112,7 +135,8 @@ const createTables = async () => {
             name VARCHAR(255) NOT NULL,
             address VARCHAR(255) NOT NULL,
             phone_number VARCHAR(15),
-            average_rating NUMERIC
+            average_rating NUMERIC,
+            image_url VARCHAR(255)
             
             
         );
@@ -144,27 +168,27 @@ const insertUsers = async () => {
   }
 };
 
-// const insertRestaurants = async () => {
-//   try {
-//     for (const restaurant of restaurants) {
-//       await createRestaurant(restaurant);
-//     }
-//     console.log('Restaurants data inserted successfully.');
-//   } catch (error) {
-//     console.error('Error inserting restaurant data:', error);
-//   }
-// };
+const insertRestaurants = async () => {
+  try {
+    for (const restaurant of restaurants) {
+      await createRestaurant(restaurant);
+    }
+    console.log('Restaurants data inserted successfully.');
+  } catch (error) {
+    console.error('Error inserting restaurant data:', error);
+  }
+};
 
-// const insertReviews = async () => {
-//   try {
-//     for (const review of reviews) {
-//       await createReview(review);
-//     }
-//     console.log('Reviews data inserted successfully.');
-//   } catch (error) {
-//     console.error('Error inserting review data:', error);
-//   }
-// };
+const insertReviews = async () => {
+  try {
+    for (const review of reviews) {
+      await createReview(review);
+    }
+    console.log('Reviews data inserted successfully.');
+  } catch (error) {
+    console.error('Error inserting review data:', error);
+  }
+};
 
 const seedDatabse = async () => {
   try {
@@ -172,8 +196,8 @@ const seedDatabse = async () => {
     await dropTables();
     await createTables();
     await insertUsers();
-    // await insertRestaurants();
-    // await insertReviews();
+    await insertRestaurants();
+    await insertReviews();
   } catch (err) {
     throw err;
   } finally {
