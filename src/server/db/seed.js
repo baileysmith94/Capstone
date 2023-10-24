@@ -80,9 +80,9 @@ const users = [
 
 const dropTables = async () => {
   try {
-    await db.query(`DROP TABLE IF EXISTS users;
+    await db.query(`DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS restaurants;
-    DROP TABLE IF EXISTS reviews;`);
+    DROP TABLE IF EXISTS users;`);
   } catch (err) {
     throw err;
   }
