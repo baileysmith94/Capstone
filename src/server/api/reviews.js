@@ -105,7 +105,7 @@ reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
           message: `No post by ID ${reviewId}`
         })
         // reviewToUpdate.user_id?? would this be admin? Since admin is only allowed to delete
-      } else if (req.user_id !== reviewToUpdate.user_id) {
+      } else if (req.user_id !== reviewToUpdate.user_id || !is_admin) {
         res.status(403); 
         next({
           name: "WrongUserError",
