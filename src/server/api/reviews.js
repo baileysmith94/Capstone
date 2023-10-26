@@ -3,7 +3,8 @@ const reviewsRouter = express.Router();
 const { 
     getAllReviews, 
     getReviewById, 
-    createReview
+    createReview,
+    updateReview
 } = require('../db');
 
 
@@ -20,20 +21,21 @@ reviewsRouter.get('/', async( req, res, next) => {
 });
 
 reviewsRouter.post('/create_review', requireUser, async (req, res, next) => {
-    const {user_id, restaurant_id, rating, review_text = "" } = req.body;
+    const {user_id, restaurant_id, rating, review_text, type = "" } = req.body;
   
-    const postData = {};
+    const reviewData = {};
   
     try {
-      postData.user_id = req.user_id;
-      postData.restaurant_id = restaurant_id;
-      postData.rating = rating;
-      postData.review_text = review_text
+      reviewData.user_id = req.user_id;
+      reviewData.restaurant_id = restaurant_id;
+      reviewData.rating = rating;
+      reviewData.review_text = review_text;
+      reviewData.type = type;
   
-      const post = await createPost(postData);
+      const review = await createReview(reviewData);
   
-      if (post) {
-        res.send(post);
+      if (review) {
+        res.send(review);
       } else {
         next({
           name: 'PostCreationError',
@@ -56,5 +58,64 @@ reviewsRouter.get('/:id', async( req, res, next) => {
         next(error)
     }
 });
+
+reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
+    const { user_id, restaurant_id } = req.params;
+    const { rating, review_text, type } = req.body;
+  
+    const updateFields = {};
+  
+    if (rating && rating.length > 0) {
+      updateFields.rating= rating.trim().split(/\s+/);
+    }
+  
+    if (review_text) {
+      updateFields.review_text = review_text;
+    }
+  
+    if (type) {
+      updateFields.type = type;
+    }
+  
+    try {
+      const originalReview = await getReviewById(reviewId);
+  
+      if (originalReview.user_id === req.user_id) {
+        const updatedReview = await updateReview(restaurant_id, updateFields);
+        res.send({ post: updatedReview })
+      } else {
+        next({
+          name: 'UnauthorizedUserError',
+          message: 'You cannot update a post that is not yours'
+        })
+      }
+    } catch ({ name, message }) {
+      next({ name, message });
+    }
+  });
+  
+  reviewsRouter.delete('/:postId', requireUser, async (req, res, next) => {
+    try{
+      const {reviewId} = req.params;
+      const reviewToUpdate = await getReviewById(reviewId);
+      if(!reviewToUpdate) {
+        next({
+          name: 'NotFound',
+          message: `No post by ID ${reviewId}`
+        })
+      } else if (req.user_id !== reviewToUpdate.creatorId) {
+        res.status(403); 
+        next({
+          name: "WrongUserError",
+          message: "You must be the same user who created this routine to perform this action"
+        });
+      } else {
+        const deletedPost = await destroyPost(postId)
+        res.send({success: true, ...deletedPost})
+      }
+    } catch (error) {
+      next(error)
+    }
+  });
 
 module.exports = reviewsRouter;
