@@ -27,7 +27,19 @@ const getRestaurantById = async (restaurantId) => {
   }
 }
 
+const getAllRestaurants = async () => {
+  try {
+    const { rows } = await db.query(`
+    SELECT * FROM restaurants
+    `);
+    return rows
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports = {
   createRestaurant,
   getRestaurantById,
+  getAllRestaurants
 };
