@@ -38,10 +38,46 @@ const getReviewById = async (reviewId) => {
   }
 }
 
+const updateReview = async (reviewId) => {
+  const {rating, review_text, type} = fields; 
+    delete fields.rating;
+    delete fields.review_text;
+    delete fields.type;
 
+  // build the set string
+  const setString = Object.keys(fields).map(
+    (key, index) => `"${ key }"=$${ index + 1 }`
+  ).join(', ');
+
+  try{
+    if (setString.length > 0) {
+      await client.query(`
+      UPDATE reviews
+      SET ${ setString } 
+      WHERE id= ${ reviewId }
+      RETURNING *;
+      `, Object.values(fields));
+    }
+
+    if (rating === undefined){
+      return await getReviewById(reviewId);
+    }
+    if (review_text === undefined){
+      return await getReviewById(reviewId);
+    }
+    if (type === undefined){
+      return await getReviewById(reviewId);
+    }
+  
+    return await getReviewById(reviewId);
+  } catch (error) {
+    throw error;
+  }
+}
 
 module.exports = {
   getAllReviews,
   createReview,
   getReviewById,
+  updateReview
 };
