@@ -36,41 +36,47 @@ const users = [
 
 const restaurants = [
   {
-    name: "Restaurant A",
+    name: "Scott's Sandwiches",
     address: "123 Main St",
     phone_number: "555-123-4567",
-    type: "A"
+    type: "A",
+    image_url: "./images/sandwich.png"
   },
   {
     name: "Peanut Garden",
     address: "5656 Garden Lane",
     phone_number: "281-593-3210",
-    type: "B"
+    type: "B",
+    image_url: "./images/peanutgarden.png"
   },
   {
     name: "Wisconsin Roadhouse",
     address: "321 Get Lost Lane",
     phone_number: "303-597-7256",
-    type: "C"
+    type: "C",
+    image_url: "./images/wisconsin.png"
   },
   {
     name: "Taco King",
     address: "301 Gordita Street",
     phone_number: "808-901-3278",
-    type: "D"
+    type: "D",
+    image_url: "./images/tacoking.png"
   },
 
   {
     name: "Poultry Roaster",
     address: "999 Rotisserie Road",
     phone_number: "999-593-0303",
-    type: "E"
+    type: "E",
+    image_url: "./images/poultry.png"
   },
   {
     name: "Gorgonzola Express",
     address: "0001 Stinky Street",
     phone_number: "578-371-9456",
-    type: "F"
+    type: "F",
+    image_url: "./images/gorgon.png"
   },
 ];
 
