@@ -4,6 +4,7 @@ const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
 // const { JWT_SECRET } = process.env;
 const volleyball = require('volleyball')
+const { getAllRestaurants, getRestaurantById, getUserById, getAllReviews, getReviewById } = require('../db');
 apiRouter.use(volleyball)
 
 // TO BE COMPLETED - set `req.user` if possible, using token sent in the request header
@@ -57,5 +58,42 @@ apiRouter.use('/users', usersRouter);
 apiRouter.use((err, req, res, next) => {
     res.status(500).send(err)
   })
+
+  apiRouter.get('/restaurants', async (req, res, next) => {
+    try {
+      const restaurants = await getAllRestaurants();
+      res.send({ restaurants });
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+  apiRouter.get('/restaurants/:id', async (req, res, next) => {
+    try {
+      const restaurant = await getRestaurantById(req.params.id);
+      res.send({ restaurant });
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  apiRouter.get('/reviews', async (req, res, next) => {
+    try {
+        const reviews = await getAllReviews();
+        res.send({ reviews });
+    } catch (error) {
+        next(error);
+    }
+});
+
+apiRouter.get('/reviews/:id', async (req, res, next) => {
+    try {
+        const review = await getReviewById(req.params.id);
+        res.send({ review });
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 module.exports = apiRouter;

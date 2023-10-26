@@ -1,3 +1,5 @@
 module.exports = {
-    ...require('./users')
+    ...require('./users'),
+    ...require('./restaurant'),
+    ...require('./review')
 }
