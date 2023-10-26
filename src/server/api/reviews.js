@@ -4,7 +4,8 @@ const {
     getAllReviews, 
     getReviewById, 
     createReview,
-    updateReview
+    updateReview, 
+    destroyReview
 } = require('../db');
 
 
@@ -96,22 +97,23 @@ reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
   
   reviewsRouter.delete('/:postId', requireUser, async (req, res, next) => {
     try{
-      const {reviewId} = req.params;
+      const {reviewId, user_id} = req.params;
       const reviewToUpdate = await getReviewById(reviewId);
       if(!reviewToUpdate) {
         next({
           name: 'NotFound',
           message: `No post by ID ${reviewId}`
         })
-      } else if (req.user_id !== reviewToUpdate.creatorId) {
+        // reviewToUpdate.user_id?? would this be admin? Since admin is only allowed to delete
+      } else if (req.user_id !== reviewToUpdate.user_id) {
         res.status(403); 
         next({
           name: "WrongUserError",
           message: "You must be the same user who created this routine to perform this action"
         });
       } else {
-        const deletedPost = await destroyPost(postId)
-        res.send({success: true, ...deletedPost})
+        const deletedReview = await destroyReview(reviewId)
+        res.send({success: true, ...deletedReview})
       }
     } catch (error) {
       next(error)
