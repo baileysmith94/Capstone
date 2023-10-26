@@ -11,12 +11,12 @@ const getAllReviews = async () => {
   }
 }
 
-const createReview = async ({ user_id, restaurant_id, rating, review_text }) => {
+const createReview = async ({ user_id, restaurant_id, rating, review_text, type }) => {
   try {
     const { rows: [review] } = await db.query(`
-      INSERT INTO reviews(user_id, restaurant_id, rating, review_text)
-      VALUES($1, $2, $3, $4)
-      RETURNING *`, [user_id, restaurant_id, rating, review_text]);
+      INSERT INTO reviews(user_id, restaurant_id, rating, review_text, type)
+      VALUES($1, $2, $3, $4, $5)
+      RETURNING *`, [user_id, restaurant_id, rating, review_text, type]);
 
     return review;
   } catch (err) {
