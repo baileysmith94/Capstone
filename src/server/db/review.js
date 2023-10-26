@@ -1,5 +1,16 @@
 const db = require('./client'); 
 
+const getAllReviews = async () => {
+  try {
+    const { rows } = await db.query(`
+    SELECT * FROM reviews
+    `);
+    return rows
+  } catch (err) {
+    throw err;
+  }
+}
+
 const createReview = async ({ user_id, restaurant_id, rating, review_text }) => {
   try {
     const { rows: [review] } = await db.query(`
@@ -30,6 +41,7 @@ const getReviewById = async (reviewId) => {
 
 
 module.exports = {
+  getAllReviews,
   createReview,
   getReviewById,
 };
