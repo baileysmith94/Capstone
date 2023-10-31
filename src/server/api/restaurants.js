@@ -6,7 +6,7 @@ const {
     getAllRestaurants 
 } = require('../db');
 
-restaurantsRouter.get('/', async( req, res, next) => {
+restaurantsRouter.get('/restaurants', async( req, res, next) => {
     try {
         const restaurants = await getAllRestaurants();
 
