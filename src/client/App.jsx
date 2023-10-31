@@ -11,13 +11,13 @@ function App() {
   return (
     <div className='App'>
       <Routes>
-        <Route path = '/' element={<Home />} />
+        {/* <Route path = '/' element={<Home />} /> */}
         <Route path = '/' element={<Login />} />
         <Route path = '/' element={<SignUp />} />
         <Route path = '/' element={<RestaurantList />} />
-        <Route path = '/' element={<UserList />} />
-        <Route path = '/' element={<ReviewList />} />
-        <Route path = '/' element={<Profile />} />
+        {/* <Route path = '/' element={<UserList />} /> */}
+        {/* <Route path = '/' element={<ReviewList />} /> */}
+        {/* <Route path = '/' element={<Profile />} /> */}
       </Routes>
         <img id='comp-img' src='./computer.png'></img>
     </div>
