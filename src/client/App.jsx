@@ -19,7 +19,7 @@ function App() {
         {/* <Route path = '/' element={<ReviewList />} /> */}
         {/* <Route path = '/' element={<Profile />} /> */}
       </Routes>
-        <img id='comp-img' src='./computer.png'></img>
+        {/* <img id='comp-img' src='./computer.png'></img> */}
     </div>
   );
 }
