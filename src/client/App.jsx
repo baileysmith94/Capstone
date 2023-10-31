@@ -1,16 +1,25 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import Login from './components/Login';
+import SignUp from './components/SignUp';
+import RestaurantList from './components/RestaurantList';
+import { Routes, Route} from "react-router-dom";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <div className='App'>
-        <h1>Boilerplate</h1>
+      <Routes>
+        <Route path = '/' element={<Home />} />
+        <Route path = '/' element={<Login />} />
+        <Route path = '/' element={<SignUp />} />
+        <Route path = '/' element={<RestaurantList />} />
+        <Route path = '/' element={<UserList />} />
+        <Route path = '/' element={<ReviewList />} />
+        <Route path = '/' element={<Profile />} />
+      </Routes>
         <img id='comp-img' src='./computer.png'></img>
-        <p>Replace the starter code in this template with something cool</p>
-        <Login />
     </div>
   );
 }
