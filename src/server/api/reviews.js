@@ -9,7 +9,7 @@ const {
 } = require('../db');
 
 
-reviewsRouter.get('/', async( req, res, next) => {
+reviewsRouter.get('/reviews', async( req, res, next) => {
     try {
         const reviews = await getAllReviews();
 
