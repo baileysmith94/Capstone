@@ -48,7 +48,6 @@ export default function SignUp() {
     <div>
       <form onSubmit={handleSubmit}>
         <h2>Sign Up!</h2>
-        {error && <p>{error}</p>}
         <div>
           <label htmlFor="email">Email:</label>
           <input
