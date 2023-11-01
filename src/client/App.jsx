@@ -5,6 +5,7 @@ import SignUp from "./components/SignUp";
 import RestaurantList from "./components/RestaurantList";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 import "./style.css";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         {/* <Route path = '/' element={<UserList />} /> */}
         {/* <Route path = '/' element={<ReviewList />} /> */}
         {/* <Route path = '/' element={<Profile />} /> */}
+        <Route path="/" element={<Footer />} />
       </Routes>
       <img id="comp-img" src="./computer.png"></img>
     </div>
