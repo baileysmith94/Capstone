@@ -1,5 +1,6 @@
 const db = require('./client')
 const bcrypt = require('bcrypt');
+const { getReviewById } = require('./review');
 const SALT_COUNT = 10;
 
 const createUser = async({ name='first last', email, password }) => {
@@ -59,10 +60,33 @@ const getAllUsers = async () => {
     }
 }
 
+const getUserById = async () => {
+    try{
+        const { rows: [user] } = await db.query(
+            `
+            SELECT id, name, email, password, is_admin
+            FROM users
+            WHERE id=${id}
+            `
+        );
+        if (!user) {
+            throw {
+                name:"UserNotFoundError",
+                message: "User with that id does not exist"
+            }
+        }
+        user.reviews = await getReviewById(id);
+        return user;
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 module.exports = {
     createUser,
     getUser,
     getUserByEmail,
-    getAllUsers
+    getAllUsers, 
+    getUserById
 };
