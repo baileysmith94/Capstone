@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+
+  // const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -68,6 +71,8 @@ const Login = () => {
         </div>
         <button type='submit'>Login</button>
       </form>
+      {/* NEED ENDPOINT FOR ROUTE navigate()`/`*/}
+      {/* <button onClick={()=> navigate()`/`}>My Reviews</button> */}
       <p>{message}</p>
     </div>
   );
