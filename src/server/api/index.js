@@ -2,7 +2,7 @@ const express = require('express');
 const apiRouter = express.Router();
 
 const jwt = require('jsonwebtoken');
-// const { JWT_SECRET } = process.env;
+const { JWT_SECRET } = process.env;
 const volleyball = require('volleyball')
 const { getAllRestaurants, getRestaurantById, getUserById, getAllReviews, getReviewById, getReviewsByRestaurantId } = require('../db');
 apiRouter.use(volleyball)
