@@ -4,6 +4,7 @@ function RestaurantList() {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [searchParam, setSearchParam] = useState("")
 
   // Function to handle the "Reviews" button click - this might need to go in a seperate component... im not sure yet 
   function handleShowReviews(restaurant) {
@@ -30,6 +31,11 @@ function RestaurantList() {
     fetchRestaurants();
   }, []);
 
+  const restaurantToDisplay = searchParam
+  ? restaurants.filter((restaurants) =>
+  restaurants.name.toLowerCase().includes (searchParam))
+  : restaurants;
+
   async function fetchReviews(restaurantId) {
     try {
       const response = await fetch(`/api/reviews/${restaurantId}`);
@@ -46,8 +52,18 @@ function RestaurantList() {
   }
 
   return (
+    <>
+    <div>
+         <label>
+           Search:{" "}
+          <input type="text" 
+             placeholder="search"
+           onChange={(e) => setSearchParam(e.target.value.toLowerCase())}/>
+         </label> 
+    </div>
+    
     <div className="restaurant-list">
-      {restaurants.map((restaurant) => (
+      {restaurantToDisplay.map((restaurant) => (
         <div key={restaurant.id} className="restaurant-item">
           <h3>{restaurant.name}</h3>
           <p>{restaurant.address}</p>
@@ -77,7 +93,7 @@ function RestaurantList() {
         </div>
       ))}
     </div>
+    </>
   );
-}
-
+} 
 export default RestaurantList;
