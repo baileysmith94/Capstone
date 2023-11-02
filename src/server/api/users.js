@@ -35,8 +35,9 @@ usersRouter.post('/login', async(req, res, next) => {
         const user = await getUser({email, password});
         if(user) {
             const token = jwt.sign({
-                id: user.id,
-                email
+                // changed from id: user.id
+                user_id: user.id,
+                email:user.email
             }, process.env.JWT_SECRET, {
                 expiresIn: '1w'
             });

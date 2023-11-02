@@ -27,6 +27,8 @@ reviewsRouter.post('/create_review', requireUser, async (req, res, next) => {
     const reviewData = {};
   
     try {
+      // request params here?
+      // const user_id = req.params.user_id;
       reviewData.user_id = req.user_id;
       reviewData.restaurant_id = restaurant_id;
       reviewData.rating = rating;
