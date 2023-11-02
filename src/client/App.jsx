@@ -25,6 +25,7 @@ function App() {
         {/* <Route path = '/' element={<ReviewList />} /> */}
         {/* <Route path = '/' element={<Profile />} /> */}
         <Route path="/" element={<Footer />} />
+        <Route path="/" element={<Footer />} />
       </Routes>
       <div className="footer">
         <Footer />
