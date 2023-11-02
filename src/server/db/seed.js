@@ -190,7 +190,8 @@ const createTables = async () => {
             restaurant_id INT REFERENCES restaurants(id),
             rating INT NOT NULL,
             review_text TEXT,
-            image_url VARCHAR(255)
+            image_url VARCHAR(255),
+            comment VARCHAR(255)
         );`);
   } catch (err) {
     throw err;

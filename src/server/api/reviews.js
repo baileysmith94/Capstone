@@ -63,7 +63,7 @@ reviewsRouter.get('/:id', async( req, res, next) => {
 
 reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
     const { user_id, restaurant_id } = req.params;
-    const { rating, review_text, type, image_url } = req.body;
+    const { rating, review_text, type, image_url, comment } = req.body;
   
     const updateFields = {};
   
@@ -81,6 +81,10 @@ reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
 
     if (image_url) {
       updateFields.image_url = image_url;
+    }
+
+    if (comment) {
+      updateFields.comment = comment;
     }
   
     try {
