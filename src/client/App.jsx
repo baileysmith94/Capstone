@@ -4,6 +4,12 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import RestaurantList from "./components/RestaurantList";
 import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import RestaurantList from "./components/RestaurantList";
+import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import "./style.css";
@@ -13,10 +19,15 @@ function App() {
 
   return (
     <div className="App">
+    <div className="App">
       <div className="navbar"> </div>
       <NavBar />
       <Routes>
         {/* <Route path = '/' element={<Home />} /> */}
+        <Route path="/" element={<Login />} />
+        <Route path="/" element={<SignUp />} />
+        <Route path="/" element={<RestaurantList />} />
+        <Route path="/" element={<UserList />} />
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/restaurants" element={<RestaurantList />} />
