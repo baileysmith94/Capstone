@@ -11,12 +11,12 @@ const getAllReviews = async () => {
   }
 }
 
-const createReview = async ({ user_id, restaurant_id, rating, review_text }) => {
+const createReview = async ({ user_id, restaurant_id, rating, review_text, image_url }, token) => {
   try {
     const { rows: [review] } = await db.query(`
-      INSERT INTO reviews(user_id, restaurant_id, rating, review_text)
-      VALUES($1, $2, $3, $4)
-      RETURNING *`, [user_id, restaurant_id, rating, review_text]);
+      INSERT INTO reviews(user_id, restaurant_id, rating, review_text, image_url)
+      VALUES($1, $2, $3, $4, $5)
+      RETURNING *`, [user_id, restaurant_id, rating, review_text, image_url]);
 
     return review;
   } catch (err) {
@@ -53,10 +53,11 @@ const getReviewsByRestaurantId = async (restaurantId) => {
 
 
 const updateReview = async (reviewId) => {
-  const {rating, review_text, type} = fields; 
+  const {rating, review_text, type, image_url} = fields; 
     delete fields.rating;
     delete fields.review_text;
     delete fields.type;
+    delete fields.image_url;
 
   // build the set string
   const setString = Object.keys(fields).map(
@@ -80,6 +81,9 @@ const updateReview = async (reviewId) => {
       return await getReviewById(reviewId);
     }
     if (type === undefined){
+      return await getReviewById(reviewId);
+    }
+    if (image_url === undefined){
       return await getReviewById(reviewId);
     }
   

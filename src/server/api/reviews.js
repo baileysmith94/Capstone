@@ -22,7 +22,7 @@ reviewsRouter.get('/reviews', async( req, res, next) => {
 });
 
 reviewsRouter.post('/create_review', requireUser, async (req, res, next) => {
-    const {user_id, restaurant_id, rating, review_text, type = "" } = req.body;
+    const {user_id, restaurant_id, rating, review_text, type = "", image_url } = req.body;
   
     const reviewData = {};
   
@@ -32,6 +32,7 @@ reviewsRouter.post('/create_review', requireUser, async (req, res, next) => {
       reviewData.rating = rating;
       reviewData.review_text = review_text;
       reviewData.type = type;
+      reviewData.image_url = image_url;
   
       const review = await createReview(reviewData);
   
@@ -62,7 +63,7 @@ reviewsRouter.get('/:id', async( req, res, next) => {
 
 reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
     const { user_id, restaurant_id } = req.params;
-    const { rating, review_text, type } = req.body;
+    const { rating, review_text, type, image_url } = req.body;
   
     const updateFields = {};
   
@@ -76,6 +77,10 @@ reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
   
     if (type) {
       updateFields.type = type;
+    }
+
+    if (image_url) {
+      updateFields.image_url = image_url;
     }
   
     try {
