@@ -5,11 +5,11 @@ function Footer() {
      <>
      {/* this currently isn't working right, but the footer appears */}
     {localStorage.token ? (
-        <div>
+        <div className='login-status'>
             <p>You are logged in</p>
         </div>
     ) : (
-        <div>
+        <div className='login-status'>
             <p>Please log in to make a review</p>
         </div>
     )}

@@ -53,7 +53,7 @@ function RestaurantList() {
 
   return (
     <>
-    <div>
+    <div className="search-bar">
          <label>
            Search:{" "}
           <input type="text" 

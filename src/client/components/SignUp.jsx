@@ -59,10 +59,10 @@ export default function SignUp() {
   };
 
   return (
-    <div>
+    <div className="login">
       <form onSubmit={handleSubmit}>
         <h2>Sign Up!</h2>
-        <div>
+        <div className="cred">
           <label htmlFor="firstName">First Name:</label>
           <input
             type="firstName"
@@ -72,7 +72,7 @@ export default function SignUp() {
             required
           />
         </div>
-        <div>
+        <div className="cred">
           <label htmlFor="lastName">Last Name:</label>
           <input
             type="lastName"
@@ -82,7 +82,7 @@ export default function SignUp() {
             required
           />
         </div>
-        <div>
+        <div className="cred">
           <label htmlFor="email">Email:</label>
           <input
             type="email"
@@ -92,7 +92,7 @@ export default function SignUp() {
             required
           />
         </div>
-        <div>
+        <div className="cred">
           <label htmlFor="password">Password:</label>
           <input
             type="password"
