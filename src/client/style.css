@@ -190,6 +190,8 @@ button:hover {
 }
 
 .login-status {
+  position: fixed;
+  bottom: 0;
   background-color: #b50000; /* Blue background color */
   color: #fff; /* White text color */
   padding: 10px;

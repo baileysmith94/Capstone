@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
@@ -73,6 +74,9 @@ const Login = () => {
       {/* NEED ENDPOINT FOR ROUTE navigate()`/`*/}
       {/* <button onClick={()=> navigate()`/`}>My Reviews</button> */}
       <p>{message}</p>
+      <p>
+        Don't have an account?<br /><Link to="/signup">Sign up today!</Link>
+      </p>
     </div>
   );
 };
