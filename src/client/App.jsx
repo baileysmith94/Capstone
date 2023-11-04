@@ -8,6 +8,14 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import "./style.css";
 
+//TO SEE IF A TOKEN IS ACTIVLY BEING USED
+const token = localStorage.getItem('token');
+if (token) {
+  console.log('Token found:', token);
+} else {
+  console.log('No token found');
+}
+
 function App() {
   const [count, setCount] = useState(0);
 

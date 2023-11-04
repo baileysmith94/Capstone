@@ -198,7 +198,7 @@ button:hover {
 .login-status {
   position: fixed;
   bottom: 0;
-  background-color: #b50000; /* Blue background color */
+  background-color: #b50000; /* Red background color */
   color: #fff; /* White text color */
   padding: 10px;
   border-radius: 5px;
@@ -206,6 +206,8 @@ button:hover {
   font-weight: bold;
   margin: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
 }
 
 .login-status p {

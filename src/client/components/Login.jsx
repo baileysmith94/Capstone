@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -16,29 +16,44 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const login = async() => {
+  const login = async () => {
     try {
-        const response = await fetch('http://localhost:3000/api/users/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/json'
-            }, 
-            body: JSON.stringify({
-                email,
-                password
-            })
-        });
-        const result = await response.json();
-        setMessage(result.message);
-        if(!response.ok) {
-          throw(result)
-        }
+      const response = await fetch('http://localhost:3000/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const result = await response.json();
+
+      // Check if the response is successful (status code 200)
+      if (response.ok) {
+        // If successful, set the token received in localStorage
+        localStorage.setItem('token', result.token); 
+
+        // Clear input fields
         setEmail('');
         setPassword('');
+
+        setMessage('Successfully logged in!');
+
+        window.location.reload();
+      window.location.href = '/restaurants';
+
+        // Redirect to the RestaurantList component upon successful login
+      } else {
+        // If the response is not successful, set an error message
+        setMessage(result.message);
+      }
     } catch (err) {
-        console.error(`${err.name}: ${err.message}`);
+      console.error(`${err.name}: ${err.message}`);
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,8 +86,6 @@ const Login = () => {
         </div>
         <button type='submit'>Login</button>
       </form>
-      {/* NEED ENDPOINT FOR ROUTE navigate()`/`*/}
-      {/* <button onClick={()=> navigate()`/`}>My Reviews</button> */}
       <p>{message}</p>
       <p>
         Don't have an account?<br /><Link to="/signup">Sign up today!</Link>
