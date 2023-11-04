@@ -9,17 +9,23 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
-  color: #333; /* Text color for the body */
+  color: #333; 
 }
 
 /* Navigation bar styles */
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   background-color: #212529; /* Dark background color */
   color: #fff;
   padding: 15px 0;
+  z-index: 100; /* Adjust the value as needed */
 }
+
 
 .navbar a {
   color: #fff;
@@ -41,7 +47,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  height: 25vh;
   background-color: #f0f0f0;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
