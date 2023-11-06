@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -18,10 +18,10 @@ const Login = () => {
 
   const login = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/users/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3000/api/users/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email,
@@ -34,16 +34,15 @@ const Login = () => {
       // Check if the response is successful (status code 200)
       if (response.ok) {
         // If successful, set the token received in localStorage
-        localStorage.setItem('token', result.token); 
+        localStorage.setItem("token", result.token);
 
         // Clear input fields
-        setEmail('');
-        setPassword('');
+        setEmail("");
+        setPassword("");
 
-        setMessage('Successfully logged in!');
+        setMessage("Successfully logged in!");
 
-        window.location.reload();
-      window.location.href = '/restaurants';
+        window.location.href = "/restaurants";
 
         // Redirect to the RestaurantList component upon successful login
       } else {
@@ -61,34 +60,36 @@ const Login = () => {
   };
 
   return (
-    <div className='login'>
+    <div className="login">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <div className='cred'>
-          <label htmlFor='email'>Email:</label>
+        <div className="cred">
+          <label htmlFor="email">Email:</label>
           <input
-            type='email'
-            id='email'
+            type="email"
+            id="email"
             value={email}
             onChange={handleEmailChange}
             required
           />
         </div>
-        <div className='cred'>
-          <label htmlFor='password'>Password:</label>
+        <div className="cred">
+          <label htmlFor="password">Password:</label>
           <input
-            type='password'
-            id='password'
+            type="password"
+            id="password"
             value={password}
             onChange={handlePasswordChange}
             required
           />
         </div>
-        <button type='submit'>Login</button>
+        <button type="submit">Login</button>
       </form>
       <p>{message}</p>
       <p>
-        Don't have an account?<br /><Link to="/signup">Sign up today!</Link>
+        Don't have an account?
+        <br />
+        <Link to="/signup">Sign up today!</Link>
       </p>
     </div>
   );
