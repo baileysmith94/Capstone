@@ -2,18 +2,13 @@ import { useState } from "react";
 
 export default function SignUp() {
   const [token, setToken] = useState(null);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState(""); // Use a single 'name' field
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
-  };
-
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
 
   const handleEmailChange = (e) => {
@@ -32,20 +27,22 @@ export default function SignUp() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          firstName,
-          lastName,
+          name, // Use the 'name' field
           email,
           password,
         }),
       });
       const result = await response.json();
       setMessage(result.message);
-      setToken(result.token);
+
       if (!response.ok) {
         throw result;
       }
-      setFirstName("");
-      setLastName("");
+
+      localStorage.setItem('token', result.token);
+
+      setToken(result.token);
+      setName(""); // Clear the 'name' field
       setEmail("");
       setPassword("");
     } catch (err) {
@@ -63,22 +60,12 @@ export default function SignUp() {
       <form onSubmit={handleSubmit}>
         <h2>Sign Up!</h2>
         <div className="cred">
-          <label htmlFor="firstName">First Name:</label>
+          <label htmlFor="name">Name:</label>
           <input
-            type="firstName"
-            id="firstName"
-            value={firstName}
-            onChange={handleFirstNameChange}
-            required
-          />
-        </div>
-        <div className="cred">
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            type="lastName"
-            id="lastName"
-            value={lastName}
-            onChange={handleLastNameChange}
+            type="text"
+            id="name"
+            value={name}
+            onChange={handleNameChange}
             required
           />
         </div>

@@ -1,19 +1,25 @@
 import React from 'react';
 
 function Footer() {
+  const isLoggedIn = localStorage.token; // Check if the user is logged in
+
+  const logout = () => {
+    // Clear the token from localStorage
+    localStorage.removeItem('token');
+    window.location = '/restaurants';
+  };
+
   return (
-     <>
-     {/* this currently isn't working right, but the footer appears */}
-    {localStorage.token ? (
-        <div className='login-status'>
-            <p>You are logged in</p>
+    <div className='login-status'>
+      {isLoggedIn ? (
+        <div>
+          <p>You are logged in</p>
+          <button onClick={logout}>Log Out?</button>
         </div>
-    ) : (
-        <div className='login-status'>
-            <p>Please log in to make a review</p>
-        </div>
-    )}
-    </>
+      ) : (
+        <p>Please sign in to leave a review</p>
+      )}
+    </div>
   );
 }
 
