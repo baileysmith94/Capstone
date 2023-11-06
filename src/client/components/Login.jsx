@@ -6,6 +6,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  //usenav would not work for me so i used window.reload and made the end point /restuarants after you log in. we can change when there is a profile tab!
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -31,22 +32,17 @@ const Login = () => {
 
       const result = await response.json();
 
-      // Check if the response is successful (status code 200)
       if (response.ok) {
-        // If successful, set the token received in localStorage
         localStorage.setItem("token", result.token);
 
-        // Clear input fields
+        // Clear input fields!!!
         setEmail("");
         setPassword("");
 
         setMessage("Successfully logged in!");
-
+        // we can redirect anwhere, i just put /restuarants because it seemed most appropriate for what we have
         window.location.href = "/restaurants";
-
-        // Redirect to the RestaurantList component upon successful login
       } else {
-        // If the response is not successful, set an error message
         setMessage(result.message);
       }
     } catch (err) {
