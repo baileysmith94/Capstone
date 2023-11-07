@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import DropDownPicker from 'react-native-dropdown-picker';
+// npm install react-native-dropdown-picker
 
 export default function CreateReviewForm(token, {reviews, setReviews}) {
     const [user_id, setUser_id] = useState("");
