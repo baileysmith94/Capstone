@@ -20,7 +20,7 @@ function NavBar() {
             <>
               <li>
                 {/* these routes go away when you are logged in */}
-                <Link to="/">Login</Link>
+                <Link to="/login">Login</Link>
               </li>
               <li>
                 <Link to="/signup">SignUp</Link>
