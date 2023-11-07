@@ -19,7 +19,7 @@ function RestaurantList() {
       console.error("Error:", error);
     }
   }
-
+  //This is fixed to show reviews now. eventually, we will need to create a ReviewList component 
   async function fetchReviews(restaurantId) {
     try {
       const response = await fetch(`/api/restaurants/${restaurantId}/reviews`);
@@ -70,8 +70,8 @@ function RestaurantList() {
             />
             <button onClick={() => {
               if (selectedRestaurant && selectedRestaurant.id === restaurant.id) {
-                setSelectedRestaurant(null); // Toggle to hide reviews if the button is clicked again
-                setReviews([]); // Clear the reviews
+                setSelectedRestaurant(null); // hide reviews if the button is clicked again
+                setReviews([]); // clearing reviews
               } else {
                 setSelectedRestaurant(restaurant);
                 fetchReviews(restaurant.id);
