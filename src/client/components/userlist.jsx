@@ -1,35 +1,44 @@
 import React, { useEffect, useState } from "react";
 
-export default function UserList() {
+function UserList() {
   const [users, setUsers] = useState();
+  console.log(users);
 
-  useEffect(() => {
-    async function FetchUserData() {
-      try {
-        const response = await fetch(`/api/users`);
-        if (response.ok) {
-          const result = await response.json();
-          setUsers(result.users);
-        } else {
-          console.error("Failed to fetch");
-        }
-      } catch (err) {
-        console.error(err);
+  async function FetchUserData() {
+    try {
+      const response = await fetch("http://localhost:3000/api/users");
+      console.log(response);
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+        setUsers(result.users);
+      } else {
+        console.error("Failed to fetch");
       }
+    } catch (err) {
+      console.error(err);
     }
-
+  }
+  useEffect(() => {
     FetchUserData();
   }, []);
-  console.log(users);
+
+  // console.log(users);
   return (
-    <>
-      <div className="user-list">
-        {users.map((users) => (
-          <ul key={users.id}>
-            <li>Rating: {users.name}</li>
-          </ul>
-        ))}
-      </div>
-    </>
+    users && (
+      <>
+        <div className="user-list">
+          {users.map((users) => (
+            <ul key={users.id}>
+              <li>
+                Name: {users.name} Email: {users.email}
+              </li>
+            </ul>
+          ))}
+        </div>
+      </>
+    )
   );
 }
+
+export default UserList;
