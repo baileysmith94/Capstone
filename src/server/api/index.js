@@ -4,7 +4,7 @@ const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 const volleyball = require('volleyball')
-const { getAllRestaurants, getRestaurantById, getUserById, getAllReviews, getReviewById, getReviewsByRestaurantId } = require('../db');
+const { getAllRestaurants, getRestaurantById, getUserById, getAllReviews, getReviewById, getReviewsByRestaurantId, getAllUsers } = require('../db');
 apiRouter.use(volleyball)
 
 // TO BE COMPLETED - set `req.user` if possible, using token sent in the request header
@@ -63,6 +63,15 @@ apiRouter.use((err, req, res, next) => {
     try {
       const restaurants = await getAllRestaurants();
       res.send({ restaurants });
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+  apiRouter.get('/users', async (req, res, next) => {
+    try {
+      const users = await getAllUsers();
+      res.send({ users });
     } catch (error) {
       next(error);
     }
