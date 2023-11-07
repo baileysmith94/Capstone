@@ -146,7 +146,8 @@ const reviews = [
 
 const dropTables = async () => {
   try {
-    await db.query(`DROP TABLE IF EXISTS reviews;
+    await db.query(`DROP TABLE IF EXISTS comments;
+    DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS restaurants;
     DROP TABLE IF EXISTS users;`);
   } catch (err) {
@@ -190,9 +191,15 @@ const createTables = async () => {
             restaurant_id INT REFERENCES restaurants(id),
             rating INT NOT NULL,
             review_text TEXT,
-            image_url VARCHAR(255),
-            comment VARCHAR(255)
-        );`);
+            image_url VARCHAR(255)
+        );
+        CREATE TABLE comments(
+          id SERIAL PRIMARY KEY,
+          user_id INT REFERENCES users(id),
+          restaurant_id INT REFERENCES restaurants(id),
+          comment VARCHAR(255)
+        );
+      `);
   } catch (err) {
     throw err;
   }
