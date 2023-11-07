@@ -12,7 +12,7 @@ function Footer() {
   return (
     <div className='login-status'>
       {isLoggedIn ? (
-        <div>
+        <div className='log-out-button'>
           <p>You are logged in</p>
           <button onClick={logout}>Log Out?</button>
         </div>

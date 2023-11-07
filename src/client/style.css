@@ -214,3 +214,8 @@ button:hover {
   margin: 0; /* Remove default margin for the paragraph */
 }
 
+.log-out-button {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
