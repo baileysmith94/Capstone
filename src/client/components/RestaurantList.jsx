@@ -83,17 +83,19 @@ function RestaurantList() {
               <div>
                 <h4>Reviews for {restaurant.name}</h4>
                 {reviews.length > 0 ? (
-                  <ul>
-                    {reviews.map((review) => (
-                      <li key={review.id}>
-                        <p>Rating: {review.rating}</p>
-                        <p>{review.review_text}</p>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>No reviews available for this restaurant.</p>
-                )}
+  <ul>
+    {reviews.map((review) => (
+      <li key={review.id}>
+        <p>Author: {review.user_name}</p>
+        <p>Rating: {review.rating}</p>
+        <p>{review.review_text}</p>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No reviews available for this restaurant.</p>
+)}
+
               </div>
             )}
           </div>
