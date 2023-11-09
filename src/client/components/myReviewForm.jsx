@@ -109,7 +109,7 @@ export default function CreateReviewForm(token, {reviews, setReviews}) {
                   ))}
                 </ul>
               ) : (
-                // <p>Click here to see your other reviews</p>
+                <p>Click here to see your other reviews</p>
                 
 
               )}
