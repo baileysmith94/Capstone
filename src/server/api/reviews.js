@@ -10,7 +10,7 @@ const {
 const { requireUser, requiredNotSent } = require('./utils')
 
 
-reviewsRouter.get('/reviews', async( req, res, next) => {
+reviewsRouter.get('/', async( req, res, next) => {
     try {
         const reviews = await getAllReviews();
 
