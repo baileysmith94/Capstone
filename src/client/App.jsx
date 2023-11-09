@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import "./style.css";
 import UserList from "./components/userlist";
+import ProfilePage from "./components/ProfilePage";
 
 //TO SEE IF A TOKEN IS ACTIVLY BEING USED
 const token = localStorage.getItem("token");
@@ -32,7 +33,7 @@ function App() {
         <Route path="/restaurants/${restaurantId}/reviews" element={ReviewCard} />
         <Route path="/users" element={<UserList />} />
         {/* <Route path = '/' element={<ReviewList />} /> */}
-        {/* <Route path = '/' element={<Profile />} /> */}
+        <Route path = '/profile' element={<ProfilePage />} />
         <Route path="/" element={<Footer />} />
       </Routes>
       <Footer />

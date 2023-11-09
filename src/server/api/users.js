@@ -91,7 +91,7 @@ usersRouter.post('/login', async(req, res, next) => {
 //     }
 //   });
 
-  usersRouter.get('/users/profile', async (req, res, next) => {
+  usersRouter.get('/profile', async (req, res, next) => {
     const prefix = "Bearer ";
     const auth = req.header("Authorization");
   
