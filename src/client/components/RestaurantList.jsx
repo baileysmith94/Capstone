@@ -21,20 +21,20 @@ function RestaurantList() {
     }
   }
   //This is fixed to show reviews now. eventually, we will need to create a ReviewList component 
-  async function fetchReviews(restaurantId) {
-    try {
-      const response = await fetch(`/api/restaurants/${restaurantId}/reviews`);
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Received data:', data);
-        setReviews(data.reviews);
-      } else {
-        console.error('Failed to fetch reviews. Status:', response.status);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
+  // async function fetchReviews(restaurantId) {
+  //   try {
+  //     const response = await fetch(`/api/restaurants/${restaurantId}/reviews`);
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log('Received data:', data);
+  //       setReviews(data.reviews);
+  //     } else {
+  //       console.error('Failed to fetch reviews. Status:', response.status);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // }
 
   useEffect(() => {
     fetchRestaurants();
@@ -69,7 +69,8 @@ function RestaurantList() {
               alt={restaurant.name}
               className="restaurant-image"
             />
-            <button onClick={() => {
+            <button onClick={ReviewCard}>{selectedRestaurant && selectedRestaurant.id === restaurant.id ? "Hide Reviews" : "Reviews"}</button>
+            {/* <button onClick={() => {
               if (selectedRestaurant && selectedRestaurant.id === restaurant.id) {
                 setSelectedRestaurant(null); // hide reviews if the button is clicked again
                 setReviews([]); // clearing reviews
@@ -98,7 +99,7 @@ function RestaurantList() {
 )}
 
               </div>
-            )}
+            )} */}
           </div>
         ))}
       </div>
