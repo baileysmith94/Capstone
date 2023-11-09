@@ -40,7 +40,7 @@ restaurantsRouter.get('/restaurants/:id', async (req, res, next) => {
     }
 });
 
-restaurantsRouter.get('/restaurants/:restaurantId/reviews', async (req, res, next) => {
+restaurantsRouter.get('/:restaurantId/reviews', async (req, res, next) => {
     try {
       const restaurantId = req.params.restaurantId;
       const reviews = await getReviewsByRestaurantId(restaurantId);
