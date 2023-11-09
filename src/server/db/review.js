@@ -41,8 +41,10 @@ const getReviewById = async (reviewId) => {
 const getReviewsByRestaurantId = async (restaurantId) => {
   try {
     const { rows } = await db.query(`
-      SELECT * FROM reviews
-      WHERE restaurant_id = $1;
+      SELECT reviews.*, users.name as user_name
+      FROM reviews
+      JOIN users ON reviews.user_id = users.id
+      WHERE reviews.restaurant_id = $1;
     `, [restaurantId]);
 
     return rows;
@@ -50,6 +52,7 @@ const getReviewsByRestaurantId = async (restaurantId) => {
     throw error;
   }
 }
+
 
 
 const updateReview = async (reviewId) => {
