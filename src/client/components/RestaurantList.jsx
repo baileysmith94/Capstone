@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReviewCard from "./ReviewCard";
 
 function RestaurantList() {
   const [restaurants, setRestaurants] = useState([]);
