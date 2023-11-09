@@ -1,4 +1,5 @@
 const db = require('./client'); 
+const { getRestaurantById } = require('./restaurant');
 
 const getAllReviews = async () => {
   try {
@@ -52,8 +53,6 @@ const getReviewsByRestaurantId = async (restaurantId) => {
     throw error;
   }
 }
-
-
 
 const updateReview = async (reviewId) => {
   const {rating, review_text, type, image_url} = fields; 
