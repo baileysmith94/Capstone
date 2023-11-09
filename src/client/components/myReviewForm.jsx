@@ -41,10 +41,8 @@ export default function CreateReviewForm(token, {reviews, setReviews}) {
         if(result.success) {
 
           const newReviewList = [...reviews, result.data.newReview];
-          setReviews(newReviewList);
-          // how to set user id
-          // need to grab user id from state 
-          // setUser_id(${user_id});
+          setReviews(newReviewList)
+          setUser_id(user_id);
           setRating("");
           setReview_text("");
           setImage_url(null);
@@ -111,7 +109,7 @@ export default function CreateReviewForm(token, {reviews, setReviews}) {
                   ))}
                 </ul>
               ) : (
-                <p>Click here to see your other reviews</p>
+                // <p>Click here to see your other reviews</p>
                 
 
               )}

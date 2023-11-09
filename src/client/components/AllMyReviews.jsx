@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CreateReviewForm from "./myReviewForm";
 // import { searchParam } from "react-router-dom/dist/dom";
 
-export default function myReviews ({id}) {
+export default function myReviews () {
     const [reviews, setReviews] = useState([]);
     const [error, setError] = useState(null);
     const [editError, setEditError] = useState(null);
@@ -75,7 +75,7 @@ export default function myReviews ({id}) {
                     <h2 key={review.id}>{restaurant.name}</h2>
                     <h3>Rating:{restaurant.rating}</h3>
                     <p className="review_text">{review_text}</p>
-                    {/* image url */}
+                    <img src="{image_url}" alt="Storefront" />
                     {review.user_id === token &&(
                         <button onClick={() => handleEditReview(review._id)}>Edit Review</button>
                     )}
