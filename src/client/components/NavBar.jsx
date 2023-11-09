@@ -12,6 +12,9 @@ function NavBar() {
 
             <Link to="/restaurants">Restaurants</Link> 
           </li>
+          <li>
+            <Link to="/users/profile">profile</Link>
+          </li>
           {token ? (
             <>
               {/* OTHER ROUTES-LIKE PROFILE-WOULD GO HERE :) */}
