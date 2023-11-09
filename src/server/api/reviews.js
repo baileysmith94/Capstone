@@ -62,7 +62,7 @@ reviewsRouter.get('/:id', async( req, res, next) => {
     }
 });
 
-reviewsRouter.patch('/:review_id', requireUser,requiredNotSent({requiredParams: ["user_id", "restaurant_id"] || "isAdmin"}), async (req, res, next) => {
+reviewsRouter.patch('/:review_id', requireUser, requiredNotSent({requiredParams: ["user_id", "restaurant_id"] || "isAdmin", paramsFound: true}), async (req, res, next) => {
     const { user_id, restaurant_id } = req.params;
     const { rating, review_text, type, image_url, comment } = req.body;
   

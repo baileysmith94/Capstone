@@ -10,17 +10,17 @@ function requireUser(req, res, next) {
 }
 
 // takes required parameters as an array, returns a middleware function that sends back a message if they're not present
-const requiredNotSent = ({ requiredParams, paramsFound }) => {
+const requiredNotSent = ({ requiredParams, paramsFound = false }) => {
     return (req, res, next) => {
       // for operations that need at least one param. Not all required.
-      if(requiredParams) {
-        let paramsFound = 0;
+      if(paramsFound) {
+        let paramsGiven = 0;
         for(let param of requiredParams) {
           if(req.body[param] !== undefined) {
-            paramsFound++;
+            paramsGiven++;
           }
         }
-        if(!paramsFound) {
+        if(!paramsGiven) {
           next({
             name: 'MissingParams',
             message: `Must provide at least one of these in body: ${requiredParams.join(', ')}`
