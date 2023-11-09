@@ -9,12 +9,13 @@ function NavBar() {
       <nav>
         <ul>
           <li>
-
-            <Link to="/restaurants">Restaurants</Link> 
+            <Link to="/restaurants">Restaurants</Link>
           </li>
-          <li>
-            <Link to="/profile">profile</Link>
-          </li>
+          {token && (
+            <li>
+              <Link to="/profile">Profile</Link>
+            </li>
+          )}
           {token ? (
             <>
               {/* OTHER ROUTES-LIKE PROFILE-WOULD GO HERE :) */}
@@ -22,7 +23,6 @@ function NavBar() {
           ) : (
             <>
               <li>
-                {/* these routes go away when you are logged in */}
                 <Link to="/login">Login</Link>
               </li>
               <li>
