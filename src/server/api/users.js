@@ -41,6 +41,18 @@ usersRouter.get('/', async( req, res, next) => {
     }
 });
 
+usersRouter.get('/:id', async( req, res, next) => {
+    try {
+        const user = await getUserById();
+
+        res.send({
+            user
+        });
+    } catch (error) {
+        next(error)
+    }
+});
+
 usersRouter.post('/login', async(req, res, next) => {
     const { email, password } = req.body;
     if(!email || !password) {
@@ -75,6 +87,8 @@ usersRouter.post('/login', async(req, res, next) => {
         next(err);
     }
 });
+
+
 
 // usersRouter.get("/users/profile", async (req, res) => {
 //     try {

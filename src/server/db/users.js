@@ -66,7 +66,7 @@ const getUserById = async () => {
             `
             SELECT id, name, email, password, is_admin
             FROM users
-            WHERE id=${id}
+            WHERE id= $1
             `
         );
         if (!user) {

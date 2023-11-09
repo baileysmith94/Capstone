@@ -86,6 +86,7 @@ function RestaurantList() {
                   <ul>
                     {reviews.map((review) => (
                       <li key={review.id}>
+                        <p>Author: {review.user_name}</p>
                         <p>Rating: {review.rating}</p>
                         <p>{review.review_text}</p>
                       </li>
