@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ReviewCard from "./ReviewCard";
 
 function RestaurantList() {
   const [restaurants, setRestaurants] = useState([]);
@@ -21,20 +20,20 @@ function RestaurantList() {
     }
   }
   //This is fixed to show reviews now. eventually, we will need to create a ReviewList component 
-  // async function fetchReviews(restaurantId) {
-  //   try {
-  //     const response = await fetch(`/api/restaurants/${restaurantId}/reviews`);
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log('Received data:', data);
-  //       setReviews(data.reviews);
-  //     } else {
-  //       console.error('Failed to fetch reviews. Status:', response.status);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // }
+  async function fetchReviews(restaurantId) {
+    try {
+      const response = await fetch(`/api/restaurants/${restaurantId}/reviews`);
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Received data:', data);
+        setReviews(data.reviews);
+      } else {
+        console.error('Failed to fetch reviews. Status:', response.status);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
   useEffect(() => {
     fetchRestaurants();
@@ -69,8 +68,7 @@ function RestaurantList() {
               alt={restaurant.name}
               className="restaurant-image"
             />
-            <button onClick={ReviewCard}>{selectedRestaurant && selectedRestaurant.id === restaurant.id ? "Hide Reviews" : "Reviews"}</button>
-            {/* <button onClick={() => {
+            <button onClick={() => {
               if (selectedRestaurant && selectedRestaurant.id === restaurant.id) {
                 setSelectedRestaurant(null); // hide reviews if the button is clicked again
                 setReviews([]); // clearing reviews
@@ -85,21 +83,19 @@ function RestaurantList() {
               <div>
                 <h4>Reviews for {restaurant.name}</h4>
                 {reviews.length > 0 ? (
-  <ul>
-    {reviews.map((review) => (
-      <li key={review.id}>
-        <p>Author: {review.user_name}</p>
-        <p>Rating: {review.rating}</p>
-        <p>{review.review_text}</p>
-      </li>
-    ))}
-  </ul>
-) : (
-  <p>No reviews available for this restaurant.</p>
-)}
-
+                  <ul>
+                    {reviews.map((review) => (
+                      <li key={review.id}>
+                        <p>Rating: {review.rating}</p>
+                        <p>{review.review_text}</p>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No reviews available for this restaurant.</p>
+                )}
               </div>
-            )} */}
+            )}
           </div>
         ))}
       </div>
