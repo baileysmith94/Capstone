@@ -7,6 +7,7 @@ const {
     updateReview, 
     destroyReview
 } = require('../db');
+const { requireUser, requiredNotSent } = require('./utils')
 
 
 reviewsRouter.get('/reviews', async( req, res, next) => {
@@ -21,7 +22,7 @@ reviewsRouter.get('/reviews', async( req, res, next) => {
     }
 });
 
-reviewsRouter.post('/create_review', requireUser, async (req, res, next) => {
+reviewsRouter.post('/create_review', requireUser, requiredNotSent({requiredParams: ["user_id", "restaurant_id", "rating", "review_text", `type = ""`, "image_url"]}), async (req, res, next) => {
     const {user_id, restaurant_id, rating, review_text, type = "", image_url } = req.body;
   
     const reviewData = {};
@@ -61,7 +62,7 @@ reviewsRouter.get('/:id', async( req, res, next) => {
     }
 });
 
-reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
+reviewsRouter.patch('/:review_id', requireUser,requiredNotSent({requiredParams: ["user_id", "restaurant_id"] || "isAdmin"}), async (req, res, next) => {
     const { user_id, restaurant_id } = req.params;
     const { rating, review_text, type, image_url, comment } = req.body;
   
