@@ -55,65 +55,14 @@ apiRouter.use((req, res, next) => {
 const usersRouter = require('./users');
 apiRouter.use('/users', usersRouter);
 
+const restaurantsRouter = require('./restaurants');
+apiRouter.use('/restaurants', restaurantsRouter)
+
+const reviewsRouter = require('./reviews');
+apiRouter.use('/reviews', reviewsRouter);
+
 apiRouter.use((err, req, res, next) => {
     res.status(500).send(err)
-  })
-
-  apiRouter.get('/restaurants', async (req, res, next) => {
-    try {
-      const restaurants = await getAllRestaurants();
-      res.send({ restaurants });
-    } catch (error) {
-      next(error);
-    }
-  });
-  
-  apiRouter.get('/users', async (req, res, next) => {
-    try {
-      const users = await getAllUsers();
-      res.send({ users });
-    } catch (error) {
-      next(error);
-    }
-  });
-  
-  apiRouter.get('/restaurants/:id', async (req, res, next) => {
-    try {
-      const restaurant = await getRestaurantById(req.params.id);
-      res.send({ restaurant });
-    } catch (error) {
-      next(error);
-    }
-  });
-
-  apiRouter.get('/restaurants/:restaurantId/reviews', async (req, res, next) => {
-    try {
-      const restaurantId = req.params.restaurantId;
-      const reviews = await getReviewsByRestaurantId(restaurantId);
-      res.json({ reviews });
-    } catch (error) {
-      next(error);
-    }
-  });
-  
-
-  apiRouter.get('/reviews', async (req, res, next) => {
-    try {
-        const reviews = await getAllReviews();
-        res.send({ reviews });
-    } catch (error) {
-        next(error);
-    }
-});
-
-apiRouter.get('/reviews/:id', async (req, res, next) => {
-    try {
-        const review = await getReviewById(req.params.id);
-        res.send({ review });
-    } catch (error) {
-        next(error);
-    }
-});
-
+})                      
 
 module.exports = apiRouter;
