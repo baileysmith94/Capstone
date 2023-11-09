@@ -1,38 +1,57 @@
 import React, { useState, useEffect } from 'react';
 
-function UserProfile() {
-  const [user, setUser] = useState(null);
+function ProfilePage() {
+  const [token, setToken] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    // Make an API request to fetch the user's data
-    fetch('/api/user/profile') // Replace with your actual API endpoint
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setUser(data); // Assuming the response contains user data
-      })
-      .catch((error) => {
-        console.error('Error fetching user data:', error);
-      });
+    //get the token from local
+    const storedToken = localStorage.getItem("token");
+
+    if (storedToken) {
+
+      setToken(storedToken);
+    }
   }, []);
 
+  useEffect(() => {
+    
+    if (token) {
+      fetchUserData(token);
+    }
+  }, [token]);
+
+  const fetchUserData = async (token) => {
+    try {
+      const response = await fetch('/api/users/profile', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUserData(data);
+      } else {
+        console.error('Error fetching user data:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error.message);
+    }
+  };
+
   return (
-    <div>
-      {user ? (
+    <div className='profile-page'>
+      <h2>User Profile</h2>
+      {userData && (
         <div>
-          <h1>User Profile</h1>
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
+          <p>Name: {userData.user.name}</p>
+          <p>Email: {userData.user.email}</p>
+          {/* Other user data */}
         </div>
-      ) : (
-        <p>Loading...</p>
       )}
     </div>
   );
 }
 
-export default UserProfile;
+export default ProfilePage;
