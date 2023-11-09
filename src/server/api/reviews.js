@@ -23,7 +23,8 @@ reviewsRouter.get('/reviews', async( req, res, next) => {
 });
 
 reviewsRouter.post('/create_review', requireUser, requiredNotSent({requiredParams: ["user_id", "restaurant_id", "rating", "review_text", `type = ""`, "image_url"]}), async (req, res, next) => {
-    const {user_id, restaurant_id, rating, review_text, type = "", image_url } = req.body;
+    // const {user_id, restaurant_id, rating, review_text, type = "", image_url } = req.body;
+    const {user_id, restaurant_id, rating, review_text } = req.body;
   
     const reviewData = {};
   
@@ -32,8 +33,8 @@ reviewsRouter.post('/create_review', requireUser, requiredNotSent({requiredParam
       reviewData.restaurant_id = restaurant_id;
       reviewData.rating = rating;
       reviewData.review_text = review_text;
-      reviewData.type = type;
-      reviewData.image_url = image_url;
+      // reviewData.type = type;
+      // reviewData.image_url = image_url;
   
       const review = await createReview(reviewData);
   
@@ -63,7 +64,7 @@ reviewsRouter.get('/:id', async( req, res, next) => {
 });
 
 reviewsRouter.patch('/:review_id', requireUser, requiredNotSent({requiredParams: ["user_id", "restaurant_id"] || "isAdmin", paramsFound: true}), async (req, res, next) => {
-    const { user_id, restaurant_id } = req.params;
+    const { user_id, restaurant_id,is_admin} = req.params;
     const { rating, review_text, type, image_url, comment } = req.body;
   
     const updateFields = {};
@@ -76,11 +77,11 @@ reviewsRouter.patch('/:review_id', requireUser, requiredNotSent({requiredParams:
       updateFields.review_text = review_text;
     }
   
-    if (type) {
+    if (type && is_admin) {
       updateFields.type = type;
     }
 
-    if (image_url) {
+    if (image_url && is_admin) {
       updateFields.image_url = image_url;
     }
 
@@ -107,7 +108,7 @@ reviewsRouter.patch('/:review_id', requireUser, requiredNotSent({requiredParams:
   
   reviewsRouter.delete('/:postId', requireUser, async (req, res, next) => {
     try{
-      const {reviewId, user_id} = req.params;
+      const {reviewId, user_id, is_admin} = req.params;
       const reviewToUpdate = await getReviewById(reviewId);
       if(!reviewToUpdate) {
         next({
@@ -119,7 +120,7 @@ reviewsRouter.patch('/:review_id', requireUser, requiredNotSent({requiredParams:
         res.status(403); 
         next({
           name: "WrongUserError",
-          message: "You must be the same user who created this routine to perform this action"
+          message: "You must be the same user who created this review, or an admin, to perform this action"
         });
       } else {
         const deletedReview = await destroyReview(reviewId)
