@@ -41,15 +41,20 @@ usersRouter.get('/', async( req, res, next) => {
     }
 });
 
-usersRouter.get('/:id', async( req, res, next) => {
+usersRouter.get('/:id', async (req, res, next) => {
     try {
-        const user = await getUserById();
+        const userId = req.params.id;
+        const user = await getUserById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
 
         res.send({
             user
         });
     } catch (error) {
-        next(error)
+        next(error);
     }
 });
 
