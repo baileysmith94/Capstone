@@ -60,27 +60,27 @@ const getAllUsers = async () => {
     }
 }
 
-const getUserById = async () => {
-    try{
-        const { rows: [user] } = await db.query(
-            `
-            SELECT id, name, email, password, is_admin
-            FROM users
-            WHERE id= $1
-            `
-        );
-        if (!user) {
-            throw {
-                name:"UserNotFoundError",
-                message: "User with that id does not exist"
-            }
-        }
-        user.reviews = await getReviewById(id);
-        return user;
+const getUserById = async (userId) => {
+    try {
+      const { rows: [user] } = await db.query( //error is here
+        `
+        SELECT *
+        FROM users
+        WHERE id = $1;
+        `,
+        [userId]
+      );
+  
+      if (!user) return null;
+      user.reviews = await getReviewById(userId);
+      delete user.password;
+      return user;
     } catch (error) {
-        throw error;
+      throw error;
     }
-}
+  };
+  
+
 
 
 module.exports = {

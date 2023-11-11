@@ -80,22 +80,28 @@ function RestaurantList() {
               {selectedRestaurant && selectedRestaurant.id === restaurant.id ? "Hide Reviews" : "Reviews"}
             </button>
             {selectedRestaurant && selectedRestaurant.id === restaurant.id && (
-              <div>
-                <h4>Reviews for {restaurant.name}</h4>
-                {reviews.length > 0 ? (
-                  <ul>
-                    {reviews.map((review) => (
-                      <li key={review.id}>
-                        <p>Author: {review.user_name}</p>
-                        <p>Rating: {review.rating}</p>
-                        <p>{review.review_text}</p>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>No reviews available for this restaurant.</p>
-                )}
-              </div>
+              <div className="reviews mt-3">
+              <h4 className="mb-2">Reviews for {restaurant.name}</h4>
+              {reviews.length > 0 ? (
+                <ul className="list-group reviews">
+                  {reviews.map((review) => (
+                    <li key={review.id} className="list-group-item">
+                      <div className="mb-1">
+                        <strong>Author:</strong> {review.user_name}
+                      </div>
+                      <div className="mb-1">
+                        <strong>Rating:</strong> {review.rating}
+                      </div>
+                      <div>{review.review_text}</div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No reviews available for this restaurant.</p>
+              )}
+            </div>
+            
+            
             )}
           </div>
         ))}
