@@ -13,7 +13,7 @@ function NavBar() {
           </li>
           {token && (
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link to="/me">Profile</Link>
             </li>
           )}
           {token ? (

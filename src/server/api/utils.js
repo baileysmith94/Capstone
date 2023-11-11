@@ -26,7 +26,7 @@ const requiredNotSent = ({ requiredParams, paramsFound = false }) => {
             message: `Must provide at least one of these in body: ${requiredParams.join(', ')}`
           })
         } else {
-          next();
+          
         }
       } else {
         // figure out which ones are not defined, and return them

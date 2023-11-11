@@ -219,3 +219,20 @@ button:hover {
   justify-content: center;
   flex-direction: column;
 }
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15%;
+}
+
+.reviews {
+  text-align: left;
+}
+
+.profile-page {
+  margin-top: 7%;
+  margin-left: 15px;
+}
