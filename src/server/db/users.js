@@ -60,9 +60,26 @@ const getAllUsers = async () => {
     }
 }
 
+const getReviewsByUserId = async (userId) => {
+    try {
+      const { rows } = await db.query(
+        `
+        SELECT *
+        FROM reviews
+        WHERE user_id = $1;
+        `,
+        [userId]
+      );
+  
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  };
+
 const getUserById = async (userId) => {
     try {
-      const { rows: [user] } = await db.query( //error is here
+      const { rows: [user] } = await db.query( 
         `
         SELECT *
         FROM users
@@ -72,7 +89,7 @@ const getUserById = async (userId) => {
       );
   
       if (!user) return null;
-      user.reviews = await getReviewById(userId);
+      user.reviews = await getReviewsByUserId(userId);
       delete user.password;
       return user;
     } catch (error) {
@@ -87,6 +104,7 @@ module.exports = {
     createUser,
     getUser,
     getUserByEmail,
+    getReviewsByUserId,
     getAllUsers, 
     getUserById
 };

@@ -54,6 +54,21 @@ const getReviewsByRestaurantId = async (restaurantId) => {
   }
 }
 
+//DELETE MAYbe
+const getReviewsByUserId = async (userId) => {
+  try {
+    const { rows } = await db.query(`
+      SELECT * 
+      FROM reviews
+      WHERE user_id = $1;
+    `, [userId]);
+
+    return rows;
+  } catch (err) {
+    throw err;
+  }
+}
+
 const updateReview = async (reviewId) => {
   const {rating, review_text, type, image_url} = fields; 
     delete fields.rating;
@@ -117,6 +132,7 @@ module.exports = {
   createReview,
   getReviewById,
   getReviewsByRestaurantId,
+  getReviewsByUserId,
   updateReview, 
   destroyReview
 };

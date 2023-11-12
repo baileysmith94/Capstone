@@ -2,25 +2,34 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap styles
 
 const ProfilePage = () => {
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState({});
+  const [userReviews, setUserReviews] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('token');
 
-        const response = await fetch('http://localhost:3000/api/users/me', {
+        // Fetch user data
+        const userDataResponse = await fetch('http://localhost:3000/api/users/me', {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         });
 
-        if (response.ok) {
-          const data = await response.json();
-          setUserData(data);
+        if (userDataResponse.ok) {
+          const userData = await userDataResponse.json();
+          setUserData(userData);
+
+          // Check if userData.reviews is an array before setting userReviews
+          const reviewsResponse = Array.isArray(userData.reviews)
+            ? userData.reviews
+            : [];
+
+          setUserReviews(reviewsResponse);
         } else {
-          // Handle error
+          // Handle error fetching user data
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -31,7 +40,7 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className='profile-page container mt-5'>
+    <div className='profile-page container'>
       <div className='card'>
         <div className='card-body'>
           <h1 className='card-title mb-4'>Welcome, {userData?.name}!</h1>
@@ -53,9 +62,30 @@ const ProfilePage = () => {
       <div className='card mt-4'>
         <div className='card-body'>
           <h5 className='card-title mb-3'>Reviews</h5>
-          <p className='card-text'>
-            The developers are working on displaying your reviews. Please be patient, fool!
-          </p>
+          {userReviews.length > 0 ? (
+            userReviews.map((review) => (
+              <div key={review.id}>
+                <p className='card-text'>
+                  <strong>Review:</strong> {review.review_text}
+                </p>
+                <p className='card-text'>
+                  <strong>Rating:</strong> {review.rating}
+                </p>
+                {review.restaurant_id && (
+                  <p className='card-text'>
+                    <strong>Restaurant Name:</strong> {review.restaurant_name}
+                  </p>
+                )}
+                {/* Add other review data fields as needed */}
+              </div>
+            ))
+          ) : (
+            <p className='card-text'>
+              {userReviews === null
+                ? 'Error fetching reviews. Please try again later.'
+                : 'No reviews yet.'}
+            </p>
+          )}
         </div>
       </div>
     </div>
