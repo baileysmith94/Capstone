@@ -13,7 +13,7 @@ body {
 }
 
 /* Navigation bar styles */
-.navbar {
+.nav-bar {
   position: fixed;
   top: 0;
   left: 0;
@@ -27,18 +27,18 @@ body {
 }
 
 
-.navbar a {
+.nav-bar a {
   color: #fff;
   text-decoration: none;
   margin: 0 20px;
   display: inline-block;
 }
 
-.navbar li {
+.nav-bar li {
   display: inline-block;
 }
 
-.navbar a:hover {
+.nav-bar a:hover {
   text-decoration: underline;
 }
 
@@ -198,8 +198,8 @@ button:hover {
 .login-status {
   position: fixed;
   bottom: 0;
-  background-color: #b50000; /* Red background color */
-  color: #fff; /* White text color */
+  background-color: #b50000; 
+  color: #fff;
   padding: 10px;
   border-radius: 5px;
   text-align: start;
@@ -211,7 +211,7 @@ button:hover {
 }
 
 .login-status p {
-  margin: 0; /* Remove default margin for the paragraph */
+  margin: 0; 
 }
 
 .log-out-button {
@@ -233,6 +233,16 @@ button:hover {
 }
 
 .profile-page {
-  margin-top: 7%;
+  margin-top: 12%;
   margin-left: 15px;
+}
+
+
+
+
+/* i think media queries go below everything */
+@media screen and (max-width: 768px) {
+  .profile-page {
+    margin-top: 20%; /* Adjust the width for smaller screens */
+  }
 }
