@@ -1,6 +1,7 @@
 const db = require('./client')
 const bcrypt = require('bcrypt');
 const { getReviewById } = require('./review');
+const {getRestaurantById} = require ('./restaurant')
 const SALT_COUNT = 10;
 
 const createUser = async({ name, email, password }) => {
@@ -78,25 +79,37 @@ const getReviewsByUserId = async (userId) => {
   };
 
 const getUserById = async (userId) => {
-    try {
-      const { rows: [user] } = await db.query( 
-        `
-        SELECT *
-        FROM users
-        WHERE id = $1;
-        `,
-        [userId]
-      );
-  
-      if (!user) return null;
-      user.reviews = await getReviewsByUserId(userId);
-      delete user.password;
-      return user;
-    } catch (error) {
-      throw error;
-    }
-  };
-  
+  try {
+    const { rows: [user] } = await db.query( 
+      `
+      SELECT *
+      FROM users
+      WHERE id = $1;
+      `,
+      [userId]
+    );
+
+    if (!user) return null;
+
+    // Fetch user's reviews with restaurant details
+    const reviews = await getReviewsByUserId(userId);
+    const reviewsWithRestaurantDetails = await Promise.all(reviews.map(async (review) => {
+      const restaurant = await getRestaurantById(review.restaurant_id);
+      return {
+        ...review,
+        restaurant_name: restaurant.name || 'Unknown Restaurant',
+      };
+    }));
+
+    user.reviews = reviewsWithRestaurantDetails;
+    delete user.password;
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 
 
