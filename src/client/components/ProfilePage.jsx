@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProfilePage = () => {
+  // state variables to store user data & reviews
   const [userData, setUserData] = useState({});
   const [userReviews, setUserReviews] = useState([]);
 
+
+  // useEffect hook fetches user data and mounts it to the component
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -25,7 +28,7 @@ const ProfilePage = () => {
           const userData = await userDataResponse.json();
           setUserData(userData);
 
-          // Check if userData.reviews is an array before setting userReviews
+          // Check if userData.reviews is an array before setting userReviews. Reviews are contained in the user body thats coming from the server. We also must get information about the restaurant, see line 35
           const reviewsResponse = Array.isArray(userData.reviews)
             ? await Promise.all(
                 userData.reviews.map(async (review) => {
@@ -33,7 +36,7 @@ const ProfilePage = () => {
                     `http://localhost:3000/api/restaurants/${review.restaurant_id}`
                   );
                   const restaurantData = await restaurantResponse.json();
-                  console.log("Restaurant Data:", restaurantData); // Log restaurantData
+                  console.log("Restaurant Data:", restaurantData);
                   return {
                     ...review,
                     restaurant_name:
@@ -48,7 +51,7 @@ const ProfilePage = () => {
 
           setUserReviews(reviewsResponse);
         } else {
-          // Handle error fetching user data
+          
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -68,7 +71,7 @@ const ProfilePage = () => {
               <p className="card-text">
                 <strong>Email:</strong> {userData.email}
               </p>
-              {/* Add other user data fields as needed */}
+              {/* Add other user data fields - like admin if theyre an admin. */}
             </div>
           )}
         </div>
@@ -78,7 +81,7 @@ const ProfilePage = () => {
       <div className="card mt-4">
         <div className="card-body all-reviews">
           <h5 className="card-title mb-3" style={{ color: "white" }}>
-            Reviews
+            My Reviews
           </h5>
 
           {userReviews.length > 0 ? (
@@ -104,7 +107,7 @@ const ProfilePage = () => {
                     <strong>Review:</strong> {review.review_text}
                   </p>
                   {index < userReviews.length - 1 && <hr />}{" "}
-                  {/* Add a line separator for all reviews except the last one */}
+                  {/* Adds a line separator for all reviews except the last one */}
                 </div>
               </div>
             ))

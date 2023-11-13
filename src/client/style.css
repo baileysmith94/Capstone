@@ -232,13 +232,17 @@ button:hover {
   text-align: left;
 }
 
+/* ALL PROFILE STYLING */
 .profile-page {
-  margin-top: 12%;
+  margin-top: 7%;
   margin-left: 15px;
 }
 
 .all-reviews {
   background-color: rgb(44, 44, 44);
+  margin: auto;
+  margin-top: 5%;
+  border-radius: 10px;
 }
 
 .single-review {
@@ -246,14 +250,16 @@ button:hover {
   flex-direction: column;
   align-items: center;
   background-color: #f0f0f0;
+  margin: auto;
+  padding: 0px;
 }
 
 .img-fluid.mb-3 {
-  max-width: 60%; /* Set the image width to 60% */
+  max-width: 40%; 
   height: auto;
-  display: block; /* Ensure the image is treated as a block element */
-  margin: 0 auto; /* Center the image */
-  border-radius: 50px;
+  display: block; 
+  margin: 0 auto;
+  border-radius: 5px;
 }
 
 
@@ -261,6 +267,6 @@ button:hover {
 /* i think media queries go below everything */
 @media screen and (max-width: 768px) {
   .profile-page {
-    margin-top: 20%; /* Adjust the width for smaller screens */
+    margin-top: 20%;
   }
 }
