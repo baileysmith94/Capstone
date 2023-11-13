@@ -9,24 +9,33 @@ const getAllComments = async () => {
         throw err;
     }
 }
-
-const createComment = async ({ user_id, restaurant_id, comment}, token) => {
+// Create a comment func. Requires a token, with userId from logged-in user
+// must find out if that is stored...
+// reviewId passed down from the review 
+// comment is supplied by user
+// seems good
+const createComment = async ({ user_id, review_id, comment}) => {
     try {
-        const { rows: [comment] } = await db.query(`
-        INSERT INTO comments(user_id, restaurant_id, comment)
+        const { rows: [ Comment ] } = await db.query(`
+        INSERT INTO comments("user_id", "review_id", "comment")
         VALUES($1, $2, $3)
-        RETURNING *`, [user_id, restaurant_id, comment]);
-        return comment;
+        RETURNING *;
+        `, [user_id, review_id, comment]);
+        
+        return Comment;
+        
     } catch (err) {
+        console.error(`error in createComment`, err)
         throw err;
     }
 }
-const getCommentsByRestaurantId = async (restaurantId) => {
+const getCommentsByReviewId = async (reviewId) => {
     try {
       const { rows } = await db.query(`
-        SELECT * FROM comments
-        WHERE restaurant_id = $1;
-      `, [restaurantId]);
+        SELECT comments.review_id, comments.comment, users.name FROM comments
+        INNER JOIN users ON comments.user_id=users.id
+        WHERE review_id = $1;
+      `, [reviewId]);
   
       return rows;
     } catch (error) {
@@ -65,7 +74,7 @@ const deleteComment = async (id) => {
 module.exports = {
     getAllComments,
     createComment,
-    getCommentsByRestaurantId,
+    getCommentsByReviewId,
     getCommentsByUserId,
     deleteComment
 };

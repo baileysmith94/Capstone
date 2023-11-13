@@ -196,7 +196,7 @@ const createTables = async () => {
         CREATE TABLE comments(
           id SERIAL PRIMARY KEY,
           user_id INT REFERENCES users(id),
-          restaurant_id INT REFERENCES restaurants(id),
+          review_id INT REFERENCES reviews(id),
           comment VARCHAR(255)
         );
       `);

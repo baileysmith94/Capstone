@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import CommentBox from "./WriteComment";
 
 function RestaurantList() {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [searchParam, setSearchParam] = useState("");
+  console.log(reviews);
 
   async function fetchRestaurants() {
     try {
@@ -19,19 +21,19 @@ function RestaurantList() {
       console.error("Error:", error);
     }
   }
-  //This is fixed to show reviews now. eventually, we will need to create a ReviewList component 
+  //This is fixed to show reviews now. eventually, we will need to create a ReviewList component
   async function fetchReviews(restaurantId) {
     try {
       const response = await fetch(`/api/restaurants/${restaurantId}/reviews`);
       if (response.ok) {
         const data = await response.json();
-        console.log('Received data:', data);
+        console.log("Received data:", data);
         setReviews(data.reviews);
       } else {
-        console.error('Failed to fetch reviews. Status:', response.status);
+        console.error("Failed to fetch reviews. Status:", response.status);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   }
 
@@ -68,16 +70,23 @@ function RestaurantList() {
               alt={restaurant.name}
               className="restaurant-image"
             />
-            <button onClick={() => {
-              if (selectedRestaurant && selectedRestaurant.id === restaurant.id) {
-                setSelectedRestaurant(null); // hide reviews if the button is clicked again
-                setReviews([]); // clearing reviews
-              } else {
-                setSelectedRestaurant(restaurant);
-                fetchReviews(restaurant.id);
-              }
-            }}>
-              {selectedRestaurant && selectedRestaurant.id === restaurant.id ? "Hide Reviews" : "Reviews"}
+            <button
+              onClick={() => {
+                if (
+                  selectedRestaurant &&
+                  selectedRestaurant.id === restaurant.id
+                ) {
+                  setSelectedRestaurant(null); // hide reviews if the button is clicked again
+                  setReviews([]); // clearing reviews
+                } else {
+                  setSelectedRestaurant(restaurant);
+                  fetchReviews(restaurant.id);
+                }
+              }}
+            >
+              {selectedRestaurant && selectedRestaurant.id === restaurant.id
+                ? "Hide Reviews"
+                : "Reviews"}
             </button>
             {selectedRestaurant && selectedRestaurant.id === restaurant.id && (
               <div>
@@ -88,6 +97,7 @@ function RestaurantList() {
                       <li key={review.id}>
                         <p>Rating: {review.rating}</p>
                         <p>{review.review_text}</p>
+                        <CommentBox reviewId={review.id} />
                       </li>
                     ))}
                   </ul>
