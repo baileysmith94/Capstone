@@ -1,4 +1,5 @@
 const db = require('./client'); 
+const { getRestaurantById } = require('./restaurant');
 
 const getAllReviews = async () => {
   try {
@@ -41,16 +42,42 @@ const getReviewById = async (reviewId) => {
 const getReviewsByRestaurantId = async (restaurantId) => {
   try {
     const { rows } = await db.query(`
-      SELECT * FROM reviews
-      WHERE restaurant_id = $1;
+      SELECT 
+        reviews.*, 
+        users.name as user_name, 
+        restaurants.name as restaurant_name
+      FROM reviews
+      JOIN users ON reviews.user_id = users.id
+      LEFT JOIN restaurants ON reviews.restaurant_id = restaurants.id
+      WHERE reviews.restaurant_id = $1;
     `, [restaurantId]);
 
-    return rows;
+    return rows.map((row) => ({
+      ...row,
+      restaurant_name: row.restaurant_name
+    }));
   } catch (error) {
     throw error;
   }
-}
+};
 
+
+
+
+//DELETE MAYbe
+const getReviewsByUserId = async (userId) => {
+  try {
+    const { rows } = await db.query(`
+      SELECT * 
+      FROM reviews
+      WHERE user_id = $1;
+    `, [userId]);
+
+    return rows;
+  } catch (err) {
+    throw err;
+  }
+}
 
 const updateReview = async (reviewId) => {
   const {rating, review_text, type, image_url} = fields; 
@@ -115,6 +142,7 @@ module.exports = {
   createReview,
   getReviewById,
   getReviewsByRestaurantId,
+  getReviewsByUserId,
   updateReview, 
   destroyReview
 };

@@ -41,7 +41,7 @@ const Login = () => {
 
         setMessage("Successfully logged in!");
         // we can redirect anwhere, i just put /restuarants because it seemed most appropriate for what we have
-        window.location.href = "/restaurants";
+        window.location.href = "/me";
       } else {
         setMessage(result.message);
       }
