@@ -9,8 +9,7 @@ import Footer from "./components/Footer";
 import "./style.css";
 import UserList from "./components/userlist";
 import ProfilePage from "./components/ProfilePage";
-import Home from "./components/home";
-
+import Home from "./components/Home";
 
 //TO SEE IF A TOKEN IS ACTIVLY BEING USED
 const token = localStorage.getItem("token");
@@ -27,13 +26,13 @@ function App() {
     <>
       <NavBar />
       <Routes>
-        <Route path ="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/restaurants" element={<RestaurantList />} />
         <Route path="/users" element={<UserList />} />
         {/* <Route path = '/' element={<ReviewList />} /> */}
-        <Route path = '/me' element={<ProfilePage />} />
+        <Route path="/me" element={<ProfilePage />} />
         <Route path="/" element={<Footer />} />
       </Routes>
       <Footer />

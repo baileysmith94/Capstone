@@ -1,6 +1,6 @@
 const express = require('express')
 const commentRouter = express.Router();
-// const { requireUser } = require('./utils')
+const { requireUser } = require('./utils')
 
 const {
     getAllComments,

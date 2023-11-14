@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
+import CommentBox from "./WriteComment";
 
 function RestaurantList({ showSearchBar = true, limit }) {
   const [restaurants, setRestaurants] = useState([]);
@@ -117,7 +118,7 @@ function RestaurantList({ showSearchBar = true, limit }) {
                   <div className="mb-1">
                     <strong>Rating:</strong> {review.rating}
                   </div>
-                  <div>{review.review_text}</div>
+                  <div>{review.review_text}</div> <CommentBox />
                 </li>
               ))}
             </ul>

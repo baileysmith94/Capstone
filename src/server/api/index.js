@@ -1,13 +1,12 @@
 const express = require("express");
-const express = require("express");
 const apiRouter = express.Router();
 
-const jwt = require("jsonwebtoken");
+
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
-const volleyball = require("volleyball");
-const { getUserById } = require("../db");
-apiRouter.use(volleyball);
+
+
+
 const volleyball = require("volleyball");
 const { getUserById } = require("../db");
 apiRouter.use(volleyball);
