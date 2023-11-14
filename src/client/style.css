@@ -42,6 +42,14 @@ body {
   text-decoration: underline;
 }
 
+.flex-end {
+  margin-right: auto;
+}
+
+.flex-start {
+  margin-left: auto;
+}
+
 /* Search bar styles */
 .search-bar {
   display: flex;
@@ -262,11 +270,34 @@ button:hover {
   border-radius: 5px;
 }
 
-
-
 /* i think media queries go below everything */
 @media screen and (max-width: 768px) {
   .profile-page {
     margin-top: 20%;
   }
 }
+
+/* Homepage Styling */
+.logo {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.homeReviews {
+  border-top: 2px solid;
+  padding-top: 50px;
+}
+
+.homeReviews h2 {
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.homeReviews .moreReviewsButton {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 7vw;
