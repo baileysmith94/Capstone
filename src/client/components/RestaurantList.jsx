@@ -63,6 +63,7 @@ function RestaurantList() {
           <div key={restaurant.id} className="restaurant-item">
             <h3>{restaurant.name}</h3>
             <p>{restaurant.address}</p>
+            <p>Average Rating: {restaurant.average_rating}</p>
             <img
               src={restaurant.image_url}
               alt={restaurant.name}
