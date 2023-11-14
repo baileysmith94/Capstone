@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import NewRestaurantForm from "./NewRestaurantForm";
 const ProfilePage = () => {
   // state variables to store user data & reviews
   const [userData, setUserData] = useState({});
@@ -120,6 +120,9 @@ const ProfilePage = () => {
           )}
         </div>
       </div>
+      <div className="newRestaurantForm">
+              <NewRestaurantForm />
+          </div>
     </div>
   );
 };

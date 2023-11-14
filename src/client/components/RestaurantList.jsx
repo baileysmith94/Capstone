@@ -62,9 +62,7 @@ function RestaurantList({ showSearchBar = true, limit }) {
              onChange={(e) => setSearchParam(e.target.    value.toLowerCase())}
             />
           </label>
-          <div className="newRestaurantForm">
-              <NewRestaurantForm />
-          </div>
+          
         </div>
       )}
 
@@ -134,6 +132,7 @@ function RestaurantList({ showSearchBar = true, limit }) {
           </Button>
         </Modal.Footer>
       </Modal>
+      
     </>
   );
 }

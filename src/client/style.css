@@ -85,6 +85,10 @@ body {
 } */
 
 
+.nav-link {
+  color: white; /* Set the link color to white for the entire ul */
+}
+
 
 h2 {
   font-size: 1.5rem;
@@ -202,7 +206,7 @@ p {
 
 /* Button styles */
 button {
-  background-color: #7a2323;
+  background-color: #b50000;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -224,13 +228,23 @@ button:hover {
   text-align: start;
   font-weight: bold;
   margin: 10px;
+  margin-top: 70px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
 }
 
+.login-status button {
+  background-color: #333;
+}
+
 .login-status p {
   margin: 0; 
+}
+
+.login-status a {
+  color: white;
+  text-decoration: none;
 }
 
 .log-out-button {

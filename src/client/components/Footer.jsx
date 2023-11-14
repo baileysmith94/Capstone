@@ -17,7 +17,7 @@ function Footer() {
           <button onClick={logout}>Log Out?</button>
         </div>
       ) : (
-        <p>Please sign in to leave a review</p>
+        <a href="/login">Please login to make a review</a>
       )}
     </div>
   );
