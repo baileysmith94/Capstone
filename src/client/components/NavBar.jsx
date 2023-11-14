@@ -9,12 +9,12 @@ function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div className="container-fluid">
-        {/* Logo on the left */}
+        
         <Link className="navbar-brand" to="/">
           <img src="/images/navlogo.png" alt="Logo" height="30" />
         </Link>
 
-        {/* Toggler button for small screens */}
+        
         <button
           className="navbar-toggler"
           type="button"
@@ -27,7 +27,7 @@ function NavBar() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Navigation links on the right */}
+        
         <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
