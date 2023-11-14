@@ -16,21 +16,20 @@ export default function CommentForm() {
       console.log(review_id);
       console.log(user_id);
       console.log(comment);
-      const response = await fetch(`http://localhost:3000/api/comments`);
-      // {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      //   body: JSON.stringify({
-      //     comment: {
-      //       user_id: user_id,
-      //       review_id: review_id,
-      //       comment: comment,
-      //     },
-      //   }),
-      // });
+      const response = await fetch(`http://localhost:3000/api/comments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          comment: {
+            user_id: user_id,
+            review_id: review_id,
+            comment: comment,
+          },
+        }),
+      });
       console.log(response);
       if (response.ok) {
         const data = await response.json();

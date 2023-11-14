@@ -1,6 +1,6 @@
 const express = require('express')
 const commentRouter = express.Router();
-const { requireUser } = require('./utils')
+// const { requireUser } = require('./utils')
 
 const {
     getAllComments,
@@ -64,31 +64,26 @@ commentRouter.get('/:review_id', async( req, res, next) => {
         
 //     next(error);}
 // });
-// commentRouter.post ('/', requireUser,  async  (req, res, next) => {
-//     const {comment} = req.body;
-//     const commentData = {};
-//     try {  
-//         commentData.user_id = user_id;
-//         commentData.review_id = review_id;
-//         commentData.comment = comment;
-        
-//         const createdComment = await createComment(commentData);
-//         if(createdComment) {
-//             res.send(createdComment)
-//         } else {
-//             next({
-//                 message: `failed to create comment`
-//             })
-//         }
+commentRouter.post('/', async  (req, res, next) => {
+    console.log("POSTING TO COMMENTS ROUTE!!!")
+    
+    try {  
+        const {user_id, review_id, comment} = req.body;
+        const createdComment = await createComment({user_id, review_id, comment});
+        console.log(createComment)
+        if(createdComment) {
+            res.send(createdComment)
+        } else {
+            next({
+                message: `failed to create comment`
+            })
+        }
 
-//     } catch (err) {
-//         console.log(err)
-//     }
-// })
+    } catch (err) {
+        console.log(err)
+    }
+});
 
-commentRouter.post('/', (req, res) => {
-    res.status(200).json({ message: 'Server route reached successfully' });
-  });
-  
+
 
 module.exports = commentRouter
