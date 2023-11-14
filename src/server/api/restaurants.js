@@ -31,14 +31,7 @@ restaurantsRouter.get('/:id', async( req, res, next) => {
     }
 });
 
-restaurantsRouter.get('/restaurants/:id', async (req, res, next) => {
-    try {
-      const restaurant = await getRestaurantById(req.params.id);
-      res.send({ restaurant });
-    } catch (error) {
-      next(error);
-    }
-});
+
 
 restaurantsRouter.get('/:restaurantId/reviews', async (req, res, next) => {
     try {

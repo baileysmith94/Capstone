@@ -13,7 +13,7 @@ body {
 }
 
 /* Navigation bar styles */
-.navbar {
+.nav-bar {
   position: fixed;
   top: 0;
   left: 0;
@@ -27,18 +27,18 @@ body {
 }
 
 
-.navbar a {
+.nav-bar a {
   color: #fff;
   text-decoration: none;
   margin: 0 20px;
   display: inline-block;
 }
 
-.navbar li {
+.nav-bar li {
   display: inline-block;
 }
 
-.navbar a:hover {
+.nav-bar a:hover {
   text-decoration: underline;
 }
 
@@ -198,8 +198,8 @@ button:hover {
 .login-status {
   position: fixed;
   bottom: 0;
-  background-color: #b50000; /* Red background color */
-  color: #fff; /* White text color */
+  background-color: #b50000; 
+  color: #fff;
   padding: 10px;
   border-radius: 5px;
   text-align: start;
@@ -211,11 +211,62 @@ button:hover {
 }
 
 .login-status p {
-  margin: 0; /* Remove default margin for the paragraph */
+  margin: 0; 
 }
 
 .log-out-button {
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15%;
+}
+
+.reviews {
+  text-align: left;
+}
+
+/* ALL PROFILE STYLING */
+.profile-page {
+  margin-top: 7%;
+  margin-left: 15px;
+}
+
+.all-reviews {
+  background-color: rgb(44, 44, 44);
+  margin: auto;
+  margin-top: 5%;
+  border-radius: 10px;
+}
+
+.single-review {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f0f0;
+  margin: auto;
+  padding: 0px;
+}
+
+.img-fluid.mb-3 {
+  max-width: 40%; 
+  height: auto;
+  display: block; 
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+
+
+/* i think media queries go below everything */
+@media screen and (max-width: 768px) {
+  .profile-page {
+    margin-top: 20%;
+  }
 }

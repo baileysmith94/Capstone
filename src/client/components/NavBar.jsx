@@ -5,7 +5,7 @@ function NavBar() {
   const token = localStorage.getItem('token');
 
   return (
-    <div className="navbar">
+    <div className="nav-bar">
       <nav>
         <ul>
           <li>
@@ -13,12 +13,12 @@ function NavBar() {
           </li>
           {token && (
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link to="/me">Profile</Link>
             </li>
           )}
           {token ? (
             <>
-              {/* OTHER ROUTES-LIKE PROFILE-WOULD GO HERE :) */}
+            {/* routes below will disappear when a user logs in */}
             </>
           ) : (
             <>
