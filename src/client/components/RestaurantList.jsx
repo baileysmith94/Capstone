@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Modal, Button } from "react-bootstrap";
 
 function RestaurantList() {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [searchParam, setSearchParam] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   async function fetchRestaurants() {
     try {
@@ -19,7 +22,7 @@ function RestaurantList() {
       console.error("Error:", error);
     }
   }
-  //This is fixed to show reviews now. eventually, we will need to create a ReviewList component 
+
   async function fetchReviews(restaurantId) {
     try {
       const response = await fetch(`/api/restaurants/${restaurantId}/reviews`);
@@ -69,44 +72,61 @@ function RestaurantList() {
               alt={restaurant.name}
               className="restaurant-image"
             />
-            <button onClick={() => {
-              if (selectedRestaurant && selectedRestaurant.id === restaurant.id) {
-                setSelectedRestaurant(null); // hide reviews if the button is clicked again
-                setReviews([]); // clearing reviews
-              } else {
-                setSelectedRestaurant(restaurant);
-                fetchReviews(restaurant.id);
-              }
-            }}>
-              {selectedRestaurant && selectedRestaurant.id === restaurant.id ? "Hide Reviews" : "Reviews"}
+            <button
+              onClick={() => {
+                if (
+                  selectedRestaurant &&
+                  selectedRestaurant.id === restaurant.id
+                ) {
+                  setSelectedRestaurant(null);
+                  setReviews([]);
+                  setIsModalOpen(false);
+                } else {
+                  setSelectedRestaurant(restaurant);
+                  fetchReviews(restaurant.id);
+                  setIsModalOpen(true);
+                }
+              }}
+            >
+              {selectedRestaurant && selectedRestaurant.id === restaurant.id
+                ? "Hide Reviews"
+                : "Reviews"}
             </button>
-            {selectedRestaurant && selectedRestaurant.id === restaurant.id && (
-              <div className="reviews mt-3">
-              <h4 className="mb-2">Reviews for {restaurant.name}</h4>
-              {reviews.length > 0 ? (
-                <ul className="list-group reviews">
-                  {reviews.map((review) => (
-                    <li key={review.id} className="list-group-item">
-                      <div className="mb-1">
-                        <strong>Author:</strong> {review.user_name}
-                      </div>
-                      <div className="mb-1">
-                        <strong>Rating:</strong> {review.rating}
-                      </div>
-                      <div>{review.review_text}</div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No reviews available for this restaurant.</p>
-              )}
-            </div>
-            
-            
-            )}
           </div>
         ))}
       </div>
+
+      <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Reviews for {selectedRestaurant && selectedRestaurant.name}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {reviews.length > 0 ? (
+            <ul className="list-group reviews">
+              {reviews.map((review) => (
+                <li key={review.id} className="list-group-item">
+                  <div className="mb-1">
+                    <strong>Author:</strong> {review.user_name}
+                  </div>
+                  <div className="mb-1">
+                    <strong>Rating:</strong> {review.rating}
+                  </div>
+                  <div>{review.review_text}</div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No reviews available for this restaurant.</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
