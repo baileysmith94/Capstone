@@ -6,7 +6,7 @@ function Footer() {
   const logout = () => {
     // Clear the token from localStorage
     localStorage.removeItem('token');
-    window.location = '/restaurants';
+    window.location = '/';
   };
 
   return (
