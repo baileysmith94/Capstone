@@ -3,6 +3,7 @@ const reviewsRouter = express.Router();
 const { 
     getAllReviews, 
     getReviewById, 
+    getReviewsByUserId,
     createReview,
     updateReview, 
     destroyReview
@@ -62,6 +63,20 @@ reviewsRouter.get('/:id', async( req, res, next) => {
         next(error)
     }
 });
+
+reviewsRouter.get('/user/:userId', async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const userReviews = await getReviewsByUserId(userId);
+
+    res.send({
+      userReviews,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 reviewsRouter.patch('/:review_id', requireUser, requiredNotSent({requiredParams: ["user_id", "restaurant_id"] || "isAdmin", paramsFound: true}), async (req, res, next) => {
     const { user_id, restaurant_id,is_admin} = req.params;
