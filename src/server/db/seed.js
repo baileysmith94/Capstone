@@ -191,7 +191,8 @@ const createTables = async () => {
             rating INT NOT NULL,
             review_text TEXT,
             image_url VARCHAR(255),
-            comment VARCHAR(255)
+            comment VARCHAR(255),
+            CONSTRAINT valid_rating CHECK (rating >= 0 AND rating <= 5)
         );`);
   } catch (err) {
     throw err;
@@ -228,12 +229,31 @@ const insertReviews = async () => {
   try {
     for (const review of reviews) {
       await createReview(review);
+
+      // Update average rating for the restaurant after each review insertion
+      await updateAverageRating(review.restaurant_id);
     }
     console.log("Reviews data inserted successfully.");
   } catch (error) {
     console.error("Error inserting review data:", error);
   }
 };
+
+const updateAverageRating = async (restaurantId) => {
+  try {
+    const result = await db.query(`
+      UPDATE restaurants
+      SET average_rating = (
+        SELECT AVG(rating) FROM reviews
+        WHERE restaurant_id = $1
+      )
+      WHERE id = $1
+    `, [restaurantId]);
+  } catch (error) {
+    console.error("Error updating average rating:", error);
+  }
+};
+
 
 const seedDatabse = async () => {
   try {
