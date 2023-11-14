@@ -71,7 +71,7 @@ const Login = () => {
 
         setMessage("Successfully logged in!");
         // Redirect to /me
-        navigate("/me");
+        window.location.href = "/me";
       } else {
         setMessage(result.message);
       }
