@@ -1,6 +1,7 @@
 const db = require('./client')
 const bcrypt = require('bcrypt');
 const { getReviewById } = require('./review');
+const {getRestaurantById} = require ('./restaurant')
 const SALT_COUNT = 10;
 
 const createUser = async({ name, email, password }) => {
@@ -60,33 +61,63 @@ const getAllUsers = async () => {
     }
 }
 
-const getUserById = async () => {
-    try{
-        const { rows: [user] } = await db.query(
-            `
-            SELECT id, name, email, password, is_admin
-            FROM users
-            WHERE id=${id}
-            `
-        );
-        if (!user) {
-            throw {
-                name:"UserNotFoundError",
-                message: "User with that id does not exist"
-            }
-        }
-        user.reviews = await getReviewById(id);
-        return user;
+const getReviewsByUserId = async (userId) => {
+    try {
+      const { rows } = await db.query(
+        `
+        SELECT *
+        FROM reviews
+        WHERE user_id = $1;
+        `,
+        [userId]
+      );
+  
+      return rows;
     } catch (error) {
-        throw error;
+      throw error;
     }
-}
+  };
+
+const getUserById = async (userId) => {
+  try {
+    const { rows: [user] } = await db.query( 
+      `
+      SELECT *
+      FROM users
+      WHERE id = $1;
+      `,
+      [userId]
+    );
+
+    if (!user) return null;
+
+    // Fetch user's reviews with restaurant details
+    const reviews = await getReviewsByUserId(userId);
+    const reviewsWithRestaurantDetails = await Promise.all(reviews.map(async (review) => {
+      const restaurant = await getRestaurantById(review.restaurant_id);
+      return {
+        ...review,
+        restaurant_name: restaurant.name || 'Unknown Restaurant',
+      };
+    }));
+
+    user.reviews = reviewsWithRestaurantDetails;
+    delete user.password;
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 
 
 module.exports = {
     createUser,
     getUser,
     getUserByEmail,
+    getReviewsByUserId,
     getAllUsers, 
     getUserById
 };

@@ -3,13 +3,15 @@ const reviewsRouter = express.Router();
 const { 
     getAllReviews, 
     getReviewById, 
+    getReviewsByUserId,
     createReview,
     updateReview, 
     destroyReview
 } = require('../db');
+const { requireUser, requiredNotSent } = require('./utils')
 
 
-reviewsRouter.get('/reviews', async( req, res, next) => {
+reviewsRouter.get('/', async( req, res, next) => {
     try {
         const reviews = await getAllReviews();
 
@@ -21,20 +23,19 @@ reviewsRouter.get('/reviews', async( req, res, next) => {
     }
 });
 
-reviewsRouter.post('/create_review', requireUser, async (req, res, next) => {
-    const {user_id, restaurant_id, rating, review_text, type = "", image_url } = req.body;
+reviewsRouter.post('/create_review', requireUser, requiredNotSent({requiredParams: ["user_id", "restaurant_id", "rating", "review_text", `type = ""`, "image_url"]}), async (req, res, next) => {
+    // const {user_id, restaurant_id, rating, review_text, type = "", image_url } = req.body;
+    const {user_id, restaurant_id, rating, review_text } = req.body;
   
     const reviewData = {};
   
     try {
-      // request params here?
-      // const user_id = req.params.user_id;
-      reviewData.user_id = req.user_id;
+      reviewData.user_id = user_id;
       reviewData.restaurant_id = restaurant_id;
       reviewData.rating = rating;
       reviewData.review_text = review_text;
-      reviewData.type = type;
-      reviewData.image_url = image_url;
+      // reviewData.type = type;
+      // reviewData.image_url = image_url;
   
       const review = await createReview(reviewData);
   
@@ -63,8 +64,22 @@ reviewsRouter.get('/:id', async( req, res, next) => {
     }
 });
 
-reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
-    const { user_id, restaurant_id } = req.params;
+reviewsRouter.get('/user/:userId', async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const userReviews = await getReviewsByUserId(userId);
+
+    res.send({
+      userReviews,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+reviewsRouter.patch('/:review_id', requireUser, requiredNotSent({requiredParams: ["user_id", "restaurant_id"] || "isAdmin", paramsFound: true}), async (req, res, next) => {
+    const { user_id, restaurant_id,is_admin} = req.params;
     const { rating, review_text, type, image_url, comment } = req.body;
   
     const updateFields = {};
@@ -77,11 +92,11 @@ reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
       updateFields.review_text = review_text;
     }
   
-    if (type) {
+    if (type && is_admin) {
       updateFields.type = type;
     }
 
-    if (image_url) {
+    if (image_url && is_admin) {
       updateFields.image_url = image_url;
     }
 
@@ -108,7 +123,7 @@ reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
   
   reviewsRouter.delete('/:postId', requireUser, async (req, res, next) => {
     try{
-      const {reviewId, user_id} = req.params;
+      const {reviewId, user_id, is_admin} = req.params;
       const reviewToUpdate = await getReviewById(reviewId);
       if(!reviewToUpdate) {
         next({
@@ -120,7 +135,7 @@ reviewsRouter.patch('/:review_id', requireUser, async (req, res, next) => {
         res.status(403); 
         next({
           name: "WrongUserError",
-          message: "You must be the same user who created this routine to perform this action"
+          message: "You must be the same user who created this review, or an admin, to perform this action"
         });
       } else {
         const deletedReview = await destroyReview(reviewId)

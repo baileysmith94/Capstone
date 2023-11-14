@@ -27,6 +27,17 @@ const getRestaurantById = async (restaurantId) => {
   }
 }
 
+const getAllRestaurantsWithAverageRating = async () => {
+  const restaurantsWithRating = await db.query(`
+    SELECT r.*, ROUND(AVG(re.rating)) as average_rating
+    FROM restaurants r
+    LEFT JOIN reviews re ON r.id = re.restaurant_id
+    GROUP BY r.id
+  `);
+
+  return restaurantsWithRating.rows;
+};
+
 const getAllRestaurants = async () => {
   try {
     const { rows } = await db.query(`
@@ -41,5 +52,6 @@ const getAllRestaurants = async () => {
 module.exports = {
   createRestaurant,
   getRestaurantById,
-  getAllRestaurants
+  getAllRestaurants,
+  getAllRestaurantsWithAverageRating
 };
