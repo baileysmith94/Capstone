@@ -87,6 +87,7 @@ function NewRestaurantForm ({restaurants, setRestaurants}) {
             placeholder="restaurant image url"
             onChange={(e) => setImage_url(e.target.value)}
             />
+            <button>Submit</button>
         </form>
     );
 
