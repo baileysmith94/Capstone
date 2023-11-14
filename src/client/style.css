@@ -42,6 +42,14 @@ body {
   text-decoration: underline;
 }
 
+.flex-end {
+  margin-right: auto;
+}
+
+.flex-start {
+  margin-left: auto;
+}
+
 /* Search bar styles */
 .search-bar {
   display: flex;
@@ -218,4 +226,30 @@ button:hover {
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+/* Homepage Styling */
+.logo {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.homeReviews {
+  border-top: 2px solid;
+  padding-top: 50px;
+}
+
+.homeReviews h2 {
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.homeReviews .moreReviewsButton {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 7vw;
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function RestaurantList() {
+function RestaurantList({ showSearchBar = true, limit }) {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -40,23 +40,26 @@ function RestaurantList() {
   }, []);
 
   const restaurantToDisplay = searchParam
-    ? restaurants.filter((restaurant) =>
-        restaurant.name.toLowerCase().includes(searchParam)
-      )
-    : restaurants;
+    ? restaurants
+      .filter((restaurant) => restaurant.name.toLowerCase().includes(searchParam))
+      .slice(0,limit)
+  
+    : restaurants.slice(0,limit);
 
   return (
     <>
-      <div className="search-bar">
-        <label>
-          Search:{" "}
-          <input
-            type="text"
-            placeholder="Search"
-            onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
-          />
-        </label>
-      </div>
+      {showSearchBar && (
+        <div className="search-bar">
+          <label>
+            Search:{" "}
+            <input
+              type="text"
+              placeholder="Search"
+             onChange={(e) => setSearchParam(e.target.    value.toLowerCase())}
+            />
+          </label>
+        </div>
+      )}
 
       <div className="restaurant-list">
         {restaurantToDisplay.map((restaurant) => (
