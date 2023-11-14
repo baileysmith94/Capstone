@@ -5,7 +5,8 @@ const {
     getRestaurantById,
     getAllRestaurants, 
     getAllRestaurantsWithAverageRating,
-    getReviewsByRestaurantId
+    getReviewsByRestaurantId,
+    createRestaurant
 } = require('../db');
 
 restaurantsRouter.get('/', async (req, res, next) => {
@@ -43,5 +44,14 @@ restaurantsRouter.get('/:restaurantId/reviews', async (req, res, next) => {
       next(error);
     }
 });
+
+restaurantsRouter.post('/create_restaurant', async (req, res, next) => {
+    try {
+        const newRestaurant = await createRestaurant(req.body, req.user.id);
+        res.send(newRestaurant);
+    } catch (error) {
+        next(error);
+    }
+})
 
 module.exports = restaurantsRouter;
