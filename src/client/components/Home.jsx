@@ -5,7 +5,7 @@ import RestaurantList from './RestaurantList';
 function Home() {
     return (
         <div className='home'>
-            <div className="logo">
+            <div className="logo fade-in">
                 <img src="/images/capstonelogo.jpeg" alt="Logo" width="80%" border="4% solid"/>
             </div>
             <div className="homeReviews">
