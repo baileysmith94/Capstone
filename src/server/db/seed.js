@@ -9,6 +9,7 @@ const users = [
     name: "Emily Johnson",
     email: "emily@example.com",
     password: "securepass",
+    is_admin:true, 
   },
   {
     name: "Liu Wei",
@@ -199,20 +200,33 @@ const createTables = async () => {
   }
 };
 
+// Your seed script
 const insertUsers = async () => {
   try {
-    for (const user of users) {
-      await createUser({
+    for (const [index, user] of users.entries()) {
+      const isEmily = user.name === "Emily Johnson";
+      const createdUser = await createUser({
         name: user.name,
         email: user.email,
         password: user.password,
+        is_admin: isEmily, // Set is_admin to true for Emily Johnson
       });
+
+      console.log("User inserted:", createdUser);
+
+      if (isEmily) {
+        console.log("Making Emily an admin...");
+        await db.query("UPDATE users SET is_admin = true WHERE id = $1", [createdUser.id]);
+      }
     }
     console.log("Seed data inserted successfully.");
   } catch (error) {
     console.error("Error inserting seed data:", error);
   }
 };
+
+
+
 
 const insertRestaurants = async () => {
   try {

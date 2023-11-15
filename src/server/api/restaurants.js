@@ -1,11 +1,13 @@
 const express = require('express')
 const restaurantsRouter = express.Router();
+const { isAdmin } = require('./utils');
 
 const { 
     getRestaurantById,
     getAllRestaurants, 
     getAllRestaurantsWithAverageRating,
     getReviewsByRestaurantId,
+    deleteRestaurantById,
     createRestaurant
 } = require('../db');
 
@@ -33,7 +35,23 @@ restaurantsRouter.get('/:id', async( req, res, next) => {
     }
 });
 
-
+restaurantsRouter.delete('/:id', isAdmin, async (req, res, next) => {
+  try {
+    const restaurantId = req.params.id;
+    
+    // Optionally, you can check if the restaurant has reviews and handle them accordingly
+    
+    const deletedRestaurant = await deleteRestaurantById(restaurantId);
+    res.json({
+      success: true,
+      message: 'Restaurant deleted successfully',
+      deletedRestaurant,
+    });
+  } catch (error) {
+    console.error('Error in delete restaurant route:', error);
+    next(error);
+  }
+});
 
 restaurantsRouter.get('/:restaurantId/reviews', async (req, res, next) => {
     try {
@@ -45,13 +63,19 @@ restaurantsRouter.get('/:restaurantId/reviews', async (req, res, next) => {
     }
 });
 
-restaurantsRouter.post('/create_restaurant', async (req, res, next) => {
-    try {
-        const newRestaurant = await createRestaurant(req.body, req.user.id);
-        res.send(newRestaurant);
-    } catch (error) {
-        next(error);
-    }
-})
+restaurantsRouter.post('/create_restaurant', isAdmin, async (req, res, next) => {
+  try {
+    console.log("User making the request:", req.user);
+    
+    const newRestaurant = await createRestaurant(req.body, req.user.id);
+    res.send(newRestaurant);
+  } catch (error) {
+    console.error("Error in create_restaurant route:", error);
+    next(error);
+  }
+});
+
+
+
 
 module.exports = restaurantsRouter;
