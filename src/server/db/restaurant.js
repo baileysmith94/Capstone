@@ -49,9 +49,24 @@ const getAllRestaurants = async () => {
   }
 }
 
+const deleteRestaurantById = async (restaurantId) => {
+  try {
+    const { rows: [deletedRestaurant] } = await db.query(`
+      DELETE FROM restaurants
+      WHERE id = $1
+      RETURNING *`, [restaurantId]);
+
+    return deletedRestaurant;
+  } catch (err) {
+    throw err;
+  }
+};
+
+
 module.exports = {
   createRestaurant,
   getRestaurantById,
   getAllRestaurants,
-  getAllRestaurantsWithAverageRating
+  getAllRestaurantsWithAverageRating,
+  deleteRestaurantById
 };

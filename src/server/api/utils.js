@@ -9,6 +9,32 @@ function requireUser(req, res, next) {
     next();
 }
 
+//Middleware to check if user is admin. might be buggy
+// utils.js
+const isAdmin = (req, res, next) => {
+  console.log("isAdmin middleware executed");
+  
+  const user = req.user;
+  console.log("User:", user);
+
+  if (user && user.is_admin) {
+    next(); // User is an admin, proceed to the next middleware or route handler
+  } else {
+    console.log("Unauthorized. Admin privileges required.");
+    res.status(403).json({ error: "Unauthorized. Admin privileges required." });
+  }
+};
+
+module.exports = { isAdmin };
+
+
+module.exports = { isAdmin };
+
+module.exports = { isAdmin };
+
+
+
+
 // takes required parameters as an array, returns a middleware function that sends back a message if they're not present
 const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
   return (req, res, next) => {
@@ -48,4 +74,5 @@ const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
 module.exports = {
     requireUser,
     requiredNotSent,
+    isAdmin
 }
