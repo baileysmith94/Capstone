@@ -62,8 +62,6 @@ const getReviewsByRestaurantId = async (restaurantId) => {
 };
 
 
-
-
 //DELETE MAYbe
 const getReviewsByUserId = async (userId) => {
   try {
@@ -79,46 +77,31 @@ const getReviewsByUserId = async (userId) => {
   }
 }
 
-const updateReview = async (reviewId) => {
-  const {rating, review_text, type, image_url} = fields; 
-    delete fields.rating;
-    delete fields.review_text;
-    delete fields.type;
-    delete fields.image_url;
-
+async function updateReviewById(review_id, fields = {}) {
   // build the set string
   const setString = Object.keys(fields).map(
-    (key, index) => `"${ key }"=$${ index + 1 }`
+      (key, index) => `"${key}"=$${index + 1}`
   ).join(', ');
 
-  try{
-    if (setString.length > 0) {
-      await client.query(`
-      UPDATE reviews
-      SET ${ setString } 
-      WHERE id= ${ reviewId }
+  // return early if this is called without fields
+  if (setString.length === 0) {
+      return;
+  }
+
+  try {
+      const {rows: [review]}  = await db.query(`
+      UPDATE review
+      SET ${setString}
+      WHERE id=${review_id}
       RETURNING *;
       `, Object.values(fields));
-    }
 
-    if (rating === undefined){
-      return await getReviewById(reviewId);
-    }
-    if (review_text === undefined){
-      return await getReviewById(reviewId);
-    }
-    if (type === undefined){
-      return await getReviewById(reviewId);
-    }
-    if (image_url === undefined){
-      return await getReviewById(reviewId);
-    }
-  
-    return await getReviewById(reviewId);
+      return review;
   } catch (error) {
-    throw error;
+      throw error;
   }
 }
+
 
 async function destroyReview(id) {
   try {
@@ -143,6 +126,47 @@ module.exports = {
   getReviewById,
   getReviewsByRestaurantId,
   getReviewsByUserId,
-  updateReview, 
+  updateReviewById, 
   destroyReview
 };
+
+// const updateReview = async (reviewId) => {
+//   const {rating, review_text, type, image_url} = fields; 
+//     delete fields.rating;
+//     delete fields.review_text;
+//     delete fields.type;
+//     delete fields.image_url;
+
+//   // build the set string
+//   const setString = Object.keys(fields).map(
+//     (key, index) => `"${ key }"=$${ index + 1 }`
+//   ).join(', ');
+
+//   try{
+//     if (setString.length > 0) {
+//       await client.query(`
+//       UPDATE reviews
+//       SET ${ setString } 
+//       WHERE id= ${ reviewId }
+//       RETURNING *;
+//       `, Object.values(fields));
+//     }
+
+//     if (rating === undefined){
+//       return await getReviewById(reviewId);
+//     }
+//     if (review_text === undefined){
+//       return await getReviewById(reviewId);
+//     }
+//     if (type === undefined){
+//       return await getReviewById(reviewId);
+//     }
+//     if (image_url === undefined){
+//       return await getReviewById(reviewId);
+//     }
+  
+//     return await getReviewById(reviewId);
+//   } catch (error) {
+//     throw error;
+//   }
+// }

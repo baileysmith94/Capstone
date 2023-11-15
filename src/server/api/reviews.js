@@ -5,7 +5,7 @@ const {
     getReviewById, 
     getReviewsByUserId,
     createReview,
-    updateReview, 
+    updateReviewById, 
     destroyReview
 } = require('../db');
 const { requireUser, requiredNotSent } = require('./utils')
@@ -23,28 +23,26 @@ reviewsRouter.get('/', async( req, res, next) => {
     }
 });
 
-reviewsRouter.post('/create_review', requireUser, requiredNotSent({requiredParams: ["user_id", "restaurant_id", "rating", "review_text", `type = ""`, "image_url"]}), async (req, res, next) => {
-    // const {user_id, restaurant_id, rating, review_text, type = "", image_url } = req.body;
-    const {user_id, restaurant_id, rating, review_text } = req.body;
-  
-    const reviewData = {};
-  
+reviewsRouter.post('/',requireUser, async (req, res, next) => {
     try {
+      const {user_id, restaurant_id, rating, review_text, type = "", image_url } = req.body;
+      const reviewData = {};
+
       reviewData.user_id = user_id;
       reviewData.restaurant_id = restaurant_id;
       reviewData.rating = rating;
       reviewData.review_text = review_text;
-      // reviewData.type = type;
-      // reviewData.image_url = image_url;
+      reviewData.type = type;
+      reviewData.image_url = image_url;
   
-      const review = await createReview(reviewData);
+      const createdReview = await createReview(reviewData);
   
-      if (review) {
-        res.send(review);
+      if (createdReview) {
+        res.send(createdReview);
       } else {
         next({
           name: 'PostCreationError',
-          message: 'There was an error creating your post. Please try again.'
+          message: 'There was an error creating your review. Please try again.'
         })
       }
     } catch (error) {
@@ -78,52 +76,29 @@ reviewsRouter.get('/user/:userId', async (req, res, next) => {
 });
 
 
-reviewsRouter.patch('/:review_id', requireUser, requiredNotSent({requiredParams: ["user_id", "restaurant_id"] || "isAdmin", paramsFound: true}), async (req, res, next) => {
-    const { user_id, restaurant_id,is_admin} = req.params;
-    const { rating, review_text, type, image_url, comment } = req.body;
-  
-    const updateFields = {};
-  
-    if (rating && rating.length > 0) {
-      updateFields.rating= rating.trim().split(/\s+/);
-    }
-  
-    if (review_text) {
-      updateFields.review_text = review_text;
-    }
-  
-    if (type && is_admin) {
-      updateFields.type = type;
-    }
-
-    if (image_url && is_admin) {
-      updateFields.image_url = image_url;
-    }
-
-    if (comment) {
-      updateFields.comment = comment;
-    }
-  
+reviewsRouter.patch('/:id', requireUser, async (req, res, next) => {
     try {
-      const originalReview = await getReviewById(reviewId);
+     const {user_id, is_admin} = req.params;
+     const { rating, review_text, type, image_url, comment } = req.body;
+
+     const review = await updateReviewById(req.params.review_id, req.body);
   
-      if (originalReview.user_id === req.user_id) {
-        const updatedReview = await updateReview(restaurant_id, updateFields);
-        res.send({ post: updatedReview })
+      if (review.user_id === req.user_id || is_admin) {
+        res.send(review)
       } else {
         next({
           name: 'UnauthorizedUserError',
           message: 'You cannot update a post that is not yours'
         })
       }
-    } catch ({ name, message }) {
-      next({ name, message });
+    } catch (error) {
+      next(error);
     }
   });
   
   reviewsRouter.delete('/:postId', requireUser, async (req, res, next) => {
     try{
-      const {reviewId, user_id, is_admin} = req.params;
+      const {reviewId, is_admin} = req.params;
       const reviewToUpdate = await getReviewById(reviewId);
       if(!reviewToUpdate) {
         next({
