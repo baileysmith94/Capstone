@@ -1,4 +1,5 @@
 import React from 'react';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
 function Footer() {
   const isLoggedIn = localStorage.token; // Check if the user is logged in
@@ -6,18 +7,30 @@ function Footer() {
   const logout = () => {
     // Clear the token from localStorage
     localStorage.removeItem('token');
-    window.location = '/restaurants';
+    window.location = '/';
   };
 
   return (
-    <div className='login-status'>
-      {isLoggedIn ? (
-        <div className='log-out-button'>
-          <p>You are logged in</p>
-          <button onClick={logout}>Log Out?</button>
+    <div>
+      {isLoggedIn && (
+        <div
+          style={{
+            position: 'sticky',
+            bottom: 0,
+            left: 0,
+            width: 'auto',
+            backgroundColor: 'transparent',
+            padding: '10px',
+            textAlign: 'start',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <MeetingRoomIcon
+            style={{ cursor: 'pointer', color: '#b50000', fontSize: '2rem' }}
+            onClick={logout}
+          />
         </div>
-      ) : (
-        <p>Please sign in to leave a review</p>
       )}
     </div>
   );

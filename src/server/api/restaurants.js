@@ -4,20 +4,22 @@ const restaurantsRouter = express.Router();
 const { 
     getRestaurantById,
     getAllRestaurants, 
-    getReviewsByRestaurantId
+    getAllRestaurantsWithAverageRating,
+    getReviewsByRestaurantId,
+    createRestaurant
 } = require('../db');
 
-restaurantsRouter.get('/', async( req, res, next) => {
+restaurantsRouter.get('/', async (req, res, next) => {
     try {
-        const restaurants = await getAllRestaurants();
-
-        res.send({
-            restaurants
-        });
-    } catch ({name, type}) {
-        next({name, type})
+      const restaurants = await getAllRestaurantsWithAverageRating();
+  
+      res.send({
+        restaurants,
+      });
+    } catch ({ name, type }) {
+      next({ name, type });
     }
-});
+  });
 
 restaurantsRouter.get('/:id', async( req, res, next) => {
     try {
@@ -42,5 +44,14 @@ restaurantsRouter.get('/:restaurantId/reviews', async (req, res, next) => {
       next(error);
     }
 });
+
+restaurantsRouter.post('/create_restaurant', async (req, res, next) => {
+    try {
+        const newRestaurant = await createRestaurant(req.body, req.user.id);
+        res.send(newRestaurant);
+    } catch (error) {
+        next(error);
+    }
+})
 
 module.exports = restaurantsRouter;

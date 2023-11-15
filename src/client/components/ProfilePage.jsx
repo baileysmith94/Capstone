@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import NewRestaurantForm from "./NewRestaurantForm";
 const ProfilePage = () => {
   // state variables to store user data & reviews
   const [userData, setUserData] = useState({});
@@ -65,7 +65,7 @@ const ProfilePage = () => {
     <div className="profile-page container">
       <div className="card mb-3">
         <div className="card-body">
-          <h1 className="card-title mb-4">Welcome, {userData?.name}!</h1>
+          <h1 className="card-title mb-4 fade-in">Welcome, {userData?.name}!</h1>
           {userData && (
             <div>
               <p className="card-text">
@@ -120,6 +120,9 @@ const ProfilePage = () => {
           )}
         </div>
       </div>
+      <div className="card mt-3">
+              <NewRestaurantForm />
+          </div>
     </div>
   );
 };
