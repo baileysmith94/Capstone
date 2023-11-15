@@ -285,13 +285,17 @@ button:hover {
 }
 
 .add-rest {
-  margin: 4px;
+  margin: 3%;
 }
 
 .admin-rest {
   width: 50%;
   display: flex;
   justify-content: center;
+}
+
+.delete-rest {
+margin-top: 3%;
 }
 
 @keyframes fadeIn {

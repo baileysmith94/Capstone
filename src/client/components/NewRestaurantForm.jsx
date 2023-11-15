@@ -32,12 +32,14 @@ const NewRestaurantForm = ({ restaurants, setRestaurants }) => {
       if (response.ok) {
         const result = await response.json();
         console.log("Restaurant creation successful:", result);
+        window.location.reload();
         return result;
       } else {
         const errorData = await response.json();
         console.error("Restaurant creation failed:", errorData);
         return { success: false, error: errorData };
       }
+      
     } catch (error) {
       console.error("Error during restaurant creation:", error);
       return { success: false, error: { message: "An error occurred during restaurant creation." } };
@@ -66,7 +68,8 @@ const NewRestaurantForm = ({ restaurants, setRestaurants }) => {
     }
   }
 
-  return (
+  return ( 
+    <div className="add-rest">
     <form onSubmit={handleSubmit}>
       {error && <p>{error}</p>}
       <h3>Enter a new Restaurant:</h3>
@@ -74,39 +77,40 @@ const NewRestaurantForm = ({ restaurants, setRestaurants }) => {
         value={name}
         type="text"
         name="name"
-        placeholder="restaurant name"
+        placeholder="name"
         onChange={(e) => setName(e.target.value)}
       />
       <input
         value={address}
         type="text"
         name="address"
-        placeholder="restaurant address"
+        placeholder="address"
         onChange={(e) => setAddress(e.target.value)}
       />
       <input
         value={phone_number}
         type="text"
         name="phone_number"
-        placeholder="restaurant phone number"
+        placeholder="phone number"
         onChange={(e) => setPhone_number(e.target.value)}
       />
       <input
         value={type}
         type="text"
         name="type"
-        placeholder="restaurant type"
+        placeholder="type"
         onChange={(e) => setType(e.target.value)}
       />
       <input
         value={image_url}
         type="text"
         name="image_url"
-        placeholder="restaurant image url"
+        placeholder="image url"
         onChange={(e) => setImage_url(e.target.value)}
       />
       <button type="submit">Submit</button>
     </form>
+    </div>
   );
 };
 
