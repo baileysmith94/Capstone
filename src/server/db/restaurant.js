@@ -62,11 +62,26 @@ const deleteRestaurantById = async (restaurantId) => {
   }
 };
 
+const updateRestaurantById = async (restaurantId, { name, address, type }) => {
+  try {
+    const { rows: [updatedRestaurant] } = await db.query(`
+      UPDATE restaurants
+      SET name = $2, address= $3, type = $4
+      WHERE id = $1
+      RETURNING *`, [restaurantId, name, address, type]);
+
+    return updatedRestaurant;
+  } catch (err) {
+    throw err;
+  }
+};
+
 
 module.exports = {
   createRestaurant,
   getRestaurantById,
   getAllRestaurants,
   getAllRestaurantsWithAverageRating,
-  deleteRestaurantById
+  deleteRestaurantById,
+  updateRestaurantById
 };

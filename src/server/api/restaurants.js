@@ -8,7 +8,8 @@ const {
     getAllRestaurantsWithAverageRating,
     getReviewsByRestaurantId,
     deleteRestaurantById,
-    createRestaurant
+    createRestaurant,
+    updateRestaurantById
 } = require('../db');
 
 restaurantsRouter.get('/', async (req, res, next) => {
@@ -71,6 +72,22 @@ restaurantsRouter.post('/create_restaurant', isAdmin, async (req, res, next) => 
     res.send(newRestaurant);
   } catch (error) {
     console.error("Error in create_restaurant route:", error);
+    next(error);
+  }
+});
+
+restaurantsRouter.patch('/:id', isAdmin, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const updatedRestaurant = await updateRestaurantById(id, req.body);
+
+    if (updatedRestaurant) {
+      res.status(200).json({ success: true, restaurant: updatedRestaurant });
+    } else {
+      res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+  } catch (error) {
+    console.error('Error in patch restaurant route:', error);
     next(error);
   }
 });

@@ -70,13 +70,15 @@ function RestaurantList({ showSearchBar = true, limit }) {
         {restaurantToDisplay.map((restaurant) => (
           <div key={restaurant.id} className="restaurant-item">
             <h3>{restaurant.name}</h3>
-            <p>{restaurant.address}</p>
-            <p>Average Rating: {restaurant.average_rating}</p>
             <img
               src={restaurant.image_url}
               alt={restaurant.name}
               className="restaurant-image"
-            />
+            /> 
+            
+            <p>Type: {restaurant.type}</p>
+            <p>{restaurant.address}</p>
+            <p>Average Rating: {restaurant.average_rating}</p>
             <button
               onClick={() => {
                 if (
