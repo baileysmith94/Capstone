@@ -226,7 +226,7 @@ const ProfilePage = () => {
             <h5 className="card-title mb-3" style={{ color: "white" }}>
               All Restaurants
             </h5>
-            <RestaurantList userData={userData} limit={10} />
+            <RestaurantList userData={userData} />
           </div>
         </div>
       )}
