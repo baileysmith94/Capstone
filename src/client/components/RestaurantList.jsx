@@ -134,7 +134,9 @@ function RestaurantList({ showSearchBar = true, limit }) {
           </Button>
         </Modal.Footer>
       </Modal>
-      
+      <div>
+        <NewRestaurantForm />
+      </div>
     </>
   );
 }
