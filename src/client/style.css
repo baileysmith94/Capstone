@@ -1,17 +1,14 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
 body {
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
   color: #333;
 }
-
 
 .nav-bar {
   position: fixed;
@@ -20,7 +17,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  background-color: #212529; 
+  background-color: #212529;
   color: #fff;
   padding: 15px 0;
   z-index: 100;
@@ -238,14 +235,6 @@ button:hover {
   flex-direction: column;
 }
 
-.user-list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15%;
-}
-
 .reviews {
   text-align: left;
 }
@@ -295,7 +284,7 @@ button:hover {
 }
 
 .delete-rest {
-margin-top: 3%;
+  margin-top: 3%;
 }
 
 @keyframes fadeIn {

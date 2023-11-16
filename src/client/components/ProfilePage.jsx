@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import RestaurantList from "./RestaurantList";
 import NewRestaurantForm from "./NewRestaurantForm";
 import UserList from "./userlist";
@@ -10,6 +11,7 @@ const ProfilePage = () => {
   const [userReviews, setUserReviews] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
   const [deleteConfirmation, setDeleteConfirmation] = useState(null);
+  const [editRestaurantId, setEditRestaurantId] = useState(null);
   const [showRestaurants, setShowRestaurants] = useState(true);
   const [showUsers, setShowUsers] = useState(false);
 
@@ -98,6 +100,44 @@ const ProfilePage = () => {
       console.error("Error deleting restaurant:", error);
     }
     window.location.reload();
+  };
+
+  const handleEditRestaurant = (restaurantId) => {
+    setEditRestaurantId(restaurantId);
+  };
+//=====LOOK HERE IF YOU NEED PATCH HELP
+  const handleUpdateRestaurant = async (formData) => {
+    
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `http://localhost:3000/api/restaurants/${editRestaurantId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (response.ok) {
+        
+        console.log("Restaurant updated successfully!");
+        setEditRestaurantId(null);
+        // You might want to fetch the updated restaurant list after editing
+        window.location.reload()
+      } else {
+        console.error("Failed to update restaurant");
+      }
+    } catch (error) {
+      console.error("Error updating restaurant:", error);
+    }
+  };
+
+  const handleCloseEditModal = () => {
+    setEditRestaurantId(null);
   };
 
   return (
@@ -203,13 +243,19 @@ const ProfilePage = () => {
       )}
 
       {userData && Object.keys(userData).length > 0 && userData.is_admin && (
+        
         <ul className="list-group delete-rest">
+          <h3>Edit/Delete Restaurants</h3>
           {restaurants.map((restaurant) => (
             <li key={restaurant.id} className="list-group-item">
               <div className="d-flex justify-content-between align-items-center">
                 <span>{restaurant.name}</span>
                 {userData.is_admin && (
                   <span>
+                    <EditIcon
+                      style={{ cursor: "pointer", marginRight: '10px' }}
+                      onClick={() => handleEditRestaurant(restaurant.id)}
+                    />
                     <DeleteIcon
                       style={{ cursor: "pointer" }}
                       onClick={() => setDeleteConfirmation(restaurant.id)}
@@ -249,6 +295,45 @@ const ProfilePage = () => {
             Delete
           </Button>
         </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={editRestaurantId !== null}
+        onHide={handleCloseEditModal}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Restaurant</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = {};
+            formData.forEach((value, key) => {
+              data[key] = value;
+            });
+            handleUpdateRestaurant(data);
+          }}>
+            {/* Example edit form fields, replace with your actual fields */}
+            <Form.Group controlId="editFormName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" name="name" placeholder="Enter restaurant name" />
+            </Form.Group>
+            <Form.Group controlId="editFormAddress">
+              <Form.Label>Address</Form.Label>
+              <Form.Control type="text" name="address" placeholder="Enter restaurant address" />
+            </Form.Group>
+            <Form.Group controlId="editFormType">
+              <Form.Label>Type</Form.Label>
+              <Form.Control type="text" name="type" placeholder="Enter restaurant type" />
+            </Form.Group>
+            {/* Add more form fields as needed */}
+
+            <Button variant="primary" type="submit">
+              Save Changes
+            </Button>
+          </Form>
+        </Modal.Body>
       </Modal>
 
       {userData && Object.keys(userData).length > 0 && userData.is_admin && (

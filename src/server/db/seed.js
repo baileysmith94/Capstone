@@ -40,28 +40,28 @@ const restaurants = [
     name: "Scott's Sandwiches",
     address: "123 Main St",
     phone_number: "555-123-4567",
-    type: "A",
+    type: "Italian",
     image_url: "./images/sandwich.png"
   },
   {
     name: "Peanut Garden",
     address: "5656 Garden Lane",
     phone_number: "281-593-3210",
-    type: "B",
+    type: "American",
     image_url: "./images/peanutgarden.png"
   },
   {
     name: "Wisconsin Roadhouse",
     address: "321 Get Lost Lane",
     phone_number: "303-597-7256",
-    type: "C",
+    type: "American",
     image_url: "./images/wisconsin.png"
   },
   {
     name: "Taco King",
     address: "301 Gordita Street",
     phone_number: "808-901-3278",
-    type: "D",
+    type: "Mexican",
     image_url: "./images/tacoking.png"
   },
 
@@ -69,14 +69,14 @@ const restaurants = [
     name: "Poultry Roaster",
     address: "999 Rotisserie Road",
     phone_number: "999-593-0303",
-    type: "E",
+    type: "American",
     image_url: "./images/poultry.png"
   },
   {
     name: "Gorgonzola Express",
     address: "0001 Stinky Street",
     phone_number: "578-371-9456",
-    type: "F",
+    type: "Italian",
     image_url: "./images/gorgon.png"
   },
 ];
