@@ -58,7 +58,8 @@ body {
 }
 
 /* New Restaurant Form styles */
-.newRestaurantForm {
+.add-rest{
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
