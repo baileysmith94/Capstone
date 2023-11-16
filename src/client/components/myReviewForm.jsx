@@ -23,7 +23,7 @@ export default function CreateReviewForm(token, {reviews, setReviews}) {
 
     const createReview = async()=>{
       try{
-        const response = await fetch(`http://localhost:3000/api/users/create_review`, {
+        const response = await fetch(`http://localhost:3000/api/users/me/create_review`, {
             method: "POST", 
             headers: {
               "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export default function CreateReviewForm(token, {reviews, setReviews}) {
 
           const newReviewList = [...reviews, result.data.newReview];
           setReviews(newReviewList)
-          setUser_id(user_id);
+          setUser_id(result.id);
           setRating("");
           setReview_text("");
           setImage_url(null);

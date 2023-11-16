@@ -78,12 +78,12 @@ reviewsRouter.get('/user/:userId', async (req, res, next) => {
 
 reviewsRouter.patch('/:id', requireUser, async (req, res, next) => {
     try {
-     const {user_id, is_admin} = req.params;
+     const {user_id} = req.params;
      const { rating, review_text, type, image_url, comment } = req.body;
 
-     const review = await updateReviewById(req.params.review_id, req.body);
+     const review = await updateReviewById(req.params.id, req.body);
   
-      if (review.user_id === req.user_id || is_admin) {
+      if ({rows:review}.user_id === user_id) {
         res.send(review)
       } else {
         next({
@@ -98,15 +98,15 @@ reviewsRouter.patch('/:id', requireUser, async (req, res, next) => {
   
   reviewsRouter.delete('/:postId', requireUser, async (req, res, next) => {
     try{
-      const {reviewId, is_admin} = req.params;
+      const {reviewId} = req.params;
       const reviewToUpdate = await getReviewById(reviewId);
       if(!reviewToUpdate) {
         next({
           name: 'NotFound',
           message: `No post by ID ${reviewId}`
         })
-        // reviewToUpdate.user_id?? would this be admin? Since admin is only allowed to delete
-      } else if (req.user_id !== reviewToUpdate.user_id || !is_admin) {
+        
+      } else if (req.user_id !== reviewToUpdate.user_id) {
         res.status(403); 
         next({
           name: "WrongUserError",
