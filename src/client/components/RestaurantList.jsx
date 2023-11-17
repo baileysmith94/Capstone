@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
+<<<<<<< HEAD
+=======
+import NewRestaurantForm from "./NewRestaurantForm";
+import LeaveReviewModal from "./LeaveReviewModal";
+>>>>>>> 32b5d6049aece3b43ff12899559f02d6ace62bf5
 
 function RestaurantList({ showSearchBar = true, limit }) {
   const [restaurants, setRestaurants] = useState([]);
@@ -58,10 +63,9 @@ function RestaurantList({ showSearchBar = true, limit }) {
             <input
               type="text"
               placeholder="Search"
-             onChange={(e) => setSearchParam(e.target.    value.toLowerCase())}
+              onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
             />
           </label>
-          
         </div>
       )}
 
@@ -74,10 +78,10 @@ function RestaurantList({ showSearchBar = true, limit }) {
               alt={restaurant.name}
               className="restaurant-image"
             /> 
-            
             <p>Type: {restaurant.type}</p>
             <p>{restaurant.address}</p>
             <p>Average Rating: {restaurant.average_rating}</p>
+            <LeaveReviewModal restaurantId={restaurant.id} />
             <button
               onClick={() => {
                 if (
@@ -133,7 +137,13 @@ function RestaurantList({ showSearchBar = true, limit }) {
           </Button>
         </Modal.Footer>
       </Modal>
+<<<<<<< HEAD
 
+=======
+      <div>
+        {/* <NewRestaurantForm /> */}
+      </div>
+>>>>>>> 32b5d6049aece3b43ff12899559f02d6ace62bf5
     </>
   );
 }
