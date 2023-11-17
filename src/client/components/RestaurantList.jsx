@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
-import NewRestaurantForm from "./NewRestaurantForm";
 
 function RestaurantList({ showSearchBar = true, limit }) {
   const [restaurants, setRestaurants] = useState([]);
@@ -134,9 +133,7 @@ function RestaurantList({ showSearchBar = true, limit }) {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div>
-        <NewRestaurantForm />
-      </div>
+
     </>
   );
 }
