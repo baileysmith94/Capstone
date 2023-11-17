@@ -12,8 +12,9 @@ const ProfilePage = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [deleteConfirmation, setDeleteConfirmation] = useState(null);
   const [editRestaurantId, setEditRestaurantId] = useState(null);
-  const [showRestaurants, setShowRestaurants] = useState(true);
+  const [showRestaurants, setShowRestaurants] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -171,7 +172,16 @@ const ProfilePage = () => {
             My Reviews
           </h5>
 
-          {userReviews.length > 0 ? (
+          <Button
+            variant="primary"
+            className="mt-2 mb-2"
+            onClick={() => setShowReviews(!showReviews)}
+            style={{ backgroundColor: "#b50000", borderColor: "#b50000", marginRight: '10px' }}
+          >
+            {showReviews ? "Hide Reviews" : "Show Reviews"}
+          </Button>
+
+          {showReviews && userReviews.length > 0 ? (
             userReviews.map((review, index) => (
               <div key={review.id} className="card mb-3">
                 <div className="card-body single-review">
@@ -335,7 +345,6 @@ const ProfilePage = () => {
               <Form.Label>Type</Form.Label>
               <Form.Control type="text" name="type" placeholder="Enter restaurant type" />
             </Form.Group>
-            {/* Add more form fields as needed */}
 
             <Button variant="primary" type="submit">
               Save Changes
