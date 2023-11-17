@@ -16,7 +16,7 @@ const ProfilePage = () => {
   const [showUsers, setShowUsers] = useState(false);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
         const userDataResponse = await fetch("http://localhost:3000/api/users/me", {
@@ -30,29 +30,41 @@ const ProfilePage = () => {
           const userData = await userDataResponse.json();
           setUserData(userData);
 
-          const reviewsResponse = Array.isArray(userData.reviews)
-            ? await Promise.all(
-                userData.reviews.map(async (review) => {
-                  const restaurantResponse = await fetch(
-                    `http://localhost:3000/api/restaurants/${review.restaurant_id}`
-                  );
-                  const restaurantData = await restaurantResponse.json();
-                  return {
-                    ...review,
-                    restaurant_name:
-                      restaurantData.restaurant.name || "Unknown Restaurant",
-                    restaurant_image_url:
-                      restaurantData.restaurant.image_url || null,
-                  };
+          if (userData.id) {
+            const reviewsResponse = await fetch(`http://localhost:3000/api/reviews/user/${userData.id}`);
+            if (reviewsResponse.ok) {
+              const reviewsData = await reviewsResponse.json();
+              const reviewsWithRestaurants = await Promise.all(
+                reviewsData.userReviews.map(async (review) => {
+                  try {
+                    const restaurantResponse = await fetch(`http://localhost:3000/api/restaurants/${review.restaurant_id}`);
+                    if (restaurantResponse.ok) {
+                      const restaurantData = await restaurantResponse.json();
+                      return {
+                        ...review,
+                        restaurant_name: restaurantData.restaurant.name || "Unknown Restaurant",
+                        restaurant_image_url: restaurantData.restaurant.image_url || null,
+                      };
+                    } else {
+                      console.error(`Failed to fetch restaurant details for review ID ${review.id}`);
+                      return review; 
+                    }
+                  } catch (restaurantError) {
+                    console.error(`Error fetching restaurant details for review ID ${review.id}:`, restaurantError);
+                    return review; 
+                  }
                 })
-              )
-            : [];
-          setUserReviews(reviewsResponse);
+              );
+              setUserReviews(reviewsWithRestaurants);
+            } else {
+              console.error("Failed to fetch user reviews");
+            }
+          }
         } else {
           console.error("Failed to fetch user data");
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user data and reviews:", error);
       }
     };
 
@@ -70,7 +82,7 @@ const ProfilePage = () => {
       }
     };
 
-    fetchUserData();
+    fetchData();
     fetchAllRestaurants();
   }, []);
 
@@ -105,9 +117,8 @@ const ProfilePage = () => {
   const handleEditRestaurant = (restaurantId) => {
     setEditRestaurantId(restaurantId);
   };
-//=====LOOK HERE IF YOU NEED PATCH HELP
+
   const handleUpdateRestaurant = async (formData) => {
-    
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
@@ -123,11 +134,9 @@ const ProfilePage = () => {
       );
 
       if (response.ok) {
-        
         console.log("Restaurant updated successfully!");
         setEditRestaurantId(null);
-        // You might want to fetch the updated restaurant list after editing
-        window.location.reload()
+        window.location.reload();
       } else {
         console.error("Failed to update restaurant");
       }
@@ -243,7 +252,6 @@ const ProfilePage = () => {
       )}
 
       {userData && Object.keys(userData).length > 0 && userData.is_admin && (
-        
         <ul className="list-group delete-rest">
           <h3>Edit/Delete Restaurants</h3>
           {restaurants.map((restaurant) => (
@@ -314,7 +322,7 @@ const ProfilePage = () => {
             });
             handleUpdateRestaurant(data);
           }}>
-            {/* Example edit form fields, replace with your actual fields */}
+           
             <Form.Group controlId="editFormName">
               <Form.Label>Name</Form.Label>
               <Form.Control type="text" name="name" placeholder="Enter restaurant name" />
