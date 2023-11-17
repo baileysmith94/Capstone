@@ -50,7 +50,7 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
         console.error("Failed to submit review. Status:", response.status);
 
         
-        if (response.status === 401) {
+        if (response.status === 500) {
           setShowSuccessMessage(false);
           setShowLoginMessage(true);
         } else {
@@ -62,7 +62,7 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
       console.error("Error submitting review:", error);
 
       // Show login message if user is not logged in
-      if (error.status === 401) {
+      if (error.status === 500) {
         setShowSuccessMessage(false);
         setShowLoginMessage(true);
       } else {
