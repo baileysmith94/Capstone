@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 
 const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
@@ -7,12 +7,44 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
   const [reviewText, setReviewText] = useState("");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const [hasReviewed, setHasReviewed] = useState(false);
+
+  useEffect(() => {
+    const checkUserReview = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(`/api/reviews/user/${userId}/restaurant/${restaurantId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const userReview = await response.json();
+          setHasReviewed(userReview !== null);
+        } else {
+          console.error("Failed to check user review status");
+        }
+      } catch (error) {
+        console.error("Error checking user review status:", error);
+      }
+    };
+
+    checkUserReview();
+  }, [userId, restaurantId]);
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
   const handleSubmit = async () => {
     try {
+      // Check if the user has already reviewed the restaurant
+      if (hasReviewed) {
+        // Display an alert or handle the case where the user has already reviewed
+        return;
+      }
+
       const reviewData = {
         user_id: userId,
         restaurant_id: restaurantId,
@@ -35,7 +67,6 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
         const createdReview = await response.json();
         console.log("Review submitted successfully:", createdReview);
 
-      
         setShowSuccessMessage(true);
         setShowLoginMessage(false);
 
@@ -44,12 +75,10 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
           onReviewSubmit(createdReview);
         }
 
-      
         handleClose();
       } else {
         console.error("Failed to submit review. Status:", response.status);
 
-        
         if (response.status === 500) {
           setShowSuccessMessage(false);
           setShowLoginMessage(true);
@@ -75,8 +104,8 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
   return (
     <>
       <Button
-        variant="danger" 
-        size="lg"       
+        variant="danger"
+        size="lg"
         className="me-2"
         onClick={handleShow}
       >
@@ -142,6 +171,16 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
         dismissible
       >
         You need to log in to leave a review.
+      </Alert>
+
+      {/* Already Reviewed Message */}
+      <Alert
+        variant="warning"
+        show={hasReviewed}
+        onClose={() => setHasReviewed(false)}
+        dismissible
+      >
+        You have already reviewed this restaurant.
       </Alert>
     </>
   );

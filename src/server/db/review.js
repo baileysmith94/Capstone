@@ -12,6 +12,20 @@ const getAllReviews = async () => {
   }
 }
 
+const getReviewByUserAndRestaurant = async (userId, restaurantId) => {
+  try {
+    const { rows } = await db.query(`
+      SELECT * 
+      FROM reviews
+      WHERE user_id = $1 AND restaurant_id = $2;
+    `, [userId, restaurantId]);
+
+    return rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 const createReview = async ({ user_id, restaurant_id, rating, review_text, image_url, comment }, token) => {
   try {
     const { rows: [review] } = await db.query(`
@@ -101,6 +115,29 @@ async function updateReviewById(id, fields = {}) {
   }
 }
 
+// Assume you have a function in your reviews controller or service to get reviews by user ID and restaurant ID
+const getUserReviewByRestaurantId = async (userId, restaurantId) => {
+  try {
+    const response = await fetch(`/api/reviews/user/${userId}/restaurant/${restaurantId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      const userReview = await response.json();
+      return userReview;
+    } else {
+      console.error("Failed to get user review for restaurant");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error getting user review for restaurant:", error);
+    return null;
+  }
+};
+
+
 async function destroyReview(id) {
   try {
     await client.query(`
@@ -125,5 +162,7 @@ module.exports = {
   getReviewsByRestaurantId,
   getReviewsByUserId,
   updateReviewById, 
-  destroyReview
+  destroyReview,
+  getReviewByUserAndRestaurant,
+  getUserReviewByRestaurantId
 };
