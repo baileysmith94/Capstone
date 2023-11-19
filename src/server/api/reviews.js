@@ -6,7 +6,8 @@ const {
     getReviewsByUserId,
     createReview,
     updateReviewById, 
-    destroyReview
+    destroyReview,
+    getReviewByUserAndRestaurant
 } = require('../db');
 const { requireUser, requiredNotSent } = require('./utils');
 const jwt = require('jsonwebtoken');
@@ -64,22 +65,23 @@ reviewsRouter.get('/', async( req, res, next) => {
 
 reviewsRouter.post('/', requireUser, async (req, res, next) => {
   try {
-    // Log the request body to check the received data
-    console.log('Request Body:', req.body);
-    console.log('User Object:', req.user);
-
     const { restaurant_id, rating, review_text } = req.body;
+    const userId = req.user.id;
+
+    // Check if the user has already reviewed the restaurant
+    const existingReview = await getReviewByUserAndRestaurant(userId, restaurant_id);
+
+    if (existingReview) {
+      return res.status(400).json({ error: 'User has already reviewed this restaurant' });
+    }
 
     const reviewData = {
-      user_id: req.user.id,
+      user_id: userId,
       restaurant_id,
       rating,
       review_text,
       // Add other review data - we might need image
     };
-
-    // Log the extracted data to check if user_id and restaurant_id are present
-    console.log('Extracted Data:', reviewData);
 
     const createdReview = await createReview(reviewData);
 
@@ -88,13 +90,14 @@ reviewsRouter.post('/', requireUser, async (req, res, next) => {
     } else {
       next({
         name: 'PostCreationError',
-        message: 'There was an error creating your review. Please try again.'
+        message: 'There was an error creating your review. Please try again.',
       });
     }
   } catch (error) {
     next(error);
   }
 });
+
 
 
 

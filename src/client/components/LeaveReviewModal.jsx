@@ -7,6 +7,7 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
   const [reviewText, setReviewText] = useState("");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const [showAlreadyReviewedMessage, setShowAlreadyReviewedMessage] = useState(false);
   const [hasReviewed, setHasReviewed] = useState(false);
 
   useEffect(() => {
@@ -39,9 +40,10 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
 
   const handleSubmit = async () => {
     try {
-      // Check if the user has already reviewed the restaurant
+      // checks if the user has already reviewed the restaurant
       if (hasReviewed) {
-        // Display an alert or handle the case where the user has already reviewed
+        // displays an alert or handle the case where the user has already reviewed
+        setShowAlreadyReviewedMessage(true);
         return;
       }
 
@@ -70,7 +72,7 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
         setShowSuccessMessage(true);
         setShowLoginMessage(false);
 
-        // Call the onReviewSubmit prop to handle the submission
+        // call the onReviewSubmit prop to handle the submission.
         if (onReviewSubmit) {
           onReviewSubmit(createdReview);
         }
@@ -79,7 +81,9 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
       } else {
         console.error("Failed to submit review. Status:", response.status);
 
-        if (response.status === 500) {
+        if (response.status === 400) {
+          setShowAlreadyReviewedMessage(true);
+        } else if (response.status === 500) {
           setShowSuccessMessage(false);
           setShowLoginMessage(true);
         } else {
@@ -90,7 +94,7 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
     } catch (error) {
       console.error("Error submitting review:", error);
 
-      // Show login message if user is not logged in
+      // show login message if user is not logged in
       if (error.status === 500) {
         setShowSuccessMessage(false);
         setShowLoginMessage(true);
@@ -176,8 +180,8 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
       {/* Already Reviewed Message */}
       <Alert
         variant="warning"
-        show={hasReviewed}
-        onClose={() => setHasReviewed(false)}
+        show={showAlreadyReviewedMessage}
+        onClose={() => setShowAlreadyReviewedMessage(false)}
         dismissible
       >
         You have already reviewed this restaurant.
