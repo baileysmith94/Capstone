@@ -23,8 +23,7 @@ apiRouter.use(async (req, res, next) => {
 
       const id = parsedToken && parsedToken.id;
       if (id) {
-        req.user = await getUserById(id);
-        console.log(token);
+        req.user = await getUserById(id)
         next();
       }
     } catch (error) {

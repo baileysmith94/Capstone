@@ -18,7 +18,7 @@ const createReview = async ({ user_id, restaurant_id, rating, review_text, image
       INSERT INTO reviews(user_id, restaurant_id, rating, review_text, image_url, comment)
       VALUES($1, $2, $3, $4, $5, $6)
       RETURNING *`, [user_id, restaurant_id, rating, review_text, image_url, comment]);
-      
+
 
     return review;
   } catch (err) {

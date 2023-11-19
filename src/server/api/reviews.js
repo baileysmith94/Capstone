@@ -5,6 +5,7 @@ const {
     getReviewById, 
     getReviewsByUserId,
     createReview,
+    getReviewByUserId,
     updateReviewById, 
     destroyReview
 } = require('../db');
@@ -98,7 +99,7 @@ reviewsRouter.patch('/:id', requireUser, async (req, res, next) => {
   
   reviewsRouter.delete('/:postId', requireUser, async (req, res, next) => {
     try{
-      const {reviewId} = req.params;
+    const {reviewId} = req.params;
       const reviewToUpdate = await getReviewById(reviewId);
       if(!reviewToUpdate) {
         next({
