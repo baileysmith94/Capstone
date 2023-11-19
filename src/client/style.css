@@ -276,6 +276,14 @@ button:hover {
 
 .add-rest {
   margin: 3%;
+  padding: 15%;
+}
+
+.add-rest form {
+  margin-top: 5px;
+  padding: 0%;
+  
+  
 }
 
 .admin-rest {
@@ -288,25 +296,7 @@ button:hover {
   margin-top: 3%;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 
-.fade-in {
-  animation: fadeIn 1s ease; /* Adjust the duration if its too fast */
-}
-
-/* i think media queries go below everything */
-@media screen and (max-width: 768px) {
-  .profile-page {
-    margin-top: 20%;
-  }
-}
 
 /* Homepage Styling */
 .logo {
@@ -332,4 +322,40 @@ button:hover {
   display: flex;
   justify-content: center;
   margin-bottom: 7vw;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease; /* Adjust the duration if its too fast */
+}
+
+/* i think media queries go below everything */
+@media screen and (max-width: 768px) {
+  .profile-page {
+    margin-top: 20%;
+  }
+
+  .add-rest {
+    padding: 0%;
+    margin: 5%;
+  }
+
+  .homeReviews h2 {
+    margin: auto;
+    padding: 0;
+    font-size: 1.3rem;
+  }
+
+  .add-rest form {
+    margin-top: 5%;
+    padding: 0%;
+  }
 }

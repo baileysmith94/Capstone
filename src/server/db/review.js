@@ -137,23 +137,35 @@ const getUserReviewByRestaurantId = async (userId, restaurantId) => {
   }
 };
 
-
-async function destroyReview(id) {
+const destroyReview = async (reviewId) => {
   try {
-    await client.query(`
-    DELETE FROM reviews
-    WHERE "reviewId" = $1;
-    `, [id]);
-    const {rows: [review]} = await client.query(`
+    const { rows } = await db.query(`
       DELETE FROM reviews 
       WHERE id = $1
-      RETURNING *
-    `, [id]);
-    return review;
+      RETURNING *;
+    `, [reviewId]);
+
+    return rows[0];
   } catch (error) {
     throw error;
   }
-}
+};
+// async function destroyReview(id) {
+//   try {
+//     await client.query(`
+//     DELETE FROM reviews
+//     WHERE "reviewId" = $1;
+//     `, [id]);
+//     const {rows: [review]} = await client.query(`
+//       DELETE FROM reviews 
+//       WHERE id = $1
+//       RETURNING *
+//     `, [id]);
+//     return review;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 
 module.exports = {
   getAllReviews,
