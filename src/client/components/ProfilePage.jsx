@@ -87,11 +87,11 @@ const ProfilePage = () => {
     fetchAllRestaurants();
   }, []);
 
-  const handleDeleteRestaurant = async (restaurantId) => {
+  const handleDeleteReview = async (reviewId) => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:3000/api/restaurants/${restaurantId}`,
+        `http://localhost:3000/api/reviews/${reviewId}`,
         {
           method: "DELETE",
           headers: {
@@ -100,20 +100,22 @@ const ProfilePage = () => {
           },
         }
       );
-
+  
       if (response.ok) {
-        const updatedRestaurants = restaurants.filter(
-          (restaurant) => restaurant.id !== restaurantId
+        const updatedReviews = userReviews.filter(
+          (review) => review.id !== reviewId
         );
-        setRestaurants(updatedRestaurants);
+        setUserReviews(updatedReviews);
       } else {
-        console.error("Failed to delete restaurant");
+        console.error("Failed to delete review");
       }
     } catch (error) {
-      console.error("Error deleting restaurant:", error);
+      console.error("Error deleting review:", error);
+    } finally {
+      setDeleteConfirmation(null); // Clear the deleteConfirmation state
     }
-    window.location.reload();
   };
+  
 
   const handleEditRestaurant = (restaurantId) => {
     setEditRestaurantId(restaurantId);
@@ -204,6 +206,14 @@ const ProfilePage = () => {
                     <strong>Review:</strong> {review.review_text}
                   </p>
                   {index < userReviews.length - 1 && <hr />}
+                  <span>
+                  <DeleteIcon
+  style={{ cursor: "pointer", color: "red", marginRight: '10px' }}
+  onClick={() => setDeleteConfirmation(review.id)}
+/>
+
+                    
+                  </span>
                 </div>
               </div>
             ))
@@ -294,7 +304,7 @@ const ProfilePage = () => {
           <Modal.Title>Delete Restaurant</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure you want to delete this restaurant?</p>
+          <p>Are you sure you want to delete? This cant be undone.</p>
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -306,7 +316,7 @@ const ProfilePage = () => {
           <Button
             variant="danger"
             onClick={() => {
-              handleDeleteRestaurant(deleteConfirmation);
+              handleDeleteReview(deleteConfirmation);
               setDeleteConfirmation(null);
             }}
           >
