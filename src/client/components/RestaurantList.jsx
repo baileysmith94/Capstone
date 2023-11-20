@@ -118,7 +118,7 @@ function RestaurantList({ showSearchBar = true, limit }) {
                   <div className="mb-1">
                     <strong>Rating:</strong> {review.rating}
                   </div>
-                  <div>{review.review_text}</div> <CommentBox />
+                  <div>{review.review_text}</div> <CommentBox reviewId={review.id}/>
                 </li>
               ))}
             </ul>

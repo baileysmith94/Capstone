@@ -1,17 +1,15 @@
 import { useState } from "react";
 
-export default function CommentForm() {
+export default function CommentForm(reviewId) {
   const [comment, setComment] = useState("");
-
-  // const review_id = reviewId.reviewId;
-
-  //temporary user_id. need to retrieve the logged in user id
+  const review_id = reviewId.reviewId.reviewId
+  
 
   async function handleSubmit(e) {
     e.preventDefault();
     const token = localStorage.getItem("token");
     try {
-      const review_id = 5;
+      
       const user_id = 1;
       console.log(review_id);
       console.log(user_id);
@@ -23,16 +21,15 @@ export default function CommentForm() {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          comment: {
-            user_id: user_id,
-            review_id: review_id,
-            comment: comment,
-          },
+          
+           user_id,
+             review_id,
+            comment,
+          
         }),
       });
-      console.log(response);
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
         return data;
       } else {
         console.log("failed to fetch", response.status);
