@@ -108,31 +108,78 @@ reviewsRouter.patch('/:id', requireUser, async (req, res, next) => {
       next(error);
     }
   });
-  
+
   reviewsRouter.delete('/:id', requireUser, async (req, res, next) => {
-    try{
-      const {id} = req.params;
-      // const reviewToDelete = await getReviewsByUserId(req.user.id);
-      const reviewToDelete= await getReviewById(id);
-      console.log("req.user.id", req.user.id)
-      if(!reviewToDelete) {
-        next({
-          name: 'NotFound',
-          message: `No routine by ID ${id}`
-        })
-      } else if(req.user.id !== reviewToDelete.user_id) {
-        res.status(403);
-        next({
-          name: "WrongUserError",
-          message: "You must be the same user who created this routine to perform this action"
+    try {
+      const reviewId = req.params.id;
+      const reviewToDelete = await getReviewById(reviewId);
+  
+      if (!reviewToDelete) {
+        return res.status(404).json({
+          success: false,
+          message: `Review with ID ${reviewId} not found.`,
+        });
+      }
+  
+      // Check if the user making the request is the owner of the review or an admin
+      if (req.user.id !== reviewToDelete.user_id) {
+        return res.status(403).json({
+          success: false,
+          message: "You must be the owner of the review or an admin to delete it.",
+        });
+      }
+  
+      const deletedReview = await destroyReview(reviewId);
+  
+      if (deletedReview) {
+        res.json({
+          success: true,
+          message: "Review deleted successfully.",
+          deletedReview,
         });
       } else {
-        const deletedReview = await destroyReview(id);
-        res.send({success: true, ...deletedReview});
+        next({
+          name: 'DeleteReviewError',
+          message: 'There was an error deleting the review. Please try again.',
+        });
       }
     } catch (error) {
-      next(error)
+      next(error);
     }
   });
+  
+
+  //--!!!!!!--There was an issue with this route.. im not sure what but i copied and pasted it above and adjusted it. I think it was an issue with req.body and my mess up with all of that stuff in the beginning - AJ
+
+  
+  // reviewsRouter.delete('/:id', requireUser, async (req, res, next) => {
+  //   try {
+  //     const { reviewId } = req.body;
+  //     const reviewToUpdate = await getReviewById(reviewId);
+  
+  //     if (!reviewToUpdate) {
+  //       next({
+  //         name: 'NotFound',
+  //         message: `No post by ID ${reviewId}`,
+  //       });
+  //     } else if (req.user_id !== reviewToUpdate.user_id) {
+  //       res.status(403);
+  //       next({
+  //         name: "WrongUserError",
+  //         message: "You must be the same user who created this review, or an admin, to perform this action",
+  //       });
+  //     } else {
+  //       const deletedReview = await destroyReview(reviewId);
+        
+  //       // Log the deletedReview to the console for debugging
+  //       console.log("Deleted Review:", deletedReview);
+  
+  //       res.send({ success: true, deletedReview });
+  //     }
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // });
+  
 
 module.exports = reviewsRouter;

@@ -59,26 +59,31 @@ const Login = () => {
           password,
         }),
       });
-
+  
       const result = await response.json();
-
-      if (response.ok) {
+  
+      if (response.status === 200) {
         localStorage.setItem("token", result.token);
-
+  
         // Clear input fields!!!
         setEmail("");
         setPassword("");
-
+  
         setMessage("Successfully logged in!");
         // Redirect to /me
         window.location.href = "/me";
+      } else if (response.status >= 400 && response.status < 500) {
+        setMessage("Incorrect email or password. Please try again.");
       } else {
-        setMessage(result.message);
+        setMessage("Incorrect Email or Password. Please Try Again.");
       }
     } catch (err) {
       console.error(`${err.name}: ${err.message}`);
+      setMessage("Incorrect Email or Password. Please Try Again.");
     }
   };
+  
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
