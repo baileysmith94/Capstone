@@ -7,7 +7,8 @@ const {
     getCommentsByReviewId,
     getCommentsByUserId,
     deleteComment,
-    createComment
+    createComment,
+    updateCommentbyId
 } = require('../db');
 
 commentRouter.get(`/`, async( req, res, next) => {
@@ -68,7 +69,16 @@ commentRouter.delete('/:id', async (req, res, next) => {
     } catch (err) {
         throw err
     }
-})
+});
+
+commentRouter.patch(`/:id`, async (req, res, next) => {
+    try {
+        const comment = await updateCommentbyId(req.params.id, req.body);
+        res.send(comment);
+    } catch (error) {
+        next(error);
+    }
+});
 
 
 module.exports = commentRouter

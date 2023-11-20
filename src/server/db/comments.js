@@ -67,11 +67,36 @@ const deleteComment = async (id) => {
         throw error;
     }
 };
+
+const updateCommentbyId = async (id, fields = {}) => {
+    const setString = object.keys(fields).map(
+        (key, index) => `"${key}"=$${index + 1}`
+    ).join(', ');
+    
+    if (setString.length === 0) {
+        return;
+    }
+
+    try {
+        const { rows: [comment] } = await db.query(`
+        UPDATE comments
+        SET ${setString}
+        WHERE id=${id}
+        RETURNING *;
+        `, Object.values(fields));
+
+        return comment
+    } catch (err) {
+        throw err
+    }
+
+}
   
 module.exports = {
     getAllComments,
     createComment,
     getCommentsByReviewId,
     getCommentsByUserId,
-    deleteComment
+    deleteComment,
+    updateCommentbyId
 };
