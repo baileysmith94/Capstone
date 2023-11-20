@@ -125,65 +125,137 @@ const restaurants = [
 
 const reviews = [
   {
-    user_id: 1, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 2, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 1, 
+    restaurant_id: 2, 
     rating: 3,
     review_text: "Great food and service, blah blah blah",
   },
   {
-    user_id: 3, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 4, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 3, 
+    restaurant_id: 4,
     rating: 4,
     review_text: 'Great food and service!!!',
 
   },
   {
-    user_id: 2, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 6, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 2, 
+    restaurant_id: 6, 
     rating: 2,
     review_text: "Very sticky restaurant!",
   },
   {
-    user_id: 4, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 3, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 4, 
+    restaurant_id: 3, 
     rating: 5,
     review_text: "The food was wonderful, and the service was excellent",
   },
   {
-    user_id: 5, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 1, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 5, 
+    restaurant_id: 1, 
     rating: 5,
     review_text: "Lovely restaurant with very nice staff",
   },
   {
-    user_id: 1, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 4, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 1, 
+    restaurant_id: 4,
     rating: 3,
     review_text: 'Not my first pick',
   },
  {
-    user_id: 3, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 2, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 3, 
+    restaurant_id: 2, 
     rating: 5,
     review_text: 'Great food and service!',
   },
  {
-    user_id: 2, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 5, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 2,
+    restaurant_id: 5, 
     rating: 2,
     review_text: 'Very sticky restaurant!',
   },
  {
-    user_id: 4, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 2, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 4, 
+    restaurant_id: 2, 
     rating: 5,
     review_text: 'The food was wonderful, service was phenomenal',
   },
  {
-    user_id: 5, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 6, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 5, 
+    restaurant_id: 6, 
     rating: 3,
     review_text: 'Food was cold but the service was great',
+  }, 
+  {
+    user_id: 1, 
+    restaurant_id: 12, 
+    rating: 5,
+    review_text: "Your tastebuds will take flight here!"
+  }, 
+  {
+    user_id: 1, 
+    restaurant_id: 11, 
+    rating: 3,
+    review_text: "I found a hair in my food!"
+  },
+  {
+    user_id: 1, 
+    restaurant_id: 9, 
+    rating: 5,
+    review_text: "very fresh!"
+  },
+  {
+    user_id: 2, 
+    restaurant_id: 8, 
+    rating: 3,
+    review_text: "something smells fishy here"
+  },
+  {
+    user_id: 2, 
+    restaurant_id: 10, 
+    rating: 3,
+    review_text: "small portions, they didn't have any chicken!"
+  },
+  {
+    user_id: 3, 
+    restaurant_id: 12, 
+    rating: 4,
+    review_text: "Unique restaurant where all of the wait staff are actually pigeons in tuxedos"
+  },
+  {
+    user_id: 3, 
+    restaurant_id: 10, 
+    rating: 3,
+    review_text: "the food was cooked well, but under-seasoned"
+  },
+  {
+    user_id: 3, 
+    restaurant_id: 8, 
+    rating: 4,
+    review_text: "quick and friendly service"
+  },
+  {
+    user_id: 4, 
+    restaurant_id: 7, 
+    rating: 4,
+    review_text: "tasty tea"
+  },
+  {
+    user_id: 4, 
+    restaurant_id: 11, 
+    rating: 5,
+    review_text: "Delicious combo of spices and flavors!"
+  },
+  {
+    user_id: 5, 
+    restaurant_id: 7, 
+    rating: 5,
+    review_text: "Great new bubble tea shoppe!"
+  },
+  {
+    user_id: 5, 
+    restaurant_id: 9, 
+    rating: 5,
+    review_text: "yummy and refreshing!"
   }
 ];
 
