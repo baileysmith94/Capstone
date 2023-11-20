@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 import LeaveReviewModal from "./LeaveReviewModal";
 import StarIcon from '@mui/icons-material/Star';
+import CommentBox from "./CommentList";
+
 
 function RestaurantList({ showSearchBar = true, limit }) {
   const [restaurants, setRestaurants] = useState([]);
@@ -30,13 +32,13 @@ function RestaurantList({ showSearchBar = true, limit }) {
       const response = await fetch(`/api/restaurants/${restaurantId}/reviews`);
       if (response.ok) {
         const data = await response.json();
-        console.log('Received data:', data);
+        console.log("Received data:", data);
         setReviews(data.reviews);
       } else {
-        console.error('Failed to fetch reviews. Status:', response.status);
+        console.error("Failed to fetch reviews. Status:", response.status);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   }
 
@@ -46,10 +48,11 @@ function RestaurantList({ showSearchBar = true, limit }) {
 
   const restaurantToDisplay = searchParam
     ? restaurants
-      .filter((restaurant) => restaurant.name.toLowerCase().includes(searchParam))
-      .slice(0,limit)
-  
-    : restaurants.slice(0,limit);
+        .filter((restaurant) =>
+          restaurant.name.toLowerCase().includes(searchParam)
+        )
+        .slice(0, limit)
+    : restaurants.slice(0, limit);
 
   return (
     <>
@@ -123,7 +126,7 @@ function RestaurantList({ showSearchBar = true, limit }) {
                   <div className="mb-1">
                     <strong>Rating:</strong> {review.rating}
                   </div>
-                  <div>{review.review_text}</div>
+                  <div>{review.review_text}</div> <CommentBox reviewId={review.id}/>
                 </li>
               ))}
             </ul>

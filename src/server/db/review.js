@@ -12,6 +12,7 @@ const getAllReviews = async () => {
   }
 }
 
+
 const getReviewByUserAndRestaurant = async (userId, restaurantId) => {
   try {
     const { rows } = await db.query(`
@@ -27,6 +28,7 @@ const getReviewByUserAndRestaurant = async (userId, restaurantId) => {
 };
 
 const createReview = async ({ user_id, restaurant_id, rating, review_text, image_url }, token) => {
+
   try {
     const { rows: [review] } = await db.query(`
       INSERT INTO reviews(user_id, restaurant_id, rating, review_text, image_url)

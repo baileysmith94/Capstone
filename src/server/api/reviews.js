@@ -181,5 +181,30 @@ reviewsRouter.delete('/:id', requireUser, async (req, res, next) => {
   //   }
   // });
   
+  reviewsRouter.delete('/:postId',  async (req, res, next) => {
+    try{
+      const {reviewId, user_id, is_admin} = req.params;
+      const reviewToUpdate = await getReviewById(reviewId);
+      if(!reviewToUpdate) {
+        next({
+          name: 'NotFound',
+          message: `No post by ID ${reviewId}`
+        })
+        // reviewToUpdate.user_id?? would this be admin? Since admin is only allowed to delete
+      } else if (req.user_id !== reviewToUpdate.user_id || !is_admin) {
+        res.status(403); 
+        next({
+          name: "WrongUserError",
+          message: "You must be the same user who created this review, or an admin, to perform this action"
+        });
+      } else {
+        const deletedReview = await destroyReview(reviewId)
+        res.send({success: true, ...deletedReview})
+      }
+    } catch (error) {
+      next(error)
+    }
+  });
+
 
 module.exports = reviewsRouter;

@@ -1,8 +1,12 @@
 const express = require("express");
 const apiRouter = express.Router();
 
+
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
+
+
+
 const volleyball = require("volleyball");
 const { getUserById } = require("../db");
 apiRouter.use(volleyball);
@@ -53,6 +57,11 @@ apiRouter.use("/restaurants", restaurantsRouter);
 
 const reviewsRouter = require("./reviews");
 apiRouter.use("/reviews", reviewsRouter);
+
+
+
+const commentRouter = require(`./comments`);
+apiRouter.use(`/comments`, commentRouter) ;
 
 
 module.exports = apiRouter;
