@@ -234,7 +234,6 @@ const createTables = async () => {
             rating INT NOT NULL,
             review_text TEXT,
             image_url VARCHAR(255),
-            comment VARCHAR(255),
             CONSTRAINT valid_rating CHECK (rating >= 0 AND rating <= 5)
         );`);
   } catch (err) {

@@ -26,12 +26,12 @@ const getReviewByUserAndRestaurant = async (userId, restaurantId) => {
   }
 };
 
-const createReview = async ({ user_id, restaurant_id, rating, review_text, image_url, comment }, token) => {
+const createReview = async ({ user_id, restaurant_id, rating, review_text, image_url }, token) => {
   try {
     const { rows: [review] } = await db.query(`
-      INSERT INTO reviews(user_id, restaurant_id, rating, review_text, image_url, comment)
-      VALUES($1, $2, $3, $4, $5, $6)
-      RETURNING *`, [user_id, restaurant_id, rating, review_text, image_url, comment]);
+      INSERT INTO reviews(user_id, restaurant_id, rating, review_text, image_url)
+      VALUES($1, $2, $3, $4, $5)
+      RETURNING *`, [user_id, restaurant_id, rating, review_text, image_url]);
 
     return review;
   } catch (err) {
