@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
+import StarIcon from '@mui/icons-material/Star';
 
 const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
   const [showModal, setShowModal] = useState(false);
@@ -124,6 +125,11 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
           <Form>
             <Form.Group controlId="formRating">
               <Form.Label>Rating</Form.Label>
+              <div>
+                {Array.from({ length: Math.round(rating) }, (_, index) => (
+                  <StarIcon key={index} />
+                ))}
+              </div>
               <Form.Control
                 type="number"
                 min="1"
