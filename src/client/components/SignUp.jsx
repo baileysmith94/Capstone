@@ -38,6 +38,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
 
   const handleNameChange = (e) => {
@@ -49,11 +50,25 @@ const SignUp = () => {
   };
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+
+    // Check password length
+    if (newPassword.length < 8) {
+      setPasswordError("Password must be at least 8 characters long.");
+    } else {
+      setPasswordError("");
+    }
   };
 
   const signUp = async () => {
     try {
+      // Additional check for password length
+      if (password.length < 8) {
+        setPasswordError("Password must be at least 8 characters long.");
+        return;
+      }
+
       const response = await fetch("http://localhost:3000/api/users/register", {
         method: "POST",
         headers: {
@@ -78,6 +93,7 @@ const SignUp = () => {
       setName("");
       setEmail("");
       setPassword("");
+      setPasswordError("");
     } catch (err) {
       console.error(`${err.name}: ${err.message}`);
     }
@@ -133,13 +149,14 @@ const SignUp = () => {
             onChange={handlePasswordChange}
             required
           />
+          {/* Display password error */}
+          {passwordError && (
+            <Typography variant="body2" color="error" align="center">
+              {passwordError}
+            </Typography>
+          )}
         </CredentialsInput>
-        <SignUpButton
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-        >
+        <SignUpButton type="submit" fullWidth variant="contained" color="primary">
           Sign Up
         </SignUpButton>
       </SignUpForm>
