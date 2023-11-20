@@ -6,6 +6,8 @@ import CreateReviewForm from "./myReviewForm";
 
 export default function myReviews () {
     const [reviews, setReviews] = useState([]);
+    // line below
+    // const [user_id, setUser_id] = useState("");
     const [error, setError] = useState(null);
     const [editError, setEditError] = useState(null);
     const [deletionError, setDeletionError] = useState(null);
@@ -14,6 +16,7 @@ export default function myReviews () {
 
     useEffect(() => {
         if (token) {
+            // setUser_id(data.user_id);
             getReviewById(reviews, token)
             .then((data) => {
                 setReviews(data);
@@ -80,7 +83,7 @@ export default function myReviews () {
                         <button onClick={() => handleEditReview(review._id)}>Edit Review</button>
                     )}
                     {editError && <p>{editError}</p>}
-                    { isAdmin || review.user_id === token &&(
+                    {review.user_id === token &&(
                         <button onClick={() => handleDeleteReview(review._id)}>Delete Review</button>
                     )}
                     {deletionError && <p>{deletionError}</p>}

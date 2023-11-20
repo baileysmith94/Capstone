@@ -1,18 +1,15 @@
-/* Reset default browser styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body styles */
 body {
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
-  color: #333; 
+  color: #333;
 }
 
-/* Navigation bar styles */
 .nav-bar {
   position: fixed;
   top: 0;
@@ -20,12 +17,11 @@ body {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  background-color: #212529; /* Dark background color */
+  background-color: #212529;
   color: #fff;
   padding: 15px 0;
-  z-index: 100; /* Adjust the value as needed */
+  z-index: 100;
 }
-
 
 .nav-bar a {
   color: #fff;
@@ -61,19 +57,21 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Login form styles */
-.login {
-  text-align: center;
-  padding: 20px;
+/* New Restaurant Form styles */
+.add-rest{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 25vh;
   background-color: #f0f0f0;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  width: 300px;
-  margin: 0 auto;
-  margin-top: 5%;
 }
 
-
+.nav-link {
+  color: white;
+}
 
 h2 {
   font-size: 1.5rem;
@@ -86,12 +84,12 @@ form {
   align-items: center;
 }
 
-.cred {
+/* .cred {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin: 10px;
-}
+} */
 
 label {
   font-weight: bold;
@@ -108,7 +106,7 @@ input {
 
 button {
   padding: 10px 20px;
-  background-color: #0077b5;
+  background-color: #0071ad;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -191,7 +189,7 @@ p {
 
 /* Button styles */
 button {
-  background-color: #7a2323;
+  background-color: #b50000;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -206,34 +204,36 @@ button:hover {
 .login-status {
   position: fixed;
   bottom: 0;
-  background-color: #b50000; 
+  background-color: #b50000;
   color: #fff;
   padding: 10px;
   border-radius: 5px;
   text-align: start;
   font-weight: bold;
   margin: 10px;
+  margin-top: 70px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
 }
 
+.login-status button {
+  background-color: #333;
+}
+
 .login-status p {
-  margin: 0; 
+  margin: 0;
+}
+
+.login-status a {
+  color: white;
+  text-decoration: none;
 }
 
 .log-out-button {
   display: flex;
   justify-content: center;
   flex-direction: column;
-}
-
-.user-list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15%;
 }
 
 .reviews {
@@ -249,6 +249,7 @@ button:hover {
   background-color: rgb(44, 44, 44);
   margin: auto;
   margin-top: 5%;
+  margin-bottom: 5%;
   border-radius: 10px;
 }
 
@@ -266,19 +267,36 @@ button:hover {
 }
 
 .img-fluid.mb-3 {
-  max-width: 40%; 
+  max-width: 40%;
   height: auto;
-  display: block; 
+  display: block;
   margin: 0 auto;
   border-radius: 5px;
 }
 
-/* i think media queries go below everything */
-@media screen and (max-width: 768px) {
-  .profile-page {
-    margin-top: 20%;
-  }
+.add-rest {
+  margin: 3%;
+  padding: 15%;
 }
+
+.add-rest form {
+  margin-top: 5px;
+  padding: 0%;
+  
+  
+}
+
+.admin-rest {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.delete-rest {
+  margin-top: 3%;
+}
+
+
 
 /* Homepage Styling */
 .logo {
@@ -304,4 +322,40 @@ button:hover {
   display: flex;
   justify-content: center;
   margin-bottom: 7vw;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease; /* Adjust the duration if its too fast */
+}
+
+/* i think media queries go below everything */
+@media screen and (max-width: 768px) {
+  .profile-page {
+    margin-top: 20%;
+  }
+
+  .add-rest {
+    padding: 0%;
+    margin: 5%;
+  }
+
+  .homeReviews h2 {
+    margin: auto;
+    padding: 0;
+    font-size: 1.3rem;
+  }
+
+  .add-rest form {
+    margin-top: 5%;
+    padding: 0%;
+  }
 }

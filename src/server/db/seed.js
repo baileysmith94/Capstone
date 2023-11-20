@@ -9,6 +9,7 @@ const users = [
     name: "Emily Johnson",
     email: "emily@example.com",
     password: "securepass",
+    is_admin:true, 
   },
   {
     name: "Liu Wei",
@@ -39,28 +40,28 @@ const restaurants = [
     name: "Scott's Sandwiches",
     address: "123 Main St",
     phone_number: "555-123-4567",
-    type: "A",
+    type: "Italian",
     image_url: "./images/sandwich.png"
   },
   {
     name: "Peanut Garden",
     address: "5656 Garden Lane",
     phone_number: "281-593-3210",
-    type: "B",
+    type: "American",
     image_url: "./images/peanutgarden.png"
   },
   {
     name: "Wisconsin Roadhouse",
     address: "321 Get Lost Lane",
     phone_number: "303-597-7256",
-    type: "C",
+    type: "American",
     image_url: "./images/wisconsin.png"
   },
   {
     name: "Taco King",
     address: "301 Gordita Street",
     phone_number: "808-901-3278",
-    type: "D",
+    type: "Mexican",
     image_url: "./images/tacoking.png"
   },
 
@@ -68,79 +69,193 @@ const restaurants = [
     name: "Poultry Roaster",
     address: "999 Rotisserie Road",
     phone_number: "999-593-0303",
-    type: "E",
+    type: "American",
     image_url: "./images/poultry.png"
   },
   {
     name: "Gorgonzola Express",
     address: "0001 Stinky Street",
     phone_number: "578-371-9456",
-    type: "F",
+    type: "Italian",
     image_url: "./images/gorgon.png"
   },
+  {
+    name: "Poppin' Bubbles",
+    address: "321 Splat Street",
+    phone_number: "123-456-7890",
+    type: "Tawianese",
+    image_url: "./images/popbub.png"
+  },
+  {
+    name: "Yoko's Sushi",
+    address: "777 Lucky Boulevard",
+    phone_number: "777-777-7777",
+    type: "Japanese",
+    image_url: "./images/yokosushi.png"
+  },
+  {
+    name: "Smoothie Shack",
+    address: "363 Fruit Avenue",
+    phone_number: "510-765-2121",
+    type: "US/California",
+    image_url: "images/smoothie.png"
+  },
+  {
+    name: "The Vegan Difference",
+    address: "5445 Free Street",
+    phone_number: "310-321-1245",
+    type: "US/Califonia",
+    image_url: "./images/TVD.png"
+  },
+  {
+    name: "Curry in a Hurry",
+    address: "108 Enlightenment Road",
+    phone_number: "108-108-1081",
+    type: "Indian",
+    image_url: "images/curry.png"
+  },
+  {
+    name: "Le Pigeon",
+    address: "000 Route des Oiseaux",
+    phone_number: "331-991-4231",
+    type: "French",
+    image_url: "./images/pigeon.png"
+  }
 ];
 
 const reviews = [
   {
-    user_id: 1, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 2, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 1, 
+    restaurant_id: 2, 
     rating: 3,
     review_text: "Great food and service, blah blah blah",
   },
   {
-    user_id: 3, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 4, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 3, 
+    restaurant_id: 4,
     rating: 4,
     review_text: 'Great food and service!!!',
 
   },
   {
-    user_id: 2, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 6, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 2, 
+    restaurant_id: 6, 
     rating: 2,
     review_text: "Very sticky restaurant!",
   },
   {
-    user_id: 4, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 3, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 4, 
+    restaurant_id: 3, 
     rating: 5,
     review_text: "The food was wonderful, and the service was excellent",
   },
   {
-    user_id: 5, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 1, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 5, 
+    restaurant_id: 1, 
     rating: 5,
     review_text: "Lovely restaurant with very nice staff",
   },
   {
-    user_id: 1, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 4, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 1, 
+    restaurant_id: 4,
     rating: 3,
     review_text: 'Not my first pick',
   },
  {
-    user_id: 3, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 2, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 3, 
+    restaurant_id: 2, 
     rating: 5,
     review_text: 'Great food and service!',
   },
  {
-    user_id: 2, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 5, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 2,
+    restaurant_id: 5, 
     rating: 2,
     review_text: 'Very sticky restaurant!',
   },
  {
-    user_id: 4, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 2, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 4, 
+    restaurant_id: 2, 
     rating: 5,
     review_text: 'The food was wonderful, service was phenomenal',
   },
  {
-    user_id: 5, // Replace with the actual user ID?? (or use faker?)
-    restaurant_id: 6, // Replace with the actual restaurant ID?? (or use faker?)
+    user_id: 5, 
+    restaurant_id: 6, 
     rating: 3,
     review_text: 'Food was cold but the service was great',
+  }, 
+  {
+    user_id: 1, 
+    restaurant_id: 12, 
+    rating: 5,
+    review_text: "Your tastebuds will take flight here!"
+  }, 
+  {
+    user_id: 1, 
+    restaurant_id: 11, 
+    rating: 3,
+    review_text: "I found a hair in my food!"
+  },
+  {
+    user_id: 1, 
+    restaurant_id: 9, 
+    rating: 5,
+    review_text: "very fresh!"
+  },
+  {
+    user_id: 2, 
+    restaurant_id: 8, 
+    rating: 3,
+    review_text: "something smells fishy here"
+  },
+  {
+    user_id: 2, 
+    restaurant_id: 10, 
+    rating: 3,
+    review_text: "small portions, they didn't have any chicken!"
+  },
+  {
+    user_id: 3, 
+    restaurant_id: 12, 
+    rating: 4,
+    review_text: "Unique restaurant where all of the wait staff are actually pigeons in tuxedos"
+  },
+  {
+    user_id: 3, 
+    restaurant_id: 10, 
+    rating: 3,
+    review_text: "the food was cooked well, but under-seasoned"
+  },
+  {
+    user_id: 3, 
+    restaurant_id: 8, 
+    rating: 4,
+    review_text: "quick and friendly service"
+  },
+  {
+    user_id: 4, 
+    restaurant_id: 7, 
+    rating: 4,
+    review_text: "tasty tea"
+  },
+  {
+    user_id: 4, 
+    restaurant_id: 11, 
+    rating: 5,
+    review_text: "Delicious combo of spices and flavors!"
+  },
+  {
+    user_id: 5, 
+    restaurant_id: 7, 
+    rating: 5,
+    review_text: "Great new bubble tea shoppe!"
+  },
+  {
+    user_id: 5, 
+    restaurant_id: 9, 
+    rating: 5,
+    review_text: "yummy and refreshing!"
   }
 ];
 
@@ -191,7 +306,11 @@ const createTables = async () => {
             restaurant_id INT REFERENCES restaurants(id),
             rating INT NOT NULL,
             review_text TEXT,
-            image_url VARCHAR(255)
+
+            image_url VARCHAR(255),
+            CONSTRAINT valid_rating CHECK (rating >= 0 AND rating <= 5)
+        );`);
+
         );
         CREATE TABLE comments(
           id SERIAL PRIMARY KEY,
@@ -200,25 +319,39 @@ const createTables = async () => {
           comment VARCHAR(255)
         );
       `);
+
   } catch (err) {
     throw err;
   }
 };
 
+// Your seed script
 const insertUsers = async () => {
   try {
-    for (const user of users) {
-      await createUser({
+    for (const [index, user] of users.entries()) {
+      const isEmily = user.name === "Emily Johnson";
+      const createdUser = await createUser({
         name: user.name,
         email: user.email,
         password: user.password,
+        is_admin: isEmily, // Set is_admin to true for Emily Johnson
       });
+
+      console.log("User inserted:", createdUser);
+
+      if (isEmily) {
+        console.log("Making Emily an admin...");
+        await db.query("UPDATE users SET is_admin = true WHERE id = $1", [createdUser.id]);
+      }
     }
     console.log("Seed data inserted successfully.");
   } catch (error) {
     console.error("Error inserting seed data:", error);
   }
 };
+
+
+
 
 const insertRestaurants = async () => {
   try {

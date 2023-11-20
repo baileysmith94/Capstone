@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { styled } from '@mui/system';
+
+const UserItem = styled('div')({
+  padding: '8px', // Use whatever values you prefer
+  marginBottom: '8px',
+  border: '1px solid #ccc',
+  borderRadius: '4px',
+  display: 'flex',
+  width: '100%',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
 
 function UserList() {
   const [users, setUsers] = useState();
-  console.log(users);
 
-  async function FetchUserData() {
+  async function fetchUserData() {
     try {
       const response = await fetch("http://localhost:3000/api/users");
-      console.log(response);
       if (response.ok) {
         const result = await response.json();
-        console.log(result);
         setUsers(result.users);
       } else {
         console.error("Failed to fetch");
@@ -19,24 +28,24 @@ function UserList() {
       console.error(err);
     }
   }
+
   useEffect(() => {
-    FetchUserData();
+    fetchUserData();
   }, []);
 
-  // console.log(users);
   return (
     users && (
-      <>
-        <div className="user-list">
-          {users.map((users) => (
-            <ul key={users.id}>
-              <li>
-                Name: {users.name} Email: {users.email}
-              </li>
-            </ul>
-          ))}
-        </div>
-      </>
+      <div className="user-list">
+        {users.map((user) => (
+          <UserItem key={user.id}>
+            <div>
+              <div>Name: {user.name}</div>
+              <div>Email: {user.email}</div>
+              <div>Admin: {user.is_admin ? "Yes" : "No"}</div>
+            </div>
+          </UserItem>
+        ))}
+      </div>
     )
   );
 }

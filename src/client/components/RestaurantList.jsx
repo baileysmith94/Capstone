@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
+import LeaveReviewModal from "./LeaveReviewModal";
+import StarIcon from '@mui/icons-material/Star';
 import CommentBox from "./CommentList";
+
 
 function RestaurantList({ showSearchBar = true, limit }) {
   const [restaurants, setRestaurants] = useState([]);
@@ -70,13 +73,18 @@ function RestaurantList({ showSearchBar = true, limit }) {
         {restaurantToDisplay.map((restaurant) => (
           <div key={restaurant.id} className="restaurant-item">
             <h3>{restaurant.name}</h3>
-            <p>{restaurant.address}</p>
-            <p>Average Rating: {restaurant.average_rating}</p>
             <img
               src={restaurant.image_url}
               alt={restaurant.name}
               className="restaurant-image"
-            />
+            /> 
+            <p>Type: {restaurant.type}</p>
+            <p>{restaurant.address}</p>
+            <p>Average Rating:{' '}
+            {Array.from({ length: Math.round(restaurant.average_rating) }, (_, index) => (
+              <StarIcon key={index} />
+            ))} </p>
+            <LeaveReviewModal restaurantId={restaurant.id} />
             <button
               onClick={() => {
                 if (
