@@ -21,17 +21,7 @@ commentRouter.get(`/`, async( req, res, next) => {
     }
 });
 
-// commentRouter.get('/:user_id', async( req, res, next) => {
-//     try {
-//         const comments = await getCommentsByUserId(req.params.user_id);
 
-//         res.send({
-//             comments
-//         });
-//     } catch (error) {
-//         next(error)
-//     }
-// });
 commentRouter.get('/:review_id', async( req, res, next) => {
     try {
         const comments = await getCommentsByReviewId(req.params.review_id);
@@ -43,27 +33,7 @@ commentRouter.get('/:review_id', async( req, res, next) => {
     }
 });
 
-// post /api/comments. create a new comment
-// commentRouter.post('/createdComment', requireUser, async (req, res, next) => {
-//     try {
-//         const comment = req.body;
-//         const { id: userId } = req.user;
-//         const newComment = await createComment({userId, reviewId, comment});
-//         if(newComment) {
-//             res.send(newComment);
-//             console.log("The new comment is:", newComment)
-//         }else {
-//             console.log("failed to create comment")
-//             next({
-//               name: 'FailedToCreate',
-//               message: 'There was an error creating your comment'
-//             })
-//         }
-//         }
-//      catch (error) {console.log(error)
-        
-//     next(error);}
-// });
+
 commentRouter.post('/', async  (req, res, next) => {
     console.log("POSTING TO COMMENTS ROUTE!!!")
     
@@ -84,6 +54,21 @@ commentRouter.post('/', async  (req, res, next) => {
     }
 });
 
+commentRouter.delete('/:id', async (req, res, next) => {
+    try {
+        const destroyComment = await deleteComment(req.params.id);
+        console.log("Attempt to delete the comment:")
+        if(destroyComment) {
+            res.send(destroyComment)
+        } else {
+            next({
+                message: `failed to delete comment`
+            })
+        }
+    } catch (err) {
+        throw err
+    }
+})
 
 
 module.exports = commentRouter

@@ -32,7 +32,7 @@ const createComment = async ({ user_id, review_id, comment}) => {
 const getCommentsByReviewId = async (reviewId) => {
     try {
       const { rows } = await db.query(`
-        SELECT comments.review_id, comments.comment, users.name FROM comments
+        SELECT comments.id, comments.review_id, comments.comment, users.name FROM comments
         INNER JOIN users ON comments.user_id=users.id
         WHERE review_id = $1;
       `, [reviewId]);
@@ -57,10 +57,7 @@ const getCommentsByUserId = async (userId) => {
 
 const deleteComment = async (id) => {
     try {
-        await client.query(`
-        DELETE FROM comments
-        WHERE "commentId" = $1;`, [id]);
-        const {rows: [comment]} = await client.query(`
+        const {rows: [comment]} = await db.query(`
             DELETE FROM comments 
              WHERE id = $1
             RETURNING *
