@@ -3,7 +3,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 // npm install react-native-dropdown-picker
 
 export default function CreateReviewForm(token, {reviews, setReviews}) {
-    const [user_id, setUser_id] = useState("");
+    // const [user_id, setUser_id] = useState("");
     const [restaurant_id, setRestaurant_id] = useState("");
     const [rating, setRating] = useState("");
     const [review_text, setReview_text] = useState("");
@@ -42,7 +42,7 @@ export default function CreateReviewForm(token, {reviews, setReviews}) {
 
           const newReviewList = [...reviews, result.data.newReview];
           setReviews(newReviewList)
-          setUser_id(result.id);
+          // setUser_id(result.id);
           setRating("");
           setReview_text("");
           setImage_url(null);

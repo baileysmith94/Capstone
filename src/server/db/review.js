@@ -33,21 +33,19 @@ const createReview = async ({ user_id, restaurant_id, rating, review_text, image
       VALUES($1, $2, $3, $4, $5, $6)
       RETURNING *`, [user_id, restaurant_id, rating, review_text, image_url, comment]);
 
-
     return review;
   } catch (err) {
     throw err;
   }
 }
 
-
-const getReviewById = async (reviewId) => {
+const getReviewById = async (id) => {
   try {
     const { rows: [review] } = await db.query(`
       SELECT * 
       FROM reviews
-      WHERE id = $1;`, [reviewId]);
-
+      WHERE id = $1;`, [id]);
+     
     return review;
   } catch (err) {
     throw err;
@@ -76,7 +74,6 @@ const getReviewsByRestaurantId = async (restaurantId) => {
   }
 };
 
-
 //DELETE MAYbe
 const getReviewsByUserId = async (userId) => {
   try {
@@ -101,7 +98,6 @@ async function updateReviewById(id, fields = {}) {
   if (setString.length === 0) {
       return;
   }
-
   try {
       const {rows: [review]}  = await db.query(`
       UPDATE reviews
@@ -138,17 +134,13 @@ const getUserReviewByRestaurantId = async (userId, restaurantId) => {
 };
 
 
-async function destroyReview(id) {
+async function destroyReview(user_id) {
   try {
-    await client.query(`
-    DELETE FROM reviews
-    WHERE "reviewId" = $1;
-    `, [id]);
-    const {rows: [review]} = await client.query(`
+    const {rows: [review]} = await db.query(`
       DELETE FROM reviews 
       WHERE id = $1
       RETURNING *
-    `, [id]);
+    `, [user_id]);
     return review;
   } catch (error) {
     throw error;

@@ -13,8 +13,6 @@ const {
 const { requireUser, requiredNotSent } = require('./utils');
 const jwt = require('jsonwebtoken');
 
-
-
 reviewsRouter.get('/', async( req, res, next) => {
     try {
         const reviews = await getAllReviews();
@@ -26,43 +24,6 @@ reviewsRouter.get('/', async( req, res, next) => {
         next({name, type})
     }
 });
-
-// reviewsRouter.post('/', requireUser, async (req, res, next) => {
-//   try {
-//     const { user_id, restaurant_id, rating, review_text, type = "", image_url } = req.body;
-//     const reviewData = {};
-
-//     // Get the user ID from the decoded token
-//     const token = req.headers.authorization.split(" ")[1];
-//     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-//     const userIdFromToken = decodedToken.user.id;
-
-//     // Ensure that the user making the request is the same as the one in the token
-//     if (userIdFromToken !== user_id) {
-//       return res.status(401).json({ error: "Unauthorized user" });
-//     }
-
-//     reviewData.user_id = user_id;
-//     reviewData.restaurant_id = restaurant_id;
-//     reviewData.rating = rating;
-//     reviewData.review_text = review_text;
-//     reviewData.type = type;
-//     reviewData.image_url = image_url;
-
-//     const createdReview = await createReview(reviewData);
-
-//     if (createdReview) {
-//       res.send(createdReview);
-//     } else {
-//       next({
-//         name: 'PostCreationError',
-//         message: 'There was an error creating your review. Please try again.'
-//       });
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 reviewsRouter.post('/', requireUser, async (req, res, next) => {
   try {
@@ -148,25 +109,26 @@ reviewsRouter.patch('/:id', requireUser, async (req, res, next) => {
     }
   });
   
-  reviewsRouter.delete('/:postId', requireUser, async (req, res, next) => {
+  reviewsRouter.delete('/:id', requireUser, async (req, res, next) => {
     try{
-    const {reviewId} = req.params;
-      const reviewToUpdate = await getReviewById(reviewId);
-      if(!reviewToUpdate) {
+      const {id} = req.params;
+      // const reviewToDelete = await getReviewsByUserId(req.user.id);
+      const reviewToDelete= await getReviewById(id);
+      console.log("req.user.id", req.user.id)
+      if(!reviewToDelete) {
         next({
           name: 'NotFound',
-          message: `No post by ID ${reviewId}`
+          message: `No routine by ID ${id}`
         })
-        
-      } else if (req.user_id !== reviewToUpdate.user_id) {
-        res.status(403); 
+      } else if(req.user.id !== reviewToDelete.user_id) {
+        res.status(403);
         next({
           name: "WrongUserError",
-          message: "You must be the same user who created this review, or an admin, to perform this action"
+          message: "You must be the same user who created this routine to perform this action"
         });
       } else {
-        const deletedReview = await destroyReview(reviewId)
-        res.send({success: true, ...deletedReview})
+        const deletedReview = await destroyReview(id);
+        res.send({success: true, ...deletedReview});
       }
     } catch (error) {
       next(error)
