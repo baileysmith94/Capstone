@@ -107,46 +107,46 @@ reviewsRouter.patch('/:id', requireUser, async (req, res, next) => {
     } catch (error) {
       next(error);
     }
-  });
+});
 
-  reviewsRouter.delete('/:id', requireUser, async (req, res, next) => {
-    try {
-      const reviewId = req.params.id;
-      const reviewToDelete = await getReviewById(reviewId);
+reviewsRouter.delete('/:id', requireUser, async (req, res, next) => {
+  try {
+    const reviewId = req.params.id;
+    const reviewToDelete = await getReviewById(reviewId);
   
-      if (!reviewToDelete) {
-        return res.status(404).json({
-          success: false,
-          message: `Review with ID ${reviewId} not found.`,
-        });
-      }
-  
-      // Check if the user making the request is the owner of the review or an admin
-      if (req.user.id !== reviewToDelete.user_id) {
-        return res.status(403).json({
-          success: false,
-          message: "You must be the owner of the review or an admin to delete it.",
-        });
-      }
-  
-      const deletedReview = await destroyReview(reviewId);
-  
-      if (deletedReview) {
-        res.json({
-          success: true,
-          message: "Review deleted successfully.",
-          deletedReview,
-        });
-      } else {
-        next({
-          name: 'DeleteReviewError',
-          message: 'There was an error deleting the review. Please try again.',
-        });
-      }
-    } catch (error) {
-      next(error);
+    if (!reviewToDelete) {
+      return res.status(404).json({
+        success: false,
+        message: `Review with ID ${reviewId} not found.`,
+      });
     }
-  });
+  
+    // Check if the user making the request is the owner of the review or an admin
+    if (req.user.id !== reviewToDelete.user_id) {
+      return res.status(403).json({
+        success: false,
+        message: "You must be the owner of the review or an admin to delete it.",
+      });
+    }
+  
+    const deletedReview = await destroyReview(reviewId);
+  
+    if (deletedReview) {
+      res.json({
+        success: true,
+        message: "Review deleted successfully.",
+        deletedReview,
+      });
+    } else {
+      next({
+        name: 'DeleteReviewError',
+        message: 'There was an error deleting the review. Please try again.',
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
   
 
   //--!!!!!!--There was an issue with this route.. im not sure what but i copied and pasted it above and adjusted it. I think it was an issue with req.body and my mess up with all of that stuff in the beginning - AJ
