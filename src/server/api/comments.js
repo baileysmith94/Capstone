@@ -55,7 +55,7 @@ commentRouter.post('/', requireUser, async  (req, res, next) => {
     }
 });
 
-commentRouter.delete('/:id', async (req, res, next) => {
+commentRouter.delete('/:id', requireUser, async (req, res, next) => {
     try {
         const destroyComment = await deleteComment(req.params.id);
         console.log("Attempt to delete the comment:")
