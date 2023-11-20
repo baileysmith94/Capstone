@@ -98,7 +98,7 @@ const restaurants = [
     address: "363 Fruit Avenue",
     phone_number: "510-765-2121",
     type: "US/California",
-    image_url: ".images/smoothie.png"
+    image_url: "images/smoothie.png"
   },
   {
     name: "The Vegan Difference",
@@ -112,7 +112,7 @@ const restaurants = [
     address: "108 Enlightenment Road",
     phone_number: "108-108-1081",
     type: "Indian",
-    image_url: ".images/curry.png"
+    image_url: "images/curry.png"
   },
   {
     name: "Le Pigeon",
