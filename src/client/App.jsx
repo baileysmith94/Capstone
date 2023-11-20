@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import "./style.css";
 import UserList from "./components/userlist";
 import ProfilePage from "./components/ProfilePage";
-import Home from "./components/home";
+import Home from "./components/Home";
 
 
 //TO SEE IF A TOKEN IS ACTIVLY BEING USED
