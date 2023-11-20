@@ -253,9 +253,22 @@ const [editText, setEditText] = useState(null);
             userReviews.map((review, index) => (
               <div key={review.id} className="card mb-3">
                 <div className="card-body single-review">
-                  <h3 className="card-subtitle mb-2 text-muted">
-                    {review.restaurant_name || "Unknown Restaurant"}
-                  </h3>
+                <div className="d-flex justify-content-between align-items-center">
+          <h3 className="card-subtitle text-muted">
+            {review.restaurant_name || "Unknown Restaurant"}
+          </h3>
+          <div className="ms-auto"> {/* Use ms-auto to push content to the right */}
+            <EditIcon
+              style={{ cursor: "pointer", color: "#b50000", marginRight: '10px' }}
+              onClick={() => handleEditReview(review.id)}
+            />
+            <DeleteIcon
+              style={{ cursor: "pointer", color: "#b50000" }}
+              onClick={() => setDeleteConfirmation(review.id)}
+            />
+          </div>
+        </div>
+
                   {review.restaurant_image_url && (
                     <div>
                       <img
@@ -273,14 +286,7 @@ const [editText, setEditText] = useState(null);
                   </p>
                   {index < userReviews.length - 1 && <hr />}
                   <span>
-                  <EditIcon
-                      style={{ cursor: "pointer", color: "#b50000", marginRight: '10px' }}
-                      onClick={() => handleEditReview(review.id)}
-                    />
-                    <DeleteIcon
-                      style={{ cursor: "pointer", color: "#b50000", marginRight: '10px' }}
-                      onClick={() => setDeleteConfirmation(review.id)}
-                    />
+                 
                     
                   </span>
                 </div>
@@ -327,7 +333,7 @@ const [editText, setEditText] = useState(null);
           onChange={(e) => setEditText(e.target.value)}
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button variant="danger" type="submit" style={{backgroundColor:'#b50000'}}>
         Save Changes
       </Button>
     </Form>

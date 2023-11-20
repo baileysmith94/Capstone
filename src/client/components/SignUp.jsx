@@ -10,6 +10,8 @@ import {
   CssBaseline,
 } from "@mui/material";
 
+
+
 const SignUpContainer = styled(Container)({
   marginTop: 150,
   display: "flex",
@@ -94,6 +96,7 @@ const SignUp = () => {
       setEmail("");
       setPassword("");
       setPasswordError("");
+      window.location.href = "/me";
     } catch (err) {
       console.error(`${err.name}: ${err.message}`);
     }

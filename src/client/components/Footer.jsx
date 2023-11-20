@@ -35,6 +35,8 @@ const FooterLink = styled(Link)({
 
 const FooterIcon = styled('span')({
   marginRight: theme => theme.spacing(1),
+  textAlign:'left',
+  alignItems:'left'
 });
 
 function Footer() {
@@ -64,12 +66,12 @@ function Footer() {
               </FooterListItem>
               <FooterListItem>
                 <FooterLink href="#">
-                  FAQ
+                Discover your city
                 </FooterLink>
               </FooterListItem>
               <FooterListItem>
                 <FooterLink href="#">
-                  Leave a Note!
+                  FAQ
                 </FooterLink>
               </FooterListItem>
             </FooterList>
