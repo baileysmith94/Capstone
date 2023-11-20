@@ -84,42 +84,66 @@ const restaurants = [
     address: "321 Splat Street",
     phone_number: "123-456-7890",
     type: "Tawianese",
+<<<<<<< HEAD
     image_url: "./images/popbub.png"
+=======
+    image_url: "images/popbub.png"
+>>>>>>> b43d9bca0c84584d792e0f59d595f9449d00cf0c
   },
   {
     name: "Yoko's Sushi",
     address: "777 Lucky Boulevard",
     phone_number: "777-777-7777",
     type: "Japanese",
+<<<<<<< HEAD
     image_url: "./images/yokosushi.png"
+=======
+    image_url: "images/yokosushi.png"
+>>>>>>> b43d9bca0c84584d792e0f59d595f9449d00cf0c
   },
   {
     name: "Smoothie Shack",
     address: "363 Fruit Avenue",
     phone_number: "510-765-2121",
     type: "US/California",
+<<<<<<< HEAD
     image_url: "./smoothie.png"
+=======
+    image_url: "images/smoothie.png"
+>>>>>>> b43d9bca0c84584d792e0f59d595f9449d00cf0c
   },
   {
     name: "The Vegan Difference",
     address: "5445 Free Street",
     phone_number: "310-321-1245",
     type: "US/Califonia",
+<<<<<<< HEAD
     image_url: "./images/TVD.png"
+=======
+    image_url: "images/TVD.png"
+>>>>>>> b43d9bca0c84584d792e0f59d595f9449d00cf0c
   },
   {
     name: "Curry in a Hurry",
     address: "108 Enlightenment Road",
     phone_number: "108-108-1081",
     type: "Indian",
+<<<<<<< HEAD
     image_url: "./curry.png"
+=======
+    image_url: "images/curry.png"
+>>>>>>> b43d9bca0c84584d792e0f59d595f9449d00cf0c
   },
   {
     name: "Le Pigeon",
     address: "000 Route des Oiseaux",
     phone_number: "331-991-4231",
     type: "French",
+<<<<<<< HEAD
     image_url: "./images/pigeon.png"
+=======
+    image_url: "images/pigeon.png"
+>>>>>>> b43d9bca0c84584d792e0f59d595f9449d00cf0c
   }
 ];
 

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import DropDownPicker from 'react-native-dropdown-picker';
+import StarIcon from '@mui/icons-material/Star';
 // npm install react-native-dropdown-picker
 
 export default function CreateReviewForm(token, {reviews, setReviews}) {
@@ -74,6 +75,11 @@ export default function CreateReviewForm(token, {reviews, setReviews}) {
             setItems={setItems}
             onClick={(e) => setRestaurant_id(e.target.value)}
           />
+          <div>
+            {Array.from({ length: Math.round(rating) }, (_, index) => (
+            <StarIcon key={index} />
+          ))}
+          </div>
           <input
             value={rating}
             type="int"
