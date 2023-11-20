@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 import LeaveReviewModal from "./LeaveReviewModal";
 import StarIcon from '@mui/icons-material/Star';
+import CommentBox from "./CommentList";
+import CommentForm from "./CommentForm";
 
 function RestaurantList({ showSearchBar = true, limit }) {
   const [restaurants, setRestaurants] = useState([]);
@@ -124,7 +126,10 @@ function RestaurantList({ showSearchBar = true, limit }) {
                     <strong>Rating:</strong> {review.rating}
                   </div>
                   <div>{review.review_text}</div>
+                  {console.log(review.id)}
+                  <CommentForm  reviewId={review.id}/>
                 </li>
+                
               ))}
             </ul>
           ) : (

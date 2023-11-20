@@ -54,5 +54,8 @@ apiRouter.use("/restaurants", restaurantsRouter);
 const reviewsRouter = require("./reviews");
 apiRouter.use("/reviews", reviewsRouter);
 
+const commentRouter = require(`./comments`);
+apiRouter.use(`/comments`, commentRouter) ;
+
 
 module.exports = apiRouter;
