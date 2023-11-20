@@ -11,10 +11,14 @@ const ProfilePage = () => {
   const [userReviews, setUserReviews] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
   const [deleteConfirmation, setDeleteConfirmation] = useState(null);
+  const [deleteRest, setDeleteRest] = useState(null);
   const [editRestaurantId, setEditRestaurantId] = useState(null);
   const [showRestaurants, setShowRestaurants] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
   const [showReviews, setShowReviews] = useState(true);
+  const [editReviewId, setEditReviewId] = useState(null);
+  const [editRating, setEditRating] = useState(null);
+const [editText, setEditText] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,6 +120,33 @@ const ProfilePage = () => {
     }
   };
   
+  const handleDeleteRestaurant = async (restaurantId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `http://localhost:3000/api/restaurants/${restaurantId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const updatedRestaurants = restaurants.filter(
+          (restaurant) => restaurant.id !== restaurantId
+        );
+        setRestaurants(updatedRestaurants);
+      } else {
+        console.error("Failed to delete restaurant");
+      }
+    } catch (error) {
+      console.error("Error deleting restaurant:", error);
+    }
+    window.location.reload();
+  };
 
   const handleEditRestaurant = (restaurantId) => {
     setEditRestaurantId(restaurantId);
@@ -151,6 +182,41 @@ const ProfilePage = () => {
   const handleCloseEditModal = () => {
     setEditRestaurantId(null);
   };
+
+  const handleEditReview = (reviewId, initialRating, initialText) => {
+    setEditReviewId(reviewId);
+    setEditRating(initialRating);
+    setEditText(initialText);
+  };
+  
+
+  const handleUpdateReview = async (formData) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `http://localhost:3000/api/reviews/${editReviewId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (response.ok) {
+        console.log("Review updated successfully!");
+        setEditReviewId(null);
+        window.location.reload();
+      } else {
+        console.error("Failed to update review");
+      }
+    } catch (error) {
+      console.error("Error updating review:", error);
+    }
+  };
+
 
   return (
     <div className="profile-page container">
@@ -207,14 +273,66 @@ const ProfilePage = () => {
                   </p>
                   {index < userReviews.length - 1 && <hr />}
                   <span>
-                  <DeleteIcon
-  style={{ cursor: "pointer", color: "red", marginRight: '10px' }}
-  onClick={() => setDeleteConfirmation(review.id)}
-/>
-
+                  <EditIcon
+                      style={{ cursor: "pointer", color: "#b50000", marginRight: '10px' }}
+                      onClick={() => handleEditReview(review.id)}
+                    />
+                    <DeleteIcon
+                      style={{ cursor: "pointer", color: "#b50000", marginRight: '10px' }}
+                      onClick={() => setDeleteConfirmation(review.id)}
+                    />
                     
                   </span>
                 </div>
+                {/* Modal for editing reviews */}
+                <Modal
+  show={editReviewId !== null}
+  onHide={() => {
+    setEditReviewId(null);
+    setEditRating(null);
+    setEditText(null);
+  }}
+>
+  <Modal.Header closeButton>
+    <Modal.Title>Edit Review</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <Form onSubmit={(e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+      handleUpdateReview(data);
+    }}>
+      <Form.Group controlId="editFormRating">
+        <Form.Label>Rating</Form.Label>
+        <Form.Control
+          type="number"
+          name="rating"
+          placeholder="Enter rating"
+          value={editRating || ''}
+          onChange={(e) => setEditRating(Math.min(e.target.value, 5))}
+          max={5}
+        />
+      </Form.Group>
+      <Form.Group controlId="editFormText">
+        <Form.Label>Review Text</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="review_text"
+          placeholder="Enter review text"
+          value={editText || ''}
+          onChange={(e) => setEditText(e.target.value)}
+        />
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Save Changes
+      </Button>
+    </Form>
+  </Modal.Body>
+</Modal>
               </div>
             ))
           ) : (
@@ -286,7 +404,7 @@ const ProfilePage = () => {
                     />
                     <DeleteIcon
                       style={{ cursor: "pointer" }}
-                      onClick={() => setDeleteConfirmation(restaurant.id)}
+                      onClick={() => setDeleteRest(restaurant.id)}
                     />
                   </span>
                 )}
@@ -296,12 +414,42 @@ const ProfilePage = () => {
         </ul>
       )}
 
+<Modal
+        show={deleteRest !== null}
+        onHide={() => setDeleteRest(null)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Are you sure you want to delete? This cant be undone.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setDeleteRest(null)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              handleDeleteRestaurant(deleteRest);
+              setDeleteRest(null);
+            }}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
       <Modal
         show={deleteConfirmation !== null}
         onHide={() => setDeleteConfirmation(null)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Delete Restaurant</Modal.Title>
+          <Modal.Title>Delete</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>Are you sure you want to delete? This cant be undone.</p>

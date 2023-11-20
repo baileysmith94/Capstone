@@ -7,6 +7,7 @@ const FooterContainer = styled('footer')({
   backgroundColor: '#f9f9f9',
   padding: theme => theme.spacing(4, 0),
   textAlign: 'center',
+  marginTop:'40px',
   marginBottom: '17px',
 });
 
@@ -25,7 +26,7 @@ const FooterListItem = styled('li')({
 });
 
 const FooterLink = styled(Link)({
-  color: '#b50000', // Set link color to b50000
+  color: '#b50000',
   textDecoration: 'none',
   '&:hover': {
     textDecoration: 'underline',
