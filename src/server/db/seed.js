@@ -84,14 +84,14 @@ const restaurants = [
     address: "321 Splat Street",
     phone_number: "123-456-7890",
     type: "Tawianese",
-    image_url: "images/popbub.png"
+    image_url: "./images/popbub.png"
   },
   {
     name: "Yoko's Sushi",
     address: "777 Lucky Boulevard",
     phone_number: "777-777-7777",
     type: "Japanese",
-    image_url: "images/yokosushi.png"
+    image_url: "./images/yokosushi.png"
   },
   {
     name: "Smoothie Shack",
@@ -105,7 +105,7 @@ const restaurants = [
     address: "5445 Free Street",
     phone_number: "310-321-1245",
     type: "US/Califonia",
-    image_url: "images/TVD.png"
+    image_url: "./images/TVD.png"
   },
   {
     name: "Curry in a Hurry",
@@ -119,7 +119,7 @@ const restaurants = [
     address: "000 Route des Oiseaux",
     phone_number: "331-991-4231",
     type: "French",
-    image_url: "images/pigeon.png"
+    image_url: "./images/pigeon.png"
   }
 ];
 
