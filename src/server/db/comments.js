@@ -69,7 +69,7 @@ const deleteComment = async (id) => {
 };
 
 const updateCommentbyId = async (id, fields = {}) => {
-    const setString = object.keys(fields).map(
+    const setString = Object.keys(fields).map(
         (key, index) => `"${key}"=$${index + 1}`
     ).join(', ');
     

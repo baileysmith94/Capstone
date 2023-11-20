@@ -35,9 +35,7 @@ commentRouter.get('/:review_id', async( req, res, next) => {
 });
 
 
-commentRouter.post('/', requireUser, async  (req, res, next) => {
-    console.log("POSTING TO COMMENTS ROUTE!!!")
-    
+commentRouter.post('/', requireUser, async  (req, res, next) => {   
     try {  
         const {user_id, review_id, comment} = req.body;
         const createdComment = await createComment({user_id, review_id, comment});
@@ -73,8 +71,18 @@ commentRouter.delete('/:id', requireUser, async (req, res, next) => {
 
 commentRouter.patch(`/:id`, async (req, res, next) => {
     try {
-        const comment = await updateCommentbyId(req.params.id, req.body);
-        res.send(comment);
+        const {user_id} = req.params;
+        const {comment} = req.body;
+        const commentEdit = await updateCommentbyId(req.params.id, req.body);
+        if ({rows:comment}.user_id === user_id){
+            res.send(commentEdit);
+        } else {
+            next({
+                name: 'UnauthorizedUserError',
+                message: 'You cannot update a comment that is not yours'
+              })
+        }
+        
     } catch (error) {
         next(error);
     }
