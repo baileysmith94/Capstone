@@ -145,7 +145,7 @@ const [editText, setEditText] = useState(null);
     } catch (error) {
       console.error("Error deleting restaurant:", error);
     }
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleEditRestaurant = (restaurantId) => {
@@ -257,7 +257,7 @@ const [editText, setEditText] = useState(null);
           <h3 className="card-subtitle text-muted">
             {review.restaurant_name || "Unknown Restaurant"}
           </h3>
-          <div className="ms-auto"> {/* Use ms-auto to push content to the right */}
+          <div className="ms-auto"> 
             <EditIcon
               style={{ cursor: "pointer", color: "#b50000", marginRight: '10px' }}
               onClick={() => handleEditReview(review.id)}
