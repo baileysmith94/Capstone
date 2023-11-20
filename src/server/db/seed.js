@@ -79,6 +79,48 @@ const restaurants = [
     type: "Italian",
     image_url: "./images/gorgon.png"
   },
+  {
+    name: "Poppin' Bubbles",
+    address: "321 Splat Street",
+    phone_number: "123-456-7890",
+    type: "Tawianese",
+    image_url: "insert image here"
+  },
+  {
+    name: "Yoko's Sushi",
+    address: "777 Lucky Boulevard",
+    phone_number: "777-777-7777",
+    type: "Japanese",
+    image_url: "insert image here"
+  },
+  {
+    name: "Smoothie Shack",
+    address: "363 Fruit Avenue",
+    phone_number: "510-765-2121",
+    type: "US/California",
+    image_url: "insert image here"
+  },
+  {
+    name: "The Vegan Difference",
+    address: "5445 Free Street",
+    phone_number: "310-321-1245",
+    type: "US/Califonia",
+    image_url: "insert image here"
+  },
+  {
+    name: "Curry in a Hurry",
+    address: "108 Enlightenment Road",
+    phone_number: "108-108-1081",
+    type: "Indian",
+    image_url: "insert image here"
+  },
+  {
+    name: "Le Pigeon",
+    address: "000 Route des Oiseaux",
+    phone_number: "331-991-4231",
+    type: "French",
+    image_url: "insert image here"
+  }
 ];
 
 const reviews = [
