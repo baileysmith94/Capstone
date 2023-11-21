@@ -5,12 +5,11 @@ import CommentBox from "./CommentList";
 export default function CommentForm(reviewId) {
   const token = localStorage.getItem("token");
   const [comment, setComment] = useState("");
-  const review_id = reviewId.reviewId
-  console.log("review ID:", reviewId);
-  const [userData, setUserData] = useState({})
-  // console.log("REVIEW ID", review_id)
-  // console.log("Token", token);
-  // console.log("user data", userData);
+  const review_id = reviewId.reviewId;
+  const [userId, setUserId] = useState({});
+  const [userData, setUserData] = useState({});
+  // console.log("THe user's id is", userId)
+
   useEffect(()=>{
     fetchUser();
   }, [])
@@ -29,6 +28,8 @@ export default function CommentForm(reviewId) {
           const data = await userDataResponse.json();
           // console.log("User Data:", data)
           setUserData(data)
+          setUserId(data.id)
+          // console.log("user id:", data.id)
         } else {
           console.log(error, "Failed to fetch user data")
         }
@@ -41,7 +42,6 @@ export default function CommentForm(reviewId) {
     // e.preventDefault();    
     try {      
       const user_id = userData.id;
-      // console.log("User ID", user_id)
       const response = await fetch(`http://localhost:3000/api/comments`, {
         method: "POST",
         headers: {
@@ -67,8 +67,12 @@ export default function CommentForm(reviewId) {
   }
   
   return (
-    <> <CommentBox reviewId={reviewId}/>
-      <form onSubmit={handleSubmit}>
+    <> 
+    <CommentBox reviewId={reviewId}
+     userData={userData.id}
+      userId={userId}/>
+      {userData.id > 0 ? 
+         <form onSubmit={handleSubmit}>
           <input
             value={comment} required
             type="text"
@@ -79,7 +83,7 @@ export default function CommentForm(reviewId) {
         
 
         <button type="submit">Post Comment</button>
-      </form>
+      </form> : `Sign in the leave a comment`}
     </>
   );
 }

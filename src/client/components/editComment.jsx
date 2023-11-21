@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 
-export default function EditButton (commentId) {
+export default function EditButton (commentId, userData) {
     const [comment, setComment] = useState("");
     const token = localStorage.getItem("token");
-    console.log("The comment ID is ", commentId)
+    // console.log("The comment ID is ", commentId)
 
         async function handleEdit (e) {
             // e.preventDefault()
@@ -29,7 +29,8 @@ export default function EditButton (commentId) {
             }
         }  
 
-        return (
+        return (<>
+          
             <form onSubmit={handleEdit}>
           <input
             value={comment} required
@@ -42,5 +43,5 @@ export default function EditButton (commentId) {
 
         <button type="submit">Edit Comment</button>
       </form>
-        )
+      </>)
 }

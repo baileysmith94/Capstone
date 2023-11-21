@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useId } from "react";
 import DeleteButton from "./deleteComments";
 import EditButton from "./editComment";
 import "bootstrap/dist/css/bootstrap.min.css";
 //pull down the review id
 
-export default function CommentBox(reviewId) {
+export default function CommentBox(reviewId, userData) {
   const [comments, setComments] = useState([]);
-  console.log(`the review ID is `, reviewId.reviewId)
-  console.log(`HERES YA COMMENTS`, comments);
-  // get the comments that relate to the review's reviewid
+  console.log(reviewId.userId, reviewId.userData)
+ 
 
   async function fetchComments(reviewId) {
     try {
@@ -17,7 +16,7 @@ export default function CommentBox(reviewId) {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log(`COMMENT DATA:`, data);
+        // console.log(`COMMENT DATA:`, data);
         setComments(data.comments);
       } else {
         console.error("Failed to fetch comments. Status:", response.status);
@@ -39,8 +38,10 @@ export default function CommentBox(reviewId) {
               <li key={comments.id}>
                 <p>
                   {comments.name} says: {comments.comment}
-                  <DeleteButton commentId={comments.id}/>
-                  <EditButton commentId={comments.id}/>
+                  {reviewId.userData == reviewId.userId && 
+                  <DeleteButton commentId={comments.id} userData={userData} userId={reviewId.userId}/>}
+                  {reviewId.userData == reviewId.userId && 
+                  <EditButton commentId={comments.id} userData={userData}/>}
                 </p>
                 
               </li>
