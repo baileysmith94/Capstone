@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
-import StarIcon from '@mui/icons-material/Star';
+import StarIcon from "@mui/icons-material/Star";
 
 const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
   const [showModal, setShowModal] = useState(false);
@@ -8,46 +8,14 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
   const [reviewText, setReviewText] = useState("");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
-  const [showAlreadyReviewedMessage, setShowAlreadyReviewedMessage] = useState(false);
-  const [hasReviewed, setHasReviewed] = useState(false);
-
-  useEffect(() => {
-    const checkUserReview = async () => {
-      try {
-        const token = localStorage.getItem("token");
-
-        const response = await fetch(`/api/reviews/user/${userId}/restaurant/${restaurantId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (response.ok) {
-          const userReview = await response.json();
-          setHasReviewed(userReview !== null);
-        } else {
-          console.error("Failed to check user review status");
-        }
-      } catch (error) {
-        console.error("Error checking user review status:", error);
-      }
-    };
-
-    checkUserReview();
-  }, [userId, restaurantId]);
+  const [showAlreadyReviewedMessage, setShowAlreadyReviewedMessage] =
+    useState(false);
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
   const handleSubmit = async () => {
     try {
-      // checks if the user has already reviewed the restaurant
-      if (hasReviewed) {
-        // displays an alert or handle the case where the user has already reviewed
-        setShowAlreadyReviewedMessage(true);
-        return;
-      }
-
       const reviewData = {
         user_id: userId,
         restaurant_id: restaurantId,
@@ -108,12 +76,7 @@ const LeaveReviewModal = ({ userId, restaurantId, onReviewSubmit }) => {
 
   return (
     <>
-      <Button
-        variant="danger"
-        size="lg"
-        className="me-2"
-        onClick={handleShow}
-      >
+      <Button variant="danger" size="lg" className="me-2" onClick={handleShow}>
         Leave a Review
       </Button>
 
