@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import CommentForm from "./CommentForm";
+import DeleteButton from "./deleteComments";
+import EditButton from "./editComment";
 import "bootstrap/dist/css/bootstrap.min.css";
 //pull down the review id
 
@@ -38,7 +39,10 @@ export default function CommentBox(reviewId) {
               <li key={comments.id}>
                 <p>
                   {comments.name} says: {comments.comment}
+                  <DeleteButton commentId={comments.id}/>
+                  <EditButton commentId={comments.id}/>
                 </p>
+                
               </li>
             ))}
           </ul>
