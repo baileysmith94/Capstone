@@ -1,9 +1,9 @@
 
 import { useState, useEffect } from "react";
 
-export default function DeleteButton (commentId) {
+export default function DeleteButton (commentId, userData, userId) {
     const token = localStorage.getItem("token");
-    console.log("the comment ID is ", commentId)
+    // console.log("user ID:",userData.id, "comment's user id:", userId)
      async function handleDelete (e) {
         try {
             
@@ -23,9 +23,11 @@ export default function DeleteButton (commentId) {
      }
 
         return(
-            <>
+             
             <form onSubmit={handleDelete}>
-                <button type="submit" >Delete</button></form>
-            </>
+                <button type="submit" >Delete</button>
+            </form>
+                
+            
 );
 }

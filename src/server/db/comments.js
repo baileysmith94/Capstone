@@ -32,7 +32,7 @@ const createComment = async ({ user_id, review_id, comment}) => {
 const getCommentsByReviewId = async (reviewId) => {
     try {
       const { rows } = await db.query(`
-        SELECT comments.id, comments.review_id, comments.comment, users.name FROM comments
+        SELECT comments.user_id, comments.id, comments.review_id, comments.comment, users.name FROM comments
         INNER JOIN users ON comments.user_id=users.id
         WHERE review_id = $1;
       `, [reviewId]);
