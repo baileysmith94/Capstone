@@ -499,6 +499,7 @@ const insertComments = async () => {
   try {
     for (const comment of comments) {
       await createComment(comment);
+      console.log("Comments data inserted successfully.");
     }
   } catch (error) {
     console.error("Error inserting comment data", error);
