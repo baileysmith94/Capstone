@@ -222,6 +222,13 @@ const [editText, setEditText] = useState(null);
       console.error("Error updating review:", error);
     }
   };
+  const scrollToAdmin = () => {
+    const adminElement = document.getElementById('admin');
+    if (adminElement) {
+      adminElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
 
 
   return (
@@ -232,9 +239,9 @@ const [editText, setEditText] = useState(null);
           {userData && (
             <div>
             {userData.is_admin && (
-              <p className="card-text">
-                <AdminPanelSettingsIcon style={{ color: 'green' }} /> Admin Status
-              </p>
+              <p className="card-text" onClick={scrollToAdmin} style={{ cursor: 'pointer' }}>
+              <AdminPanelSettingsIcon style={{ color: 'green' }} /> Admin Status
+            </p>
             )}
             <p className="card-text">
             <strong><EmailIcon /></strong> {userData.email}
@@ -365,7 +372,7 @@ const [editText, setEditText] = useState(null);
         
       </div>
       <div> <ViewComments /></div>
-
+                <div id="admin"></div>
       {userData && Object.keys(userData).length > 0 && userData.is_admin && (
         <>
           <Button
