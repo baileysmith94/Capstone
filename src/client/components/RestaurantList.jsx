@@ -18,7 +18,8 @@ function RestaurantList({ showSearchBar = true, limit }) {
       const response = await fetch("/api/restaurants");
       if (response.ok) {
         const data = await response.json();
-        setRestaurants(data.restaurants);
+        const sortedRestaurants = data.restaurants.sort((a, b) => b.average_rating - a.average_rating);
+        setRestaurants(sortedRestaurants);
       } else {
         console.error("Failed to fetch restaurants");
       }
