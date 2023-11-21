@@ -81,12 +81,12 @@ function RestaurantList({ showSearchBar = true, limit }) {
             <p>Type: {restaurant.type}</p>
             <p>{restaurant.address}</p>
             <p>
-              <PhoneIcon /> {restaurant.phone_number}
+              <PhoneIcon  style={{color:'green'}}/> {restaurant.phone_number}
             </p>
             <p>
               Average Rating:{' '}
               {Array.from({ length: Math.round(restaurant.average_rating) }, (_, index) => (
-                <StarIcon key={index} />
+                <StarIcon key={index} style={{color:'gold'}}/>
               ))} 
             </p>
             <LeaveReviewModal restaurantId={restaurant.id} />
