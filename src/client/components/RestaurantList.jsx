@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 import LeaveReviewModal from "./LeaveReviewModal";
 import StarIcon from '@mui/icons-material/Star';
+import PhoneIcon from '@mui/icons-material/Phone';
 import CommentBox from "./CommentList";
 import CommentForm from "./CommentForm";
 
@@ -50,9 +51,8 @@ function RestaurantList({ showSearchBar = true, limit }) {
   const restaurantToDisplay = searchParam
     ? restaurants
       .filter((restaurant) => restaurant.name.toLowerCase().includes(searchParam))
-      .slice(0,limit)
-  
-    : restaurants.slice(0,limit);
+      .slice(0, limit)
+    : restaurants.slice(0, limit);
 
   return (
     <>
@@ -80,10 +80,15 @@ function RestaurantList({ showSearchBar = true, limit }) {
             /> 
             <p>Type: {restaurant.type}</p>
             <p>{restaurant.address}</p>
-            <p>Average Rating:{' '}
-            {Array.from({ length: Math.round(restaurant.average_rating) }, (_, index) => (
-              <StarIcon key={index} />
-            ))} </p>
+            <p>
+              <PhoneIcon /> {restaurant.phone_number}
+            </p>
+            <p>
+              Average Rating:{' '}
+              {Array.from({ length: Math.round(restaurant.average_rating) }, (_, index) => (
+                <StarIcon key={index} />
+              ))} 
+            </p>
             <LeaveReviewModal restaurantId={restaurant.id} />
             <button
               onClick={() => {
@@ -128,9 +133,8 @@ function RestaurantList({ showSearchBar = true, limit }) {
                   </div>
                   <div>{review.review_text}</div>
                   {console.log(review.id)}
-                  <CommentForm  reviewId={review.id}/>
+                  <CommentForm reviewId={review.id} />
                 </li>
-                
               ))}
             </ul>
           ) : (
