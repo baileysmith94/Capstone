@@ -1,7 +1,6 @@
 const express = require('express')
 const commentRouter = express.Router();
 const { requireUser } = require('./utils')
-
 const {
     getAllComments,
     getCommentsByReviewId,
@@ -19,6 +18,18 @@ commentRouter.get(`/`, async( req, res, next) => {
         });
     } catch (error) {
         next(error)
+    }
+});
+
+commentRouter.get('/user/:user_id', async (req, res, next) => {
+    try {
+        const userId = req.params.user_id;
+        const comments = await getCommentsByUserId(userId);
+        res.json({
+            comments
+        });
+    } catch (error) {
+        next(error);
     }
 });
 
