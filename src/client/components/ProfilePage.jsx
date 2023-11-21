@@ -7,6 +7,8 @@ import NewRestaurantForm from "./NewRestaurantForm";
 import UserList from "./userlist";
 import ViewComments from "./ViewComments";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import EmailIcon from '@mui/icons-material/Email';
+
 
 
 
@@ -235,7 +237,7 @@ const [editText, setEditText] = useState(null);
               </p>
             )}
             <p className="card-text">
-              <strong>Email:</strong> {userData.email}
+            <strong><EmailIcon /></strong> {userData.email}
             </p>
           </div>
           )}
