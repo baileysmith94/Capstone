@@ -6,6 +6,8 @@ import RestaurantList from "./RestaurantList";
 import NewRestaurantForm from "./NewRestaurantForm";
 import UserList from "./userlist";
 import ViewComments from "./ViewComments";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+
 
 
 const ProfilePage = () => {
@@ -227,11 +229,15 @@ const [editText, setEditText] = useState(null);
           <h1 className="card-title mb-4 fade-in">Welcome, {userData?.name}!</h1>
           {userData && (
             <div>
-              {userData.is_admin && <p className="card-text">Admin Status</p>}
+            {userData.is_admin && (
               <p className="card-text">
-                <strong>Email:</strong> {userData.email}
+                <AdminPanelSettingsIcon style={{ color: 'green' }} /> Admin Status
               </p>
-            </div>
+            )}
+            <p className="card-text">
+              <strong>Email:</strong> {userData.email}
+            </p>
+          </div>
           )}
         </div>
       </div>
