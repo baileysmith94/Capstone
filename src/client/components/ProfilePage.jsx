@@ -5,6 +5,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import RestaurantList from "./RestaurantList";
 import NewRestaurantForm from "./NewRestaurantForm";
 import UserList from "./userlist";
+import ViewComments from "./ViewComments";
+
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState({});
@@ -290,6 +292,7 @@ const [editText, setEditText] = useState(null);
                     
                   </span>
                 </div>
+               
                 {/* Modal for editing reviews */}
                 <Modal
   show={editReviewId !== null}
@@ -521,9 +524,13 @@ const [editText, setEditText] = useState(null);
         <div className="card mt-3">
           <NewRestaurantForm />
         </div>
+        
       )}
+      <div> <ViewComments /></div>
     </div>
+    
   );
+ 
 };
 
 export default ProfilePage;

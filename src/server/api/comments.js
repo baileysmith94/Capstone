@@ -22,6 +22,18 @@ commentRouter.get(`/`, async( req, res, next) => {
     }
 });
 
+commentRouter.get('/user/:user_id', async (req, res, next) => {
+    try {
+        const userId = req.params.user_id;
+        const comments = await getCommentsByUserId(userId);
+        res.json({
+            comments
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 commentRouter.get('/:review_id', async( req, res, next) => {
     try {
