@@ -3,6 +3,7 @@ const { createUser } = require("./users");
 //will we need to create a restaurant and reviews js file, like how there is a users.js file? assuming we do - aj
 const { createRestaurant } = require("./restaurant");
 const { createReview } = require("./review");
+const { createComment } = require("./comments");
 
 const users = [
   {
@@ -259,6 +260,128 @@ const reviews = [
   }
 ];
 
+const comments = [
+  {
+    user_id: 3,
+    restaurant_id: 12,
+    review_id: 11,
+    comment: "This comment is 100% accurate! Best food I've ever had!"
+  },
+  {
+    user_id: 5,
+    restaurant_id: 11,
+    review_id: 12,
+    comment: "Thanks for the warning, I will never eat here..."
+  },
+  {
+    user_id: 2,
+    restaurant_id: 7,
+    review_id: 21,
+    comment: "I've been wanting a bubble tea shop for so long, can't wait to try it!"
+  },
+  {
+    user_id: 1,
+    restaurant_id: 12,
+    review_id: 16,
+    comment: "I thought something was off here"
+  },
+  {
+    user_id: 4,
+    restaurant_id: 12,
+    review_id: 16,
+    comment: "How did they manage to train all these birds?!"
+  },
+  {user_id: 3,
+  restaurant_id: 11,
+  review_id: 20,
+  comment: "This restaruant was overdue!"
+},
+{
+  user_id: 5,
+  restaurant_id: 5,
+  review_id: 8,
+  comment: "This restaurant was so gross, I'm glad someone else reviewed it!"
+},
+{
+  user_id: 2,
+  restaurant_id: 9,
+  review_id: 22,
+  comment: "I was shocked at how good this was!"
+}, 
+{
+  user_id: 4,
+  restaurant_id: 10,
+  review_id: 15,
+  comment: "...did you see the name of the restaurant before entering?"
+},
+{
+  user_id: 3,
+  restaurant_id: 8,
+  review_id: 14,
+  comment: "That checks out"
+},
+{
+  user_id: 5,
+  restaurant_id: 10,
+  review_id: 17,
+  comment: "I snuck my own salt and pepper in"
+},
+{
+  user_id: 1,
+  restaurant_id: 8,
+  review_id: 18,
+  comment: "I was shocked at how fast they were!"
+},
+{
+  user_id : 4,
+  restaurant_id: 9,
+  review_id: 13,
+  comment: "And I think it's organic!"
+},
+{
+  user_id: 2,
+  restaurant_id: 2,
+  review_id: 7,
+  comment: "Will go again!"
+},
+{
+  user_id: 2,
+  restaurant_id: 12,
+  review_id: 11,
+  comment: "It was so good I cried"
+},
+{
+  user_id: 5,
+  restaurant_id: 2,
+  review_id: 7,
+  comment: "I go every weekend!"
+},
+{
+  user_id: 1,
+  restaurant_id: 10,
+  review_id: 15,
+  comment: "We need more vegan places like this one, don't be fooled by this review, it's amazing!"
+},
+{
+  user_id: 5,
+  restaurant_id: 10,
+  review_id: 15,
+  comment: "Overhyped restaurant, and I'm over it"
+},
+{
+  user_id: 2,
+  restaurant_id: 8,
+  review_id: 18,
+  comment: "Do you think it's microwaved?"
+},
+{
+  user_id: 5,
+  restaurant_id: 12,
+  review_id: 16,
+  comment: "I have to check this out!"
+}
+]
+
 const dropTables = async () => {
   try {
     await db.query(`DROP TABLE IF EXISTS comments;
@@ -372,6 +495,16 @@ const insertReviews = async () => {
   }
 };
 
+const insertComments = async () => {
+  try {
+    for (const comment of comments) {
+      await createComment(comment);
+    }
+  } catch (error) {
+    console.error("Error inserting comment data", error);
+  }
+};
+
 const updateAverageRating = async (restaurantId) => {
   try {
     const result = await db.query(`
@@ -396,6 +529,7 @@ const seedDatabse = async () => {
     await insertUsers();
     await insertRestaurants();
     await insertReviews();
+    await insertComments();
   } catch (err) {
     throw err;
   } finally {
