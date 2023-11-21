@@ -6,6 +6,9 @@ import StarIcon from '@mui/icons-material/Star';
 import PhoneIcon from '@mui/icons-material/Phone';
 import CommentBox from "./CommentList";
 import CommentForm from "./CommentForm";
+import { TextField, InputAdornment, IconButton } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+
 
 function RestaurantList({ showSearchBar = true, limit }) {
   const [restaurants, setRestaurants] = useState([]);
@@ -58,14 +61,19 @@ function RestaurantList({ showSearchBar = true, limit }) {
     <>
       {showSearchBar && (
         <div className="search-bar">
-          <label>
-            Search:{" "}
-            <input
-              type="text"
-              placeholder="Search"
-              onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
-            />
-          </label>
+          <TextField
+            placeholder="Search"
+            onChange={(e) => setSearchParam(e.target.value.toLowerCase())}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
         </div>
       )}
 
