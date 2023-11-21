@@ -9,8 +9,8 @@ function Home() {
                 <img src="/images/capstonelogo.jpeg" alt="Logo" width="80%" border="4% solid"/>
             </div>
             <div className="homeReviews">
-                <h2>Reviewed Restaurants Local To You</h2>
-                <RestaurantList showSearchBar={false} limit={4} />
+                <h2>Top Rated Restaurants Near You</h2>
+                <RestaurantList showSearchBar={false} limit={4}/>
                 <div className='moreReviewsButton'>
                     <Link to="./restaurants">
                         <button>See More Restaurants/Reviews</button>
