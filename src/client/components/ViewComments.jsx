@@ -2,51 +2,78 @@ import React, { useEffect, useState } from 'react';
 
 const ViewComments = () => {
   const [userComments, setUserComments] = useState([]);
-  const token = localStorage.getItem('authToken'); // Retrieve the token from local storage
-  const userId = 1; // Replace with your actual logic to get the user ID
+  const [userId, setUserId] = useState(null);
+  const token = localStorage.getItem('token'); 
 
   useEffect(() => {
     const fetchUserComments = async () => {
       try {
-        if (!token || !userId) {
-          // If the token or userId is not available, do not make the API call
+        if (!token) {
+          
           return;
         }
 
-        const response = await fetch(`http://localhost:3000/api/comments/user/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`, // Include the token in the request headers
-          },
-        });
+        console.log('Token:', token);
 
-        if (!response.ok) {
-          throw new Error(`Error fetching user comments: ${response.statusText}`);
+        const decodedToken = decodeToken(token);
+        console.log('Decoded Token:', decodedToken);
+
+        if (decodedToken && decodedToken.id) {
+          setUserId(decodedToken.id);
         }
 
-        const { comments } = await response.json();
-        setUserComments(comments);
+        if (userId) {
+          
+          const response = await fetch(`http://localhost:3000/api/comments/user/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (!response.ok) {
+            console.error(`Error fetching user comments: ${response.statusText}`);
+          } else {
+            const data = await response.json();
+            console.log('API Response:', data);
+            setUserComments(data.comments);
+          }
+        }
       } catch (error) {
         console.error(error.message);
       }
     };
 
     fetchUserComments();
-  }, [token, userId]); // Dependency array includes token and userId
+  }, [token, userId]); 
+
+  const decodeToken = (token) => {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  };
 
   return (
-    <div>
-      <h2>Your Comments</h2>
-      {userComments && userComments.length > 0 ? (
-        <ul>
-          {userComments.map((comment) => (
-            <li key={comment.id}>{comment.comment}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No comments found.</p>
-      )}
+    <div className='card mt-3'>
+      <div className='card-body'>
+        <h2 className='card-title'>My Comments</h2>
+        {userComments && userComments.length > 0 ? (
+          <ul className='list-group'>
+            {userComments.map((comment) => (
+              <li key={comment.id} className='list-group-item'>
+                {comment.comment}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className='card-text'>No comments yet!</p>
+        )}
+      </div>
     </div>
   );
 };
+
 
 export default ViewComments;

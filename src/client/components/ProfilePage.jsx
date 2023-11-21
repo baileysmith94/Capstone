@@ -269,6 +269,7 @@ const [editText, setEditText] = useState(null);
               onClick={() => setDeleteConfirmation(review.id)}
             />
           </div>
+          
         </div>
 
                   {review.restaurant_image_url && (
@@ -291,8 +292,9 @@ const [editText, setEditText] = useState(null);
                  
                     
                   </span>
+                  
                 </div>
-               
+                
                 {/* Modal for editing reviews */}
                 <Modal
   show={editReviewId !== null}
@@ -352,7 +354,9 @@ const [editText, setEditText] = useState(null);
             </p>
           )}
         </div>
+        
       </div>
+      <div> <ViewComments /></div>
 
       {userData && Object.keys(userData).length > 0 && userData.is_admin && (
         <>
@@ -526,7 +530,7 @@ const [editText, setEditText] = useState(null);
         </div>
         
       )}
-      <div> <ViewComments /></div>
+      
     </div>
     
   );

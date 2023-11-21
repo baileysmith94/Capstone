@@ -45,15 +45,16 @@ const getCommentsByReviewId = async (reviewId) => {
 const getCommentsByUserId = async (userId) => {
     try {
       const { rows } = await db.query(`
-        SELECT * FROM comments
+        SELECT * 
+        FROM comments
         WHERE user_id = $1;
       `, [userId]);
   
       return rows;
-    } catch (error) {
-      throw error;
+    } catch (err) {
+      throw err;
     }
-}
+  }
 
 const deleteComment = async (id) => {
     try {
