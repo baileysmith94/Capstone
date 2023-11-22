@@ -335,7 +335,7 @@ button:hover {
 }
 
 .fade-in {
-  animation: fadeIn 1s ease; /* Adjust the duration if its too fast */
+  animation: fadeIn 2s ease; /* Adjust the duration if its too fast */
 }
 
 /* i think media queries go below everything */
