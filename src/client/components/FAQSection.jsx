@@ -5,6 +5,14 @@ import Container from "react-bootstrap/Container";
 const FAQSection = () => {
   return (
     <Container style={{ marginTop: "8rem" }}>
+      <style>
+        {`
+          .accordion-button:hover {
+            background-color: #b50000;
+            color: white
+          }
+        `}
+      </style>
       <h4 className="text-center mb-3">Frequently Asked Questions</h4>
       <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="0">
