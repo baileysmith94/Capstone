@@ -45,8 +45,8 @@ const FAQSection = () => {
             How do I discover new restaurants on Fork It?
           </Accordion.Header>
           <Accordion.Body>
-            To discover new restaurants, go to the "Discover" section on the
-            homepage. Browse through the featured restaurants or use the search
+            To discover new restaurants, go to the "Restaurant" section on the
+            nav bar. Browse through the featured restaurants or use the search
             function to find restaurants based on your preferences.
           </Accordion.Body>
         </Accordion.Item>
