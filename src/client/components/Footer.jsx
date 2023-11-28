@@ -65,7 +65,7 @@ function Footer() {
                 </FooterLink>
               </FooterListItem>
               <FooterListItem>
-                <FooterLink href="#">
+                <FooterLink href="/discover">
                 Discover your city
                 </FooterLink>
               </FooterListItem>

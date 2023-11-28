@@ -11,6 +11,7 @@ import UserList from "./components/userlist";
 import ProfilePage from "./components/ProfilePage";
 import Home from "./components/Home";
 import FAQSection from "./components/FAQSection";
+import DiscoverYourCityPage from "./components/DiscoverYourCityPage";
 
 
 //TO SEE IF A TOKEN IS ACTIVLY BEING USED
@@ -37,6 +38,7 @@ function App() {
         <Route path = '/me' element={<ProfilePage />} />
         <Route path="/" element={<Footer />} />
         <Route path="/faq" element={<FAQSection />} />
+        <Route path="/discover" element={<DiscoverYourCityPage />} />
       </Routes>
       <Footer />
     </>
