@@ -10,6 +10,7 @@ import "./style.css";
 import UserList from "./components/userlist";
 import ProfilePage from "./components/ProfilePage";
 import Home from "./components/Home";
+import FAQSection from "./components/FAQSection";
 
 
 //TO SEE IF A TOKEN IS ACTIVLY BEING USED
@@ -35,6 +36,7 @@ function App() {
         {/* <Route path = '/' element={<ReviewList />} /> */}
         <Route path = '/me' element={<ProfilePage />} />
         <Route path="/" element={<Footer />} />
+        <Route path="/faq" element={<FAQSection />} />
       </Routes>
       <Footer />
     </>

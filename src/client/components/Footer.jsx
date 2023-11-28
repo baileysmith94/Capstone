@@ -70,7 +70,7 @@ function Footer() {
                 </FooterLink>
               </FooterListItem>
               <FooterListItem>
-                <FooterLink href="#">
+                <FooterLink href="/faq">
                   FAQ
                 </FooterLink>
               </FooterListItem>
