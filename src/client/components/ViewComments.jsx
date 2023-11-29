@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import Modal from 'bootstrap/js/dist/modal';
 
 const ViewComments = ({ reviewId, userData }) => {
   const [userComments, setUserComments] = useState([]);
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentText, setEditCommentText] = useState('');
+  const [commentToDelete, setCommentToDelete] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -50,9 +54,14 @@ const ViewComments = ({ reviewId, userData }) => {
     }
   };
 
-  const handleDelete = async (commentId) => {
+  const handleDelete = (commentId) => {
+    setCommentToDelete(commentId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/comments/${commentId}`, {
+      const response = await fetch(`http://localhost:3000/api/comments/${commentToDelete}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -62,17 +71,22 @@ const ViewComments = ({ reviewId, userData }) => {
       if (!response.ok) {
         console.error(`Error deleting comment: ${response.statusText}`);
       } else {
-        setUserComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+        setUserComments((prevComments) => prevComments.filter((comment) => comment.id !== commentToDelete));
+        setShowDeleteModal(false);
       }
     } catch (error) {
       console.error('Error deleting comment:', error.message);
     }
   };
 
+  const cancelDelete = () => {
+    setCommentToDelete(null);
+    setShowDeleteModal(false);
+  };
+
   const handleEdit = async (commentId) => {
     setEditCommentId(commentId);
-    const modal = new Modal(document.getElementById('editCommentModal'));
-    modal.show();
+    setShowEditModal(true);
 
     const commentToEdit = userComments.find((comment) => comment.id === commentId);
     setEditCommentText(commentToEdit.comment);
@@ -98,12 +112,16 @@ const ViewComments = ({ reviewId, userData }) => {
           )
         );
 
-        const modal = Modal.getInstance(document.getElementById('editCommentModal'));
-        modal.hide();
+        setShowEditModal(false);
       }
     } catch (error) {
       console.error('Error updating comment:', error.message);
     }
+  };
+
+  const cancelEdit = () => {
+    setEditCommentId(null);
+    setShowEditModal(false);
   };
 
   return (
@@ -124,11 +142,7 @@ const ViewComments = ({ reviewId, userData }) => {
                     style={{ cursor: 'pointer', marginRight: '10px' }}
                   />
                   <DeleteIcon
-                    onClick={() => {
-                      if (window.confirm('Are you sure you want to delete this comment?')) {
-                        handleDelete(comment.id);
-                      }
-                    }}
+                    onClick={() => handleDelete(comment.id)}
                     style={{ cursor: 'pointer' }}
                   />
                 </div>
@@ -139,45 +153,45 @@ const ViewComments = ({ reviewId, userData }) => {
           <p className='card-text'>No comments yet!</p>
         )}
 
-        {/* Bootstrap Modal - MUI was being weird... */}
-        <div className='modal fade' id='editCommentModal' tabIndex='-1'>
-          <div className='modal-dialog'>
-            <div className='modal-content'>
-              <div className='modal-header'>
-                <h5 className='modal-title'>Edit Comment</h5>
-                <button
-                  type='button'
-                  className='btn-close'
-                  data-bs-dismiss='modal'
-                  aria-label='Close'
-                ></button>
-              </div>
-              <div className='modal-body'>
-                <textarea
-                  value={editCommentText}
-                  onChange={(e) => setEditCommentText(e.target.value)}
-                  className='form-control'
-                ></textarea>
-              </div>
-              <div className='modal-footer'>
-                <button
-                  type='button'
-                  className='btn btn-secondary'
-                  data-bs-dismiss='modal'
-                >
-                  Close
-                </button>
-                <button
-                  type='button'
-                  className='btn btn-primary'
-                  onClick={handleSaveEdit}
-                >
-                  Save changes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Bootstrap Modal for Editing Comment */}
+        <Modal show={showEditModal} onHide={cancelEdit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Comment</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <textarea
+              value={editCommentText}
+              onChange={(e) => setEditCommentText(e.target.value)}
+              className='form-control'
+            ></textarea>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={cancelEdit}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleSaveEdit}>
+              Save changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        {/* Bootstrap Modal for Deleting Comment */}
+        <Modal show={showDeleteModal} onHide={cancelDelete}>
+          <Modal.Header closeButton>
+            <Modal.Title>Delete Comment</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Are you sure you want to delete this comment?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={cancelDelete}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={confirmDelete}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );
