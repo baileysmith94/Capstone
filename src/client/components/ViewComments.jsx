@@ -1,29 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Modal from 'bootstrap/js/dist/modal';
 
-const ViewComments = () => {
+const ViewComments = ({ reviewId, userData }) => {
   const [userComments, setUserComments] = useState([]);
-  const [userId, setUserId] = useState(null);
-  const token = localStorage.getItem('token'); 
+  const [editCommentId, setEditCommentId] = useState(null);
+  const [editCommentText, setEditCommentText] = useState('');
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchUserComments = async () => {
       try {
         if (!token) {
-          
           return;
         }
 
-        console.log('Token:', token);
-
         const decodedToken = decodeToken(token);
-        console.log('Decoded Token:', decodedToken);
 
         if (decodedToken && decodedToken.id) {
-          setUserId(decodedToken.id);
-        }
-
-        if (userId) {
-          
+          const userId = decodedToken.id;
           const response = await fetch(`http://localhost:3000/api/comments/user/${userId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -34,7 +30,6 @@ const ViewComments = () => {
             console.error(`Error fetching user comments: ${response.statusText}`);
           } else {
             const data = await response.json();
-            console.log('API Response:', data);
             setUserComments(data.comments);
           }
         }
@@ -44,7 +39,7 @@ const ViewComments = () => {
     };
 
     fetchUserComments();
-  }, [token, userId]); 
+  }, [token]);
 
   const decodeToken = (token) => {
     try {
@@ -55,6 +50,62 @@ const ViewComments = () => {
     }
   };
 
+  const handleDelete = async (commentId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/comments/${commentId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        console.error(`Error deleting comment: ${response.statusText}`);
+      } else {
+        setUserComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+      }
+    } catch (error) {
+      console.error('Error deleting comment:', error.message);
+    }
+  };
+
+  const handleEdit = async (commentId) => {
+    setEditCommentId(commentId);
+    const modal = new Modal(document.getElementById('editCommentModal'));
+    modal.show();
+
+    const commentToEdit = userComments.find((comment) => comment.id === commentId);
+    setEditCommentText(commentToEdit.comment);
+  };
+
+  const handleSaveEdit = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/comments/${editCommentId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ comment: editCommentText }),
+      });
+
+      if (!response.ok) {
+        console.error(`Error updating comment: ${response.statusText}`);
+      } else {
+        setUserComments((prevComments) =>
+          prevComments.map((comment) =>
+            comment.id === editCommentId ? { ...comment, comment: editCommentText } : comment
+          )
+        );
+
+        const modal = Modal.getInstance(document.getElementById('editCommentModal'));
+        modal.hide();
+      }
+    } catch (error) {
+      console.error('Error updating comment:', error.message);
+    }
+  };
+
   return (
     <div className='card mt-3'>
       <div className='card-body'>
@@ -62,18 +113,74 @@ const ViewComments = () => {
         {userComments && userComments.length > 0 ? (
           <ul className='list-group'>
             {userComments.map((comment) => (
-              <li key={comment.id} className='list-group-item'>
+              <li
+                key={comment.id}
+                className='list-group-item d-flex align-items-center justify-content-between'
+              >
                 {comment.comment}
+                <div>
+                  <EditIcon
+                    onClick={() => handleEdit(comment.id)}
+                    style={{ cursor: 'pointer', marginRight: '10px' }}
+                  />
+                  <DeleteIcon
+                    onClick={() => {
+                      if (window.confirm('Are you sure you want to delete this comment?')) {
+                        handleDelete(comment.id);
+                      }
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  />
+                </div>
               </li>
             ))}
           </ul>
         ) : (
           <p className='card-text'>No comments yet!</p>
         )}
+
+        {/* Bootstrap Modal - MUI was being weird... */}
+        <div className='modal fade' id='editCommentModal' tabIndex='-1'>
+          <div className='modal-dialog'>
+            <div className='modal-content'>
+              <div className='modal-header'>
+                <h5 className='modal-title'>Edit Comment</h5>
+                <button
+                  type='button'
+                  className='btn-close'
+                  data-bs-dismiss='modal'
+                  aria-label='Close'
+                ></button>
+              </div>
+              <div className='modal-body'>
+                <textarea
+                  value={editCommentText}
+                  onChange={(e) => setEditCommentText(e.target.value)}
+                  className='form-control'
+                ></textarea>
+              </div>
+              <div className='modal-footer'>
+                <button
+                  type='button'
+                  className='btn btn-secondary'
+                  data-bs-dismiss='modal'
+                >
+                  Close
+                </button>
+                <button
+                  type='button'
+                  className='btn btn-primary'
+                  onClick={handleSaveEdit}
+                >
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
-
 
 export default ViewComments;
