@@ -135,6 +135,10 @@ const getUserReviewByRestaurantId = async (userId, restaurantId) => {
 
 const destroyReview = async (reviewId) => {
   try {
+    // Delete associated comments first
+    await db.query('DELETE FROM comments WHERE review_id = $1', [reviewId]);
+
+    // Then delete the review
     const { rows } = await db.query(`
       DELETE FROM reviews 
       WHERE id = $1
@@ -146,6 +150,7 @@ const destroyReview = async (reviewId) => {
     throw error;
   }
 };
+
 // async function destroyReview(id) {
 //   try {
 //     await client.query(`

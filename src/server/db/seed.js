@@ -435,7 +435,7 @@ const createTables = async () => {
         CREATE TABLE comments(
           id SERIAL PRIMARY KEY,
           user_id INT REFERENCES users(id),
-          review_id INT REFERENCES reviews(id),
+          review_id INT REFERENCES reviews(id) ON DELETE CASCADE,
           comment VARCHAR(255));`);
   } catch (err) {
     throw err;
@@ -532,9 +532,7 @@ const seedDatabse = async () => {
     await insertReviews();
     await insertComments();
   } catch (err) {
-    throw err;
-  } finally {
-    db.end();
+    
   }
 };
 

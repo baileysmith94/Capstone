@@ -51,6 +51,13 @@ const getAllRestaurants = async () => {
 
 const deleteRestaurantById = async (restaurantId) => {
   try {
+    // Delete associated comments first
+    await db.query('DELETE FROM comments WHERE review_id IN (SELECT id FROM reviews WHERE restaurant_id = $1)', [restaurantId]);
+
+    // Delete associated reviews
+    await db.query('DELETE FROM reviews WHERE restaurant_id = $1', [restaurantId]);
+
+    // Then delete the restaurant
     const { rows: [deletedRestaurant] } = await db.query(`
       DELETE FROM restaurants
       WHERE id = $1
@@ -61,6 +68,8 @@ const deleteRestaurantById = async (restaurantId) => {
     throw err;
   }
 };
+
+
 
 const updateRestaurantById = async (restaurantId, { name, address, type }) => {
   try {
