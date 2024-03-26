@@ -38,10 +38,7 @@ export default function CommentBox(reviewId, userData) {
               <li key={comments.id}>
                 <p>
                   {comments.name} says: {comments.comment}
-                  {reviewId.userData == reviewId.userId && 
-                  <DeleteButton commentId={comments.id} userData={userData} userId={reviewId.userId}/>}
-                  {reviewId.userData == reviewId.userId && 
-                  <EditButton commentId={comments.id} userData={userData}/>}
+                  
                 </p>
                 
               </li>
